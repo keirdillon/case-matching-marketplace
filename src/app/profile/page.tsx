@@ -10,11 +10,16 @@ async function getProfileData() {
   const supabase = getSupabase();
   if (!supabase) return { advisor: null, advisorTags: [] };
 
-  const { data: advisor } = await supabase
+  const { data: advisor, error: advError } = await supabase
     .from("advisors")
     .select("*")
     .eq("id", MOCK_SENIOR.id)
     .single();
+
+  if (advError) {
+    console.error("Error fetching advisor profile:", advError);
+    return { advisor: null, advisorTags: [] };
+  }
 
   const { data: advisorTags } = await supabase
     .from("advisor_tags")

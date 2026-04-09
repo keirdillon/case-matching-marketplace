@@ -50,7 +50,7 @@ export function Nav() {
           { label: "Case Board", href: "/", active: true },
           { label: "My Posts", href: "/posts" },
           { label: "My Matches", href: "/matches" },
-          { label: "Senior Profiles", href: "/profiles" },
+          { label: "Senior Profiles", href: "/profile" },
         ].map((link) => (
           <li key={link.label}>
             <Link
