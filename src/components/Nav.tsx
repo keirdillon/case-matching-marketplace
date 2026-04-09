@@ -48,6 +48,7 @@ export function Nav() {
       >
         {[
           { label: "Case Board", href: "/", active: true },
+          { label: "Discover", href: "/discover" },
           { label: "My Posts", href: "/posts" },
           { label: "My Matches", href: "/matches" },
           { label: "Senior Profiles", href: "/profile" },
