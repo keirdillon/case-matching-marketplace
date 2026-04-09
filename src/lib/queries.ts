@@ -52,19 +52,24 @@ export async function getActiveCases(): Promise<CaseWithAdvisor[]> {
     advisorMap.set(a.id, a);
   }
 
-  const caseTagsMap = new Map<string, { id: string; name: string; category: string }[]>();
-  for (const ct of (caseTagsResult.data || []) as Array<{
-    case_id: string;
-    tags: { id: string; name: string; category: string } | null;
-  }>) {
-    if (!ct.tags) continue;
-    const existing = caseTagsMap.get(ct.case_id) || [];
-    existing.push({
-      id: ct.tags.id,
-      name: ct.tags.name,
-      category: ct.tags.category,
-    });
-    caseTagsMap.set(ct.case_id, existing);
+  interface TagRow {
+    id: string;
+    name: string;
+    category: string;
+  }
+
+  const caseTagsMap = new Map<string, TagRow[]>();
+  for (const ct of caseTagsResult.data || []) {
+    const raw = ct as Record<string, unknown>;
+    const caseId = raw.case_id as string;
+    const tags = raw.tags as TagRow | TagRow[] | null;
+    if (!tags) continue;
+    const tagList = Array.isArray(tags) ? tags : [tags];
+    const existing = caseTagsMap.get(caseId) || [];
+    for (const t of tagList) {
+      existing.push({ id: t.id, name: t.name, category: t.category });
+    }
+    caseTagsMap.set(caseId, existing);
   }
 
   // Assemble CaseWithAdvisor objects
