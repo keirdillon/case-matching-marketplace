@@ -24,6 +24,9 @@ export const metadata: Metadata = {
   title: "AdvisorConnect — The Case Board | Coastal Wealth",
   description:
     "Internal advisor collaboration and mentorship matching platform for Coastal Wealth.",
+  icons: {
+    icon: { url: "/favicon.svg", type: "image/svg+xml" },
+  },
 };
 
 export default function RootLayout({
