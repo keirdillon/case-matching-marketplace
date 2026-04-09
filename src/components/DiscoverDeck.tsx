@@ -15,6 +15,22 @@ export function DiscoverDeck({ cases }: { cases: CaseWithAdvisor[] }) {
   const [deck, setDeck] = useState(cases);
   const [swiping, setSwiping] = useState(false);
 
+  const [resetting, setResetting] = useState(false);
+
+  async function resetDemo() {
+    setResetting(true);
+    const supabase = getSupabase();
+    if (supabase) {
+      await supabase
+        .from("matches")
+        .delete()
+        .eq("senior_advisor_id", MOCK_SENIOR.id);
+    }
+    router.refresh();
+    setDeck(cases);
+    setResetting(false);
+  }
+
   const handleSwipe = useCallback(
     async (direction: "left" | "right") => {
       if (deck.length === 0 || swiping) return;
@@ -177,6 +193,8 @@ export function DiscoverDeck({ cases }: { cases: CaseWithAdvisor[] }) {
                 </svg>
               </button>
             </div>
+
+            <ResetButton resetting={resetting} onClick={resetDemo} />
           </>
         ) : (
           /* Empty state */
@@ -235,6 +253,7 @@ export function DiscoverDeck({ cases }: { cases: CaseWithAdvisor[] }) {
             >
               Back to Case Board
             </a>
+            <ResetButton resetting={resetting} onClick={resetDemo} />
           </div>
         )}
       </div>
@@ -552,5 +571,28 @@ function CardTag({ children, bg, color }: { children: React.ReactNode; bg: strin
     <span style={{ fontFamily: "var(--font-ui)", fontSize: "10px", padding: "4px 10px", fontWeight: 500, letterSpacing: "0.3px", textTransform: "uppercase", background: bg, color }}>
       {children}
     </span>
+  );
+}
+
+function ResetButton({ resetting, onClick }: { resetting: boolean; onClick: () => void }) {
+  return (
+    <button
+      onClick={onClick}
+      disabled={resetting}
+      className="cursor-pointer"
+      style={{
+        marginTop: "var(--space-6)",
+        background: "none",
+        border: "none",
+        fontFamily: "var(--font-ui)",
+        fontSize: "12px",
+        color: "var(--coastal-600)",
+        opacity: resetting ? 0.5 : 0.7,
+        transition: "opacity var(--duration-fast)",
+        padding: "8px 16px",
+      }}
+    >
+      {resetting ? "Resetting..." : "Reset Demo"}
+    </button>
   );
 }
