@@ -1,15 +1,16 @@
 import { createClient } from "@supabase/supabase-js";
 import type { CaseWithAdvisor } from "@/lib/database.types";
 
-function getServiceClient() {
-  return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-  );
-}
-
 export async function getActiveCases(): Promise<CaseWithAdvisor[]> {
-  const supabase = getServiceClient();
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (!url || !key) {
+    console.warn("Supabase env vars missing — falling back to mock data");
+    return [];
+  }
+
+  const supabase = createClient(url, key);
 
   // Fetch active cases with poster (advisor) info
   const { data: cases, error: casesError } = await supabase
