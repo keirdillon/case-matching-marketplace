@@ -1,18 +1,13 @@
-import { createClient } from "@supabase/supabase-js";
 import type { CaseWithAdvisor } from "@/lib/database.types";
+import { getSupabase } from "@/lib/supabase";
 
 export async function getActiveCases(): Promise<CaseWithAdvisor[]> {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-  if (!url || !key) {
+  const supabase = getSupabase();
+  if (!supabase) {
     console.warn("Supabase env vars missing — falling back to mock data");
     return [];
   }
 
-  const supabase = createClient(url, key);
-
-  // Fetch active cases with poster (advisor) info
   const { data: cases, error: casesError } = await supabase
     .from("cases")
     .select("*")
@@ -26,11 +21,9 @@ export async function getActiveCases(): Promise<CaseWithAdvisor[]> {
 
   if (!cases || cases.length === 0) return [];
 
-  // Gather poster IDs and case IDs
   const posterIds = [...new Set(cases.map((c: Record<string, unknown>) => c.poster_id as string))];
   const caseIds = cases.map((c: Record<string, unknown>) => c.id as string);
 
-  // Fetch advisors and case_tags+tags in parallel
   const [advisorsResult, caseTagsResult] = await Promise.all([
     supabase
       .from("advisors")
@@ -47,17 +40,12 @@ export async function getActiveCases(): Promise<CaseWithAdvisor[]> {
     return [];
   }
 
-  // Build lookup maps
   const advisorMap = new Map<string, Record<string, unknown>>();
   for (const a of advisorsResult.data || []) {
     advisorMap.set(a.id, a);
   }
 
-  interface TagRow {
-    id: string;
-    name: string;
-    category: string;
-  }
+  interface TagRow { id: string; name: string; category: string }
 
   const caseTagsMap = new Map<string, TagRow[]>();
   for (const ct of caseTagsResult.data || []) {
@@ -73,7 +61,6 @@ export async function getActiveCases(): Promise<CaseWithAdvisor[]> {
     caseTagsMap.set(caseId, existing);
   }
 
-  // Assemble CaseWithAdvisor objects
   return cases.map((c: Record<string, unknown>) => {
     const advisor = advisorMap.get(c.poster_id as string);
     return {
