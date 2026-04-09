@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coastal Wealth Design System v6 — Super Version</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* ========================================
+       COASTAL WEALTH v6 — SUPER VERSION
+       Best of v3 + v4 + v5
+       Dillon Agency Palette
+       ======================================== */
+
+    --coastal-900: #252f4a;
+    --coastal-800: #3c506f;
+    --coastal-700: #5d7fa0;
+    --coastal-600: #6b95ba;
+    --coastal-500: #6b95ba;
+    --coastal-400: #89adc8;
+    --coastal-300: #a7c4d8;
+    --coastal-200: #c9dce8;
+    --coastal-100: #e8f0f5;
+    --coastal-50:  #f4f8fb;
+
+    --sand-50:  #fdfcfa;
+    --sand-100: #faf7f2;
+    --sand-200: #f3ede4;
+    --sand-300: #e5ddd0;
+    --sand-400: #d1c5b4;
+    --sand-500: #b5a895;
+
+    --white: #ffffff;
+    --gray-50:  #fafafa;
+    --gray-100: #f5f5f5;
+    --gray-200: #e8e8e8;
+    --gray-300: #d4d4d4;
+    --gray-400: #a3a3a3;
+    --gray-500: #737373;
+    --gray-600: #525252;
+    --gray-700: #404040;
+
+    --success: #22c55e;
+    --warning: #f59e0b;
+    --error:   #ef4444;
+    --info:    var(--coastal-600);
+
+    --font-display: 'Marlide Display', 'Playfair Display', Georgia, serif;
+    --font-body-serif: 'Minion Pro', 'Source Serif 4', Georgia, serif;
+    --font-ui: 'NHaasGroteskDSPro', 'DM Sans', -apple-system, sans-serif;
+
+    --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px;
+    --space-5: 24px; --space-6: 32px; --space-7: 48px; --space-8: 64px;
+    --space-9: 96px; --space-10: 128px; --space-11: 192px;
+
+    --shadow-sm: 0 1px 3px rgba(37,47,74,0.04);
+    --shadow-md: 0 4px 16px rgba(37,47,74,0.06);
+    --shadow-lg: 0 12px 40px rgba(37,47,74,0.08);
+    --shadow-xl: 0 24px 64px rgba(37,47,74,0.12);
+
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --duration-fast: 200ms;
+    --duration-normal: 400ms;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--font-ui); background: var(--white); color: var(--coastal-900); -webkit-font-smoothing: antialiased; line-height: 1.6; }
+
+  /* =============================================
+     HEADER — Full-bleed cover (from v4)
+     ============================================= */
+  .ds-header {
+    min-height: 85vh;
+    background: var(--coastal-900);
+    padding: var(--space-8);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .ds-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg, var(--coastal-600) 0%, var(--coastal-800) 35%, var(--coastal-900) 70%);
+    opacity: 0.9;
+  }
+  .ds-header::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 60%; height: 100%;
+    background: radial-gradient(ellipse at 70% 30%, rgba(107,149,186,0.15) 0%, transparent 60%);
+  }
+  .ds-header > * { position: relative; z-index: 1; }
+  .ds-header-top {
+    position: absolute;
+    top: var(--space-7);
+    left: var(--space-8);
+    right: var(--space-8);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .ds-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    font-family: var(--font-ui);
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--coastal-400);
+  }
+  .ds-badge::before { content: ''; width: 6px; height: 6px; background: var(--coastal-600); }
+  .ds-header .subtitle-top {
+    font-family: var(--font-body-serif);
+    font-size: 20px;
+    color: rgba(255,255,255,0.4);
+    font-weight: 300;
+    font-style: italic;
+    margin-bottom: var(--space-4);
+  }
+  .ds-header h1 {
+    font-family: var(--font-display);
+    font-size: clamp(64px, 8vw, 150px);
+    color: var(--white);
+    line-height: 0.88;
+    letter-spacing: -0.02em;
+    margin-bottom: var(--space-5);
+    font-weight: 400;
+    max-width: 900px;
+  }
+  .ds-header h1 em { font-style: italic; color: var(--coastal-400); }
+  .ds-header .byline {
+    font-family: var(--font-ui);
+    font-size: 14px;
+    color: rgba(255,255,255,0.3);
+    font-weight: 400;
+  }
+  .logo-mark {
+    font-family: var(--font-ui);
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    font-weight: 500;
+  }
+
+  /* =============================================
+     SECTION
+     ============================================= */
+  .ds-section {
+    padding: var(--space-9) var(--space-8);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .ds-section-title {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gray-400);
+    font-weight: 500;
+    margin-bottom: var(--space-7);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .ds-section-title::after { content: ''; flex: 1; height: 1px; background: var(--gray-200); }
+
+  .overline {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--coastal-600);
+    margin-bottom: var(--space-5);
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .overline::before { content: ''; width: 24px; height: 1.5px; background: var(--coastal-600); }
+
+  /* =============================================
+     NAVIGATION — Light & Dark (from v5)
+     ============================================= */
+  .nav-preview {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 32px;
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+  }
+  .nav-logo { font-family: var(--font-display); font-size: 22px; color: var(--coastal-900); font-weight: 400; }
+  .nav-links { display: flex; gap: var(--space-5); list-style: none; }
+  .nav-links a {
+    font-family: var(--font-ui); font-size: 13px; color: var(--gray-500);
+    text-decoration: none; font-weight: 400; transition: color var(--duration-fast); position: relative;
+  }
+  .nav-links a:hover { color: var(--coastal-900); }
+  .nav-links a.active { color: var(--coastal-900); font-weight: 500; }
+  .nav-links a.active::after { content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 1.5px; background: var(--coastal-600); }
+  .nav-cta { font-family: var(--font-ui); font-size: 12px; font-weight: 500; padding: 8px 20px; background: var(--coastal-600); color: var(--white); border: none; cursor: pointer; }
+  .nav-cta:hover { background: var(--coastal-400); }
+  .nav-dark { background: var(--coastal-900); border-color: rgba(255,255,255,0.06); }
+  .nav-dark .nav-logo { color: var(--white); }
+  .nav-dark .nav-links a { color: rgba(255,255,255,0.5); }
+  .nav-dark .nav-links a:hover { color: var(--white); }
+  .nav-dark .nav-links a.active { color: var(--white); }
+
+  /* =============================================
+     HERO — Split Grid (from v3)
+     ============================================= */
+  .hero-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 520px;
+    border: 1px solid var(--gray-200);
+  }
+  .hero-left {
+    padding: var(--space-8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: var(--sand-100);
+  }
+  .hero-right {
+    background: var(--coastal-900);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-right::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, var(--coastal-800), var(--coastal-900) 60%, #1a2540); }
+  .hero-right .deco { position: absolute; bottom: -20px; right: 32px; font-family: var(--font-display); font-size: 200px; color: rgba(255,255,255,0.03); line-height: 0.85; letter-spacing: -0.03em; font-weight: 400; }
+  .hero-left h2 {
+    font-family: var(--font-display);
+    font-size: clamp(40px, 4.5vw, 60px);
+    line-height: 0.96;
+    letter-spacing: -0.02em;
+    color: var(--coastal-900);
+    margin-bottom: var(--space-5);
+    font-weight: 400;
+  }
+  .hero-left h2 em { font-style: italic; color: var(--coastal-700); }
+  .hero-left p { font-family: var(--font-body-serif); font-size: 17px; color: var(--gray-500); max-width: 420px; line-height: 1.7; font-weight: 300; margin-bottom: var(--space-7); }
+
+  /* =============================================
+     HERO — Overlay (from v5)
+     ============================================= */
+  .hero-overlay {
+    min-height: 480px;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    padding: var(--space-8);
+    overflow: hidden;
+    border: 1px solid var(--gray-200);
+  }
+  .hero-overlay-bg {
+    position: absolute; inset: 0; background: var(--coastal-900);
+  }
+  .hero-overlay-bg::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(160deg, var(--coastal-600) 0%, var(--coastal-800) 40%, var(--coastal-900) 75%); opacity: 0.85;
+  }
+  .hero-overlay-bg::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 50%;
+    background: linear-gradient(to top, rgba(37,47,74,0.6), transparent);
+  }
+  .hero-overlay > div { position: relative; z-index: 1; }
+  .hero-overlay h2 {
+    font-family: var(--font-display);
+    font-size: clamp(40px, 5vw, 64px);
+    color: var(--white);
+    line-height: 0.98;
+    letter-spacing: -0.015em;
+    max-width: 580px;
+    margin-bottom: var(--space-5);
+    font-weight: 400;
+  }
+  .hero-overlay h2 em { font-style: italic; color: var(--coastal-400); }
+
+  /* =============================================
+     SLIDE SECTIONS — Light Blue (v4)
+     ============================================= */
+  .slide-blue { background: var(--coastal-200); }
+  .slide-dark { background: var(--coastal-900); position: relative; }
+  .slide-dark::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, var(--coastal-800) 0%, var(--coastal-900) 50%); }
+  .slide-dark > * { position: relative; z-index: 1; }
+
+  .slide-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    min-height: 480px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .slide-content {
+    padding: 150px var(--space-7);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .slide-content h2 {
+    font-family: var(--font-display);
+    font-size: clamp(44px, 5vw, 68px);
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    color: var(--coastal-900);
+    margin-bottom: var(--space-5);
+    font-weight: 400;
+  }
+  .slide-content h2 em { font-style: italic; color: var(--coastal-700); }
+  .slide-content .detail { font-family: var(--font-body-serif); font-size: 17px; color: var(--coastal-800); line-height: 1.7; font-weight: 300; max-width: 420px; margin-bottom: var(--space-6); }
+  .slide-content .meta { font-family: var(--font-ui); font-size: 14px; color: var(--coastal-700); line-height: 1.8; }
+  .slide-content .meta strong { font-weight: 500; display: block; margin-bottom: 4px; color: var(--coastal-900); }
+  .slide-dark .slide-content h2 { color: var(--white); }
+  .slide-dark .slide-content h2 em { color: var(--coastal-400); }
+  .slide-dark .slide-content .detail { color: rgba(255,255,255,0.45); }
+  .slide-dark .slide-content .meta { color: var(--coastal-400); }
+  .slide-dark .slide-content .meta strong { color: rgba(255,255,255,0.7); }
+
+  .slide-image { display: flex; align-items: center; justify-content: center; padding: var(--space-7); }
+  .framed { background: var(--white); padding: 10px; box-shadow: var(--shadow-lg); width: 100%; max-width: 420px; }
+  .framed-inner { width: 100%; aspect-ratio: 4/3; position: relative; overflow: hidden; }
+  .framed-inner::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, var(--coastal-700), var(--coastal-900)); }
+  .framed-inner .ph { position: absolute; bottom: 20px; left: 20px; font-family: var(--font-ui); font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.3); font-weight: 500; }
+
+  /* =============================================
+     IMAGE GRID — Play buttons (from v5)
+     ============================================= */
+  .image-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 200px 200px; gap: 6px; }
+  .grid-cell { position: relative; overflow: hidden; cursor: pointer; transition: opacity 200ms; }
+  .grid-cell:hover { opacity: 0.85; }
+  .grid-cell.tall { grid-row: span 2; }
+  .grid-cell::before { content: ''; position: absolute; inset: 0; }
+  .play-btn {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    width: 44px; height: 44px; border-radius: 50%; background: var(--coastal-600);
+    display: flex; align-items: center; justify-content: center; z-index: 1;
+    transition: transform 200ms var(--ease-out);
+  }
+  .play-btn:hover { transform: translate(-50%,-50%) scale(1.1); }
+  .play-btn::after { content: ''; width: 0; height: 0; border-left: 12px solid var(--white); border-top: 8px solid transparent; border-bottom: 8px solid transparent; margin-left: 3px; }
+  .grid-cell-label { position: absolute; bottom: 12px; left: 12px; font-family: var(--font-ui); font-size: 11px; color: rgba(255,255,255,0.4); letter-spacing: 1px; text-transform: uppercase; font-weight: 500; z-index: 1; }
+
+  /* =============================================
+     CENTERED SECTION (from v5)
+     ============================================= */
+  .centered-block { text-align: center; padding: var(--space-9) var(--space-8); max-width: 1200px; margin: 0 auto; }
+  .centered-block .overline { justify-content: center; }
+  .centered-block h2 { font-family: var(--font-display); font-size: clamp(32px,3.5vw,52px); max-width: 680px; margin: 0 auto var(--space-4); line-height: 1.06; letter-spacing: -0.015em; font-weight: 400; }
+  .centered-block h2 em { font-style: italic; color: var(--coastal-700); }
+  .centered-block .lead { font-family: var(--font-body-serif); font-size: 17px; color: var(--gray-500); max-width: 560px; margin: 0 auto var(--space-7); font-weight: 300; line-height: 1.7; }
+  .feature-images { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; max-width: 900px; margin: 0 auto; }
+  .feature-img { aspect-ratio: 16/10; position: relative; overflow: hidden; }
+  .feature-img::before { content: ''; position: absolute; inset: 0; }
+  .feature-img .cap { position: absolute; bottom: 14px; left: 14px; font-family: var(--font-ui); font-size: 11px; color: rgba(255,255,255,0.4); letter-spacing: 1px; text-transform: uppercase; font-weight: 500; }
+
+  /* =============================================
+     TRUST BAR (from v5)
+     ============================================= */
+  .trust-bar { text-align: center; padding: var(--space-8); border-top: 1px solid var(--gray-200); border-bottom: 1px solid var(--gray-200); }
+  .trust-bar .overline { justify-content: center; margin-bottom: var(--space-3); }
+  .trust-bar h3 { font-family: var(--font-display); font-size: 28px; margin-bottom: var(--space-6); letter-spacing: -0.01em; font-weight: 400; }
+  .logo-row { display: flex; justify-content: center; align-items: center; gap: 56px; flex-wrap: wrap; opacity: 0.3; margin-bottom: var(--space-5); }
+  .logo-placeholder { font-family: var(--font-ui); font-size: 16px; font-weight: 500; color: var(--coastal-900); letter-spacing: 2px; }
+
+  /* =============================================
+     BUTTONS
+     ============================================= */
+  .btn-row { display: flex; gap: var(--space-3); flex-wrap: wrap; align-items: center; }
+  .btn {
+    display: inline-flex; align-items: center; gap: var(--space-2);
+    font-family: var(--font-ui); font-weight: 500; border: none; cursor: pointer;
+    transition: all var(--duration-fast) var(--ease-out); text-decoration: none;
+    font-size: 14px; padding: 14px 32px;
+  }
+  .btn-primary { background: var(--coastal-900); color: var(--white); }
+  .btn-primary:hover { background: var(--coastal-800); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+  .btn-accent { background: var(--coastal-600); color: var(--white); }
+  .btn-accent:hover { background: var(--coastal-400); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+  .btn-outline { background: transparent; color: var(--coastal-900); box-shadow: inset 0 0 0 1.5px var(--gray-300); }
+  .btn-outline:hover { box-shadow: inset 0 0 0 1.5px var(--coastal-900); }
+  .btn-sand { background: var(--sand-200); color: var(--coastal-900); }
+  .btn-sand:hover { background: var(--sand-300); }
+  .btn-ghost { background: none; color: var(--coastal-600); padding: 14px 16px; }
+  .btn-ghost::after { content: ' →'; transition: transform 200ms var(--ease-out); display: inline-block; }
+  .btn-ghost:hover::after { transform: translateX(5px); }
+  .btn-ghost:hover { color: var(--coastal-700); }
+  .btn-white-outline { background: transparent; color: var(--white); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.25); }
+  .btn-white-outline:hover { box-shadow: inset 0 0 0 1px rgba(255,255,255,0.5); }
+  .btn-sm { font-size: 13px; padding: 10px 24px; }
+
+  /* =============================================
+     STATS — Both variants
+     ============================================= */
+  .stats-bordered { display: grid; grid-template-columns: repeat(3,1fr); border: 1px solid var(--gray-200); }
+  .stat-b { padding: var(--space-7) var(--space-6); text-align: center; border-right: 1px solid var(--gray-200); }
+  .stat-b:last-child { border-right: none; }
+  .stat-b-num { font-family: var(--font-display); font-size: 52px; color: var(--coastal-900); line-height: 1; margin-bottom: var(--space-2); font-weight: 400; }
+  .stat-b-label { font-family: var(--font-ui); font-size: 13px; color: var(--gray-400); font-weight: 400; }
+
+  .stats-dark { display: grid; grid-template-columns: repeat(4,1fr); background: var(--coastal-900); }
+  .stat-d { padding: var(--space-7) var(--space-6); text-align: center; border-right: 1px solid rgba(255,255,255,0.06); }
+  .stat-d:last-child { border-right: none; }
+  .stat-d-num { font-family: var(--font-display); font-size: 48px; color: var(--white); line-height: 1; margin-bottom: var(--space-2); font-weight: 400; }
+  .stat-d-label { font-family: var(--font-ui); font-size: 12px; color: var(--coastal-400); font-weight: 400; letter-spacing: 0.5px; }
+
+  /* =============================================
+     CARDS — Edge-to-edge (from v3)
+     ============================================= */
+  .card-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 0; }
+  .card {
+    padding: var(--space-7); border: 1px solid var(--gray-200); margin: -0.5px;
+    transition: all 300ms var(--ease-out); position: relative;
+  }
+  .card::after {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--coastal-600), var(--coastal-400));
+    transform: scaleX(0); transform-origin: left; transition: transform 300ms var(--ease-out);
+  }
+  .card:hover { background: var(--coastal-50); z-index: 1; }
+  .card:hover::after { transform: scaleX(1); }
+  .card-num { font-family: var(--font-display); font-size: 36px; color: var(--coastal-200); line-height: 1; margin-bottom: var(--space-4); font-weight: 400; }
+  .card-label { font-family: var(--font-display); font-size: 28px; color: var(--coastal-900); margin-bottom: var(--space-1); font-weight: 400; }
+  .card-theme { font-family: var(--font-ui); font-size: 12px; letter-spacing: 0.5px; color: var(--coastal-600); margin-bottom: var(--space-4); font-weight: 500; }
+  .card h3 { font-family: var(--font-ui); font-size: 18px; font-weight: 500; color: var(--coastal-900); margin-bottom: var(--space-3); }
+  .card p { font-family: var(--font-body-serif); font-size: 15px; color: var(--gray-500); line-height: 1.65; font-weight: 300; }
+
+  /* =============================================
+     DARK CALLOUT — Checklist (from v5)
+     ============================================= */
+  .dark-callout { display: grid; grid-template-columns: 1fr 1fr; background: var(--coastal-800); }
+  .dark-callout-content { padding: 150px var(--space-8); display: flex; flex-direction: column; justify-content: center; }
+  .dark-callout-content h2 { font-family: var(--font-display); font-size: clamp(32px,3.5vw,48px); color: var(--white); line-height: 1.06; margin-bottom: var(--space-4); letter-spacing: -0.015em; font-weight: 400; }
+  .dark-callout-content h2 em { font-style: italic; color: var(--coastal-400); }
+  .dark-callout-content > p { font-family: var(--font-body-serif); font-size: 16px; color: rgba(255,255,255,0.4); line-height: 1.7; font-weight: 300; max-width: 420px; margin-bottom: var(--space-5); }
+  .check-list { list-style: none; display: flex; flex-direction: column; gap: 14px; margin-bottom: var(--space-6); }
+  .check-list li { font-family: var(--font-ui); font-size: 14px; color: rgba(255,255,255,0.55); display: flex; align-items: flex-start; gap: 12px; line-height: 1.5; }
+  .check-list li::before { content: '✓'; color: var(--coastal-400); font-weight: 500; font-size: 13px; flex-shrink: 0; margin-top: 1px; }
+  .dark-callout-visual { position: relative; overflow: hidden; min-height: 480px; }
+  .dark-callout-visual::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, var(--coastal-600), var(--coastal-900)); }
+
+  /* =============================================
+     SPLIT — v3 style (50/50 with frame line)
+     ============================================= */
+  .split-boxed { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--gray-200); }
+  .split-content { padding: 150px var(--space-8); display: flex; flex-direction: column; justify-content: center; }
+  .split-content h2 { font-family: var(--font-display); font-size: 42px; line-height: 1.04; letter-spacing: -0.015em; color: var(--coastal-900); margin-bottom: var(--space-4); font-weight: 400; }
+  .split-content h2 em { font-style: italic; color: var(--coastal-700); }
+  .split-content p { font-family: var(--font-body-serif); font-size: 17px; color: var(--gray-500); line-height: 1.7; font-weight: 300; max-width: 440px; margin-bottom: var(--space-6); }
+  .split-visual { background: var(--coastal-900); position: relative; overflow: hidden; min-height: 400px; }
+  .split-visual::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, var(--coastal-800), var(--coastal-900)); }
+  .split-visual .frame-line { position: absolute; inset: 32px; border: 1px solid rgba(255,255,255,0.08); }
+
+  /* =============================================
+     TESTIMONIAL — Two variants
+     ============================================= */
+  /* Sand block (v3 style) */
+  .testimonial-sand {
+    background: var(--sand-100); padding: var(--space-8);
+    display: grid; grid-template-columns: auto 1fr; gap: var(--space-7); align-items: start;
+    border: 1px solid var(--sand-200);
+  }
+  .testimonial-sand .qm { font-family: var(--font-display); font-size: 150px; color: var(--coastal-200); line-height: 0.55; font-weight: 400; }
+  .testimonial-sand blockquote { font-family: var(--font-body-serif); font-size: clamp(24px,3vw,36px); color: var(--coastal-800); line-height: 1.35; max-width: 680px; font-weight: 300; font-style: italic; margin-bottom: var(--space-5); border: none; padding: 0; }
+  .testimonial-sand cite { font-family: var(--font-ui); font-style: normal; font-size: 13px; color: var(--gray-400); display: block; }
+  .testimonial-sand cite strong { color: var(--coastal-900); font-weight: 500; font-size: 14px; display: block; margin-bottom: 2px; }
+
+  /* Full-bleed dark (v4 style) */
+  .testimonial-dark {
+    background: var(--coastal-800); padding: var(--space-10) var(--space-8); text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .testimonial-dark::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(107,149,186,0.12) 0%, transparent 60%); }
+  .testimonial-dark > * { position: relative; z-index: 1; }
+  .testimonial-dark .qm { font-family: var(--font-display); font-size: 150px; color: rgba(255,255,255,0.05); line-height: 0.5; margin-bottom: var(--space-5); font-weight: 400; }
+  .testimonial-dark blockquote { font-family: var(--font-display); font-size: clamp(28px,3.5vw,48px); color: var(--white); line-height: 1.12; max-width: 750px; margin: 0 auto var(--space-6); font-weight: 400; font-style: italic; border: none; padding: 0; }
+  .testimonial-dark cite { font-family: var(--font-ui); font-size: 14px; color: var(--coastal-400); font-style: normal; }
+  .testimonial-dark cite strong { color: rgba(255,255,255,0.6); display: block; margin-bottom: 2px; font-weight: 500; }
+
+  /* =============================================
+     TEAM BANNER (from v5)
+     ============================================= */
+  .team-banner {
+    position: relative; min-height: 380px; display: flex; align-items: center;
+    padding: 150px var(--space-8); overflow: hidden; background: var(--coastal-900);
+  }
+  .team-banner::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, var(--coastal-900) 35%, rgba(37,47,74,0.5) 100%); z-index: 1; }
+  .team-banner-bg { position: absolute; inset: 0; background: linear-gradient(135deg, var(--coastal-800), var(--coastal-700)); }
+  .team-banner > div:last-child { position: relative; z-index: 2; }
+  .team-banner h2 { font-family: var(--font-display); font-size: clamp(36px,4vw,56px); color: var(--white); line-height: 1.04; max-width: 420px; letter-spacing: -0.015em; margin-bottom: var(--space-4); font-weight: 400; }
+  .team-banner h2 em { font-style: italic; color: var(--coastal-400); }
+  .team-banner p { font-family: var(--font-body-serif); font-size: 16px; color: rgba(255,255,255,0.35); max-width: 380px; line-height: 1.7; font-weight: 300; font-style: italic; }
+
+  /* =============================================
+     DARK CTA
+     ============================================= */
+  .dark-cta {
+    background: var(--coastal-900); padding: var(--space-9) var(--space-8); text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .dark-cta::before { content: ''; position: absolute; top: -40%; right: -20%; width: 80%; height: 130%; background: radial-gradient(ellipse, rgba(107,149,186,0.08) 0%, transparent 55%); pointer-events: none; }
+  .dark-cta > * { position: relative; z-index: 1; }
+  .dark-cta h2 { font-family: var(--font-display); font-size: clamp(36px,4.5vw,60px); color: var(--white); line-height: 1.04; letter-spacing: -0.015em; margin-bottom: var(--space-4); font-weight: 400; }
+  .dark-cta h2 em { font-style: italic; color: var(--coastal-400); }
+  .dark-cta p { font-family: var(--font-body-serif); font-size: 17px; color: rgba(255,255,255,0.35); max-width: 500px; margin: 0 auto var(--space-7); font-weight: 300; font-style: italic; line-height: 1.7; }
+
+  /* Sand CTA */
+  .sand-cta { background: var(--sand-100); border: 1px solid var(--sand-200); padding: var(--space-9) var(--space-8); text-align: center; }
+  .sand-cta h2 { font-family: var(--font-display); font-size: clamp(36px,4vw,56px); line-height: 1.04; letter-spacing: -0.015em; margin-bottom: var(--space-4); font-weight: 400; }
+  .sand-cta h2 em { font-style: italic; color: var(--coastal-700); }
+  .sand-cta p { font-family: var(--font-body-serif); font-size: 17px; color: var(--gray-500); max-width: 480px; margin: 0 auto var(--space-7); font-weight: 300; line-height: 1.7; }
+
+  /* =============================================
+     FORM CARD (from v5)
+     ============================================= */
+  .form-section { padding: var(--space-9) var(--space-8); text-align: center; background: var(--sand-100); }
+  .form-section .overline { justify-content: center; margin-bottom: var(--space-4); }
+  .form-section h2 { font-family: var(--font-display); font-size: clamp(32px,3.5vw,48px); margin-bottom: var(--space-6); letter-spacing: -0.015em; font-weight: 400; }
+  .form-section h2 em { font-style: italic; color: var(--coastal-700); }
+  .form-card { background: var(--white); max-width: 480px; margin: 0 auto; padding: var(--space-7); border: 1px solid var(--gray-200); text-align: left; }
+  .form-card-logo { font-family: var(--font-display); font-size: 20px; color: var(--coastal-900); margin-bottom: var(--space-5); text-align: center; font-weight: 400; }
+  .form-group { margin-bottom: var(--space-4); }
+  .form-group label { font-family: var(--font-ui); font-size: 12px; font-weight: 500; color: var(--gray-500); display: block; margin-bottom: 6px; letter-spacing: 0.5px; }
+  .form-input { width: 100%; padding: 12px 16px; border: 1px solid var(--gray-200); font-family: var(--font-ui); font-size: 14px; color: var(--coastal-900); outline: none; transition: border-color var(--duration-fast); }
+  .form-input:focus { border-color: var(--coastal-600); }
+  .form-input::placeholder { color: var(--gray-400); }
+  .form-card .btn { width: 100%; justify-content: center; margin-top: var(--space-2); }
+  .form-note { font-family: var(--font-ui); font-size: 11px; color: var(--gray-400); margin-top: var(--space-3); }
+
+  /* Simple input row */
+  .input-group { display: flex; gap: 0; max-width: 460px; }
+  .input-field { flex: 1; padding: 14px 20px; border: 1.5px solid var(--gray-200); font-family: var(--font-ui); font-size: 15px; color: var(--coastal-900); outline: none; transition: border-color var(--duration-fast); background: var(--white); }
+  .input-field:focus { border-color: var(--coastal-600); }
+  .input-field::placeholder { color: var(--gray-400); }
+
+  /* =============================================
+     COLOR PALETTE
+     ============================================= */
+  .palette-row { display: flex; flex-direction: column; gap: var(--space-6); }
+  .palette-label { font-family: var(--font-ui); font-size: 13px; font-weight: 500; color: var(--coastal-800); margin-bottom: var(--space-3); }
+  .palette-strip { display: flex; overflow: hidden; height: 80px; box-shadow: var(--shadow-sm); }
+  .palette-cell { flex: 1; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end; padding: var(--space-2) var(--space-3); font-family: 'SF Mono','Fira Code','Consolas',monospace; font-size: 10px; font-weight: 500; transition: flex 400ms var(--ease-out); cursor: default; }
+  .palette-cell:hover { flex: 2.5; }
+  .palette-cell.dk span { color: rgba(255,255,255,0.7); }
+  .palette-cell.lt span { color: rgba(37,47,74,0.5); }
+  .palette-cell .name { font-family: var(--font-ui); font-size: 9px; letter-spacing: 0.5px; text-transform: uppercase; display: block; margin-bottom: 1px; }
+
+  /* =============================================
+     TYPOGRAPHY
+     ============================================= */
+  .type-stack { display: flex; flex-direction: column; gap: var(--space-8); }
+  .type-item { padding-bottom: var(--space-7); border-bottom: 1px solid var(--gray-200); }
+  .type-specs { display: flex; gap: var(--space-3); flex-wrap: wrap; margin-bottom: var(--space-4); }
+  .type-tag { font-family: var(--font-ui); font-size: 10px; padding: 4px 12px; background: var(--coastal-50); border: 1px solid var(--coastal-100); color: var(--coastal-700); font-weight: 500; letter-spacing: 0.3px; }
+
+  .t-hero { font-family: var(--font-display); font-size: clamp(52px,6vw,84px); line-height: 0.94; letter-spacing: -0.02em; color: var(--coastal-900); font-weight: 400; }
+  .t-hero em { font-style: italic; color: var(--coastal-700); }
+  .t-display { font-family: var(--font-display); font-size: 48px; line-height: 1.05; letter-spacing: -0.015em; color: var(--coastal-900); font-weight: 400; }
+  .t-heading { font-family: var(--font-ui); font-size: 28px; font-weight: 500; line-height: 1.25; color: var(--coastal-900); }
+  .t-subheading { font-family: var(--font-ui); font-size: 20px; font-weight: 500; color: var(--coastal-800); line-height: 1.4; }
+  .t-body-serif { font-family: var(--font-body-serif); font-size: 18px; font-weight: 300; color: var(--gray-600); line-height: 1.75; max-width: 600px; }
+  .t-body-sans { font-family: var(--font-ui); font-size: 16px; font-weight: 400; color: var(--gray-500); line-height: 1.65; max-width: 600px; }
+  .t-overline { font-family: var(--font-ui); font-size: 11px; letter-spacing: 3px; text-transform: uppercase; font-weight: 500; color: var(--coastal-600); display: inline-flex; align-items: center; gap: 10px; }
+  .t-overline::before { content: ''; width: 24px; height: 1.5px; background: var(--coastal-600); }
+  .t-caption { font-family: var(--font-ui); font-size: 12px; color: var(--gray-400); letter-spacing: 0.02em; }
+
+  .font-guide { background: var(--coastal-900); padding: var(--space-6); margin-top: var(--space-7); }
+  .font-guide pre { font-family: 'SF Mono','Fira Code','Consolas',monospace; font-size: 12px; color: rgba(255,255,255,0.55); line-height: 1.7; overflow-x: auto; white-space: pre-wrap; }
+  .font-guide pre .comment { color: rgba(255,255,255,0.2); }
+  .font-guide pre .keyword { color: var(--coastal-400); }
+  .font-guide pre .string { color: #a5d6a7; }
+  .font-guide-label { font-family: var(--font-ui); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--coastal-400); font-weight: 500; margin-bottom: var(--space-4); display: block; }
+
+  /* =============================================
+     MEGA FOOTER (from v5)
+     ============================================= */
+  .mega-footer { background: var(--coastal-900); padding: var(--space-9) var(--space-8) var(--space-7); position: relative; overflow: hidden; }
+  .footer-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--space-7); max-width: 1200px; margin: 0 auto var(--space-9); position: relative; z-index: 1; }
+  .footer-col-head { font-family: var(--font-ui); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; color: var(--coastal-400); margin-bottom: var(--space-4); }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-links a { font-family: var(--font-ui); font-size: 14px; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 200ms; }
+  .footer-links a:hover { color: var(--white); }
+  .footer-mega-logo { font-family: var(--font-ui); font-size: clamp(52px,10vw,150px); font-weight: 500; color: rgba(255,255,255,0.03); letter-spacing: 6px; text-transform: uppercase; text-align: center; line-height: 1; position: relative; z-index: 1; }
+  .footer-badges { display: flex; justify-content: center; gap: 12px; margin-top: var(--space-5); position: relative; z-index: 1; }
+  .footer-badge { font-family: var(--font-ui); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; padding: 6px 16px; border: 1px solid rgba(255,255,255,0.08); color: var(--coastal-400); }
+  .footer-bottom { text-align: center; padding-top: var(--space-6); border-top: 1px solid rgba(255,255,255,0.05); margin-top: var(--space-6); position: relative; z-index: 1; }
+  .footer-bottom p { font-family: var(--font-ui); font-size: 11px; color: rgba(255,255,255,0.2); }
+
+  /* =============================================
+     RESPONSIVE
+     ============================================= */
+  @media (max-width: 768px) {
+    .ds-section { padding: var(--space-7) var(--space-5); }
+    .hero-split, .split-boxed, .slide-split, .dark-callout { grid-template-columns: 1fr; }
+    .hero-right { min-height: 300px; }
+    .nav-links { display: none; }
+    .image-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+    .grid-cell.tall { grid-row: auto; }
+    .stats-bordered { grid-template-columns: 1fr; }
+    .stat-b { border-right: none; border-bottom: 1px solid var(--gray-200); }
+    .stat-b:last-child { border-bottom: none; }
+    .stats-dark { grid-template-columns: 1fr 1fr; }
+    .card-grid { grid-template-columns: 1fr; }
+    .feature-images { grid-template-columns: 1fr; }
+    .testimonial-sand { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .ds-header { min-height: 70vh; padding: var(--space-7); }
+  }
+</style>
+</head>
+<body>
+
+  <!-- =============================================
+       HEADER
+       ============================================= -->
+  <div class="ds-header">
+    <div class="ds-header-top">
+      <div class="ds-badge">v6 — Super Version</div>
+      <span class="logo-mark">Coastal Wealth</span>
+    </div>
+    <div class="subtitle-top">Design System — Best of v3 + v4 + v5</div>
+    <h1>Coastal <em>Wealth</em></h1>
+    <div class="byline">Warm. Quiet. Confident refinement — the complete component library.</div>
+  </div>
+
+  <!-- NAVIGATION -->
+  <div class="ds-section">
+    <div class="ds-section-title">Navigation — Light</div>
+    <div class="nav-preview">
+      <div class="nav-logo">Coastal Wealth</div>
+      <ul class="nav-links"><li><a href="#" class="active">Home</a></li><li><a href="#">Coverage</a></li><li><a href="#">About</a></li><li><a href="#">Resources</a></li><li><a href="#">Contact</a></li></ul>
+      <button class="nav-cta">Get a Quote</button>
+    </div>
+  </div>
+  <div class="ds-section" style="padding-top:0">
+    <div class="ds-section-title">Navigation — Dark</div>
+    <div class="nav-preview nav-dark">
+      <div class="nav-logo">Coastal Wealth</div>
+      <ul class="nav-links"><li><a href="#" class="active">Home</a></li><li><a href="#">Coverage</a></li><li><a href="#">About</a></li><li><a href="#">Resources</a></li><li><a href="#">Contact</a></li></ul>
+      <button class="nav-cta">Get a Quote</button>
+    </div>
+  </div>
+
+  <!-- HERO A: Split Grid (v3) -->
+  <div class="ds-section">
+    <div class="ds-section-title">Hero A — Split Grid</div>
+    <div class="hero-split">
+      <div class="hero-left">
+        <div class="overline">For Clients & Advisors</div>
+        <h2>Building <em>Futures</em>.<br>Building Businesses.</h2>
+        <p>Personalized planning for clients. Proven growth systems for advisors. Partnership that lasts.</p>
+        <div class="btn-row"><button class="btn btn-primary">Start Your Plan</button><button class="btn btn-ghost">Learn More</button></div>
+      </div>
+      <div class="hero-right"><div class="deco">CW</div></div>
+    </div>
+  </div>
+
+  <!-- HERO B: Overlay (v5) -->
+  <div class="ds-section">
+    <div class="ds-section-title">Hero B — Full-Width Overlay</div>
+    <div class="hero-overlay">
+      <div class="hero-overlay-bg"></div>
+      <div>
+        <div style="font-family:var(--font-ui);font-size:11px;letter-spacing:3px;text-transform:uppercase;font-weight:500;color:var(--coastal-400);margin-bottom:var(--space-4)">Protection That Fits Your Life</div>
+        <h2>Insurance designed to fit your life, your family, and your <em>future</em>.</h2>
+        <div class="btn-row"><button class="btn btn-accent">Get a Quote</button><button class="btn btn-white-outline">Learn More</button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS — Both variants -->
+  <div class="ds-section">
+    <div class="ds-section-title">Statistics — Light Bordered</div>
+    <div class="stats-bordered">
+      <div class="stat-b"><div class="stat-b-num">300+</div><div class="stat-b-label">Financial Professionals</div></div>
+      <div class="stat-b"><div class="stat-b-num">3,000+</div><div class="stat-b-label">Families Served</div></div>
+      <div class="stat-b"><div class="stat-b-num">170+</div><div class="stat-b-label">Years of MassMutual Strength</div></div>
+    </div>
+  </div>
+  <div class="ds-section" style="padding-top:0">
+    <div class="ds-section-title">Statistics — Dark Bar</div>
+  </div>
+  <div class="stats-dark" style="max-width:1200px;margin:0 auto">
+    <div class="stat-d"><div class="stat-d-num">300+</div><div class="stat-d-label">Advisors Across FL & GA</div></div>
+    <div class="stat-d"><div class="stat-d-num">3,000+</div><div class="stat-d-label">Families Served</div></div>
+    <div class="stat-d"><div class="stat-d-num">170+</div><div class="stat-d-label">Years of MassMutual</div></div>
+    <div class="stat-d"><div class="stat-d-num">6</div><div class="stat-d-label">Business Divisions</div></div>
+  </div>
+
+  <!-- COLOR PALETTE -->
+  <div class="ds-section">
+    <div class="ds-section-title">Color Palette — Dillon Agency</div>
+    <div class="palette-row">
+      <div><div class="palette-label">Coastal Navy — Brand Core</div><div class="palette-strip"><div class="palette-cell dk" style="background:#252f4a"><span class="name">900</span><span>#252f4a</span></div><div class="palette-cell dk" style="background:#3c506f"><span class="name">800</span><span>#3c506f</span></div><div class="palette-cell dk" style="background:#5d7fa0"><span class="name">700</span><span>#5d7fa0</span></div><div class="palette-cell dk" style="background:#6b95ba"><span class="name">600</span><span>#6b95ba</span></div><div class="palette-cell dk" style="background:#89adc8"><span class="name">400</span><span>#89adc8</span></div><div class="palette-cell lt" style="background:#c9dce8"><span class="name">200</span><span>#c9dce8</span></div><div class="palette-cell lt" style="background:#e8f0f5"><span class="name">100</span><span>#e8f0f5</span></div></div></div>
+      <div><div class="palette-label">Sand — Warm Neutrals</div><div class="palette-strip"><div class="palette-cell lt" style="background:#fdfcfa"><span class="name">50</span><span>#fdfcfa</span></div><div class="palette-cell lt" style="background:#faf7f2"><span class="name">100</span><span>#faf7f2</span></div><div class="palette-cell lt" style="background:#f3ede4"><span class="name">200</span><span>#f3ede4</span></div><div class="palette-cell lt" style="background:#e5ddd0"><span class="name">300</span><span>#e5ddd0</span></div><div class="palette-cell lt" style="background:#d1c5b4"><span class="name">400</span><span>#d1c5b4</span></div><div class="palette-cell dk" style="background:#b5a895"><span class="name">500</span><span>#b5a895</span></div></div></div>
+      <div><div class="palette-label">Gray — Structure & UI</div><div class="palette-strip"><div class="palette-cell lt" style="background:#fafafa"><span class="name">50</span><span>#fafafa</span></div><div class="palette-cell lt" style="background:#f5f5f5"><span class="name">100</span><span>#f5f5f5</span></div><div class="palette-cell lt" style="background:#e8e8e8"><span class="name">200</span><span>#e8e8e8</span></div><div class="palette-cell lt" style="background:#d4d4d4"><span class="name">300</span><span>#d4d4d4</span></div><div class="palette-cell dk" style="background:#a3a3a3"><span class="name">400</span><span>#a3a3a3</span></div><div class="palette-cell dk" style="background:#737373"><span class="name">500</span><span>#737373</span></div><div class="palette-cell dk" style="background:#525252"><span class="name">600</span><span>#525252</span></div></div></div>
+    </div>
+  </div>
+
+  <!-- TYPOGRAPHY -->
+  <div class="ds-section">
+    <div class="ds-section-title">Typography</div>
+    <div class="type-stack">
+      <div class="type-item"><div class="type-specs"><span class="type-tag">Marlide Display</span><span class="type-tag">64–84px</span><span class="type-tag">Headlines & Heroes</span></div><div class="t-hero">Your <em>Future</em>, Designed.</div></div>
+      <div class="type-item"><div class="type-specs"><span class="type-tag">Marlide Display</span><span class="type-tag">48px</span><span class="type-tag">Section Titles</span></div><div class="t-display">Built Around People</div></div>
+      <div class="type-item"><div class="type-specs"><span class="type-tag">Neue Haas Grotesk</span><span class="type-tag">28px / 500</span><span class="type-tag">Component Headings</span></div><div class="t-heading">Behavioral Financial Planning</div></div>
+      <div class="type-item"><div class="type-specs"><span class="type-tag">Neue Haas Grotesk</span><span class="type-tag">20px / 500</span><span class="type-tag">Subheadings</span></div><div class="t-subheading">Supported Independence Model</div></div>
+      <div class="type-item"><div class="type-specs"><span class="type-tag">Minion Light</span><span class="type-tag">18px / 300</span><span class="type-tag">Body — Serif (Editorial, Long-form)</span></div><div class="t-body-serif">At Coastal Wealth, we don't start with products — we start with people. Whether you're building your business or your financial future, we deliver personal guidance, proven systems, and partnership that adapts as you grow.</div></div>
+      <div class="type-item"><div class="type-specs"><span class="type-tag">Neue Haas Grotesk</span><span class="type-tag">16px / 400</span><span class="type-tag">Body — Sans (UI, Functional)</span></div><div class="t-body-sans">Enjoy the freedom to run your practice your way — with the backing of a proven infrastructure. Our model empowers you to make independent decisions while we provide tools and support.</div></div>
+      <div class="type-item"><div class="type-specs"><span class="type-tag">Overline / Label</span><span class="type-tag">11px / 500 / Uppercase</span></div><div class="t-overline">For Financial Professionals</div></div>
+      <div class="type-item"><div class="type-specs"><span class="type-tag">Caption</span><span class="type-tag">12px / 400</span></div><div class="t-caption">© 2026 Coastal Wealth. All rights reserved. Securities offered through MML Investors Services.</div></div>
+    </div>
+    <div class="font-guide">
+      <span class="font-guide-label">JSX / Web Font Loading</span>
+      <pre><span class="comment">/* Self-hosted @font-face */</span>
+<span class="keyword">@font-face</span> {
+  font-family: <span class="string">'Marlide Display'</span>;
+  src: url(<span class="string">'/fonts/MarlideDisplay-Regular.woff2'</span>) format(<span class="string">'woff2'</span>);
+  font-weight: 400;
+  font-display: swap;
+}
+
+<span class="comment">/* CSS Variables */</span>
+--font-display: <span class="string">'Marlide Display'</span>, <span class="string">'Playfair Display'</span>, Georgia, serif;
+--font-body-serif: <span class="string">'Minion Pro'</span>, <span class="string">'Source Serif 4'</span>, Georgia, serif;
+--font-ui: <span class="string">'NHaasGroteskDSPro'</span>, <span class="string">'DM Sans'</span>, system-ui, sans-serif;</pre>
+    </div>
+  </div>
+
+  <!-- BUTTONS -->
+  <div class="ds-section">
+    <div class="ds-section-title">Buttons</div>
+    <div style="display:flex;flex-direction:column;gap:var(--space-5)">
+      <div class="btn-row"><button class="btn btn-primary">Primary Navy</button><button class="btn btn-accent">Coastal Accent</button><button class="btn btn-sand">Sand Neutral</button><button class="btn btn-outline">Outline</button><button class="btn btn-ghost">Text Link</button></div>
+      <div class="btn-row"><button class="btn btn-primary btn-sm">Small Primary</button><button class="btn btn-accent btn-sm">Small Accent</button><button class="btn btn-outline btn-sm">Small Outline</button></div>
+      <div style="background:var(--coastal-900);padding:var(--space-6);display:flex;gap:var(--space-3);align-items:center;flex-wrap:wrap">
+        <span style="font-family:var(--font-ui);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--coastal-400);font-weight:500;margin-right:var(--space-4)">On Dark</span>
+        <button class="btn btn-accent">Accent</button><button class="btn btn-white-outline">White Outline</button><button class="btn btn-ghost" style="color:var(--coastal-400)">Text Link</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARDS — Two styles -->
+  <div class="ds-section">
+    <div class="ds-section-title">Cards — Numbered Feature</div>
+    <div class="card-grid">
+      <div class="card"><div class="card-num">01</div><h3>Supported Independence</h3><p>Run your practice your way — with the backing of a proven infrastructure and expert support.</p></div>
+      <div class="card"><div class="card-num">02</div><h3>Behavioral Planning</h3><p>Go beyond numbers with an approach that aligns with how people truly think and feel about money.</p></div>
+      <div class="card"><div class="card-num">03</div><h3>Built-In Growth Tools</h3><p>Marketing assets, digital campaigns, lead generation, and branding support ready for deployment.</p></div>
+    </div>
+  </div>
+  <div class="ds-section" style="padding-top:0">
+    <div class="ds-section-title">Cards — Quarterly Content</div>
+    <div class="card-grid">
+      <div class="card"><div class="card-label">Q1</div><div class="card-theme">"New Year, New Opportunities"</div><p>Identify top prospects and schedule meetings. Use January momentum to review product lines with clients.</p></div>
+      <div class="card"><div class="card-label">Q2</div><div class="card-theme">"Focus on Relationships"</div><p>Build trust by prioritizing relationships. Connect personally — appreciation notes, goal check-ins.</p></div>
+      <div class="card"><div class="card-label">Q3</div><div class="card-theme">"Spring Into Action"</div><p>Clean up your pipeline. Revisit cold leads and create a fresh action plan for the second half.</p></div>
+    </div>
+  </div>
+
+  <!-- IMAGE GRID (v5) -->
+  <div class="ds-section">
+    <div class="ds-section-title">Image Grid — Video Cells</div>
+    <div class="image-grid">
+      <div class="grid-cell tall" style="background:var(--coastal-800)"><div class="play-btn"></div><span class="grid-cell-label">Life insurance</span></div>
+      <div class="grid-cell" style="background:var(--coastal-600)"><div class="play-btn"></div><span class="grid-cell-label">Disability</span></div>
+      <div class="grid-cell" style="background:var(--coastal-700)"><div class="play-btn"></div><span class="grid-cell-label">Long-term care</span></div>
+      <div class="grid-cell" style="background:var(--coastal-400)"><span class="grid-cell-label">Annuities</span></div>
+      <div class="grid-cell" style="background:var(--coastal-200)"></div>
+    </div>
+  </div>
+
+  <!-- SLIDE — Light Blue (v4) -->
+  <div class="ds-section"><div class="ds-section-title">Split — Light Blue Slide</div></div>
+  <div class="slide-blue">
+    <div class="slide-split">
+      <div class="slide-content">
+        <div class="overline">Our Model</div>
+        <h2>Supported <em>Independence</em></h2>
+        <div class="detail">Run your practice your way — with the backing of a proven infrastructure and full-service support.</div>
+        <div class="meta"><strong>Key Benefits</strong>Behavioral financial planning approach<br>Full-service marketing & compliance support<br>Quarterly VIP training and CE certificates</div>
+      </div>
+      <div class="slide-image"><div class="framed"><div class="framed-inner"><span class="ph">Photo — advisor meeting</span></div></div></div>
+    </div>
+  </div>
+
+  <!-- SLIDE — Dark (v4) -->
+  <div class="ds-section"><div class="ds-section-title" style="margin-top:var(--space-7)">Split — Dark Slide</div></div>
+  <div class="slide-dark">
+    <div class="slide-split">
+      <div class="slide-image"><div class="framed"><div class="framed-inner" style="background:linear-gradient(135deg,#1a2540,var(--coastal-800))"><span class="ph">Photo — team collaboration</span></div></div></div>
+      <div class="slide-content">
+        <div class="overline" style="color:var(--coastal-400)">Growth Tools</div>
+        <h2>Built-In <em>Growth</em> Tools</h2>
+        <div class="detail">Marketing assets, digital campaigns, lead generation, and branding support — all ready for deployment.</div>
+        <div class="meta"><strong>Social Media Cadence</strong>LinkedIn — 5x a month<br>Facebook — 5x a month<br>Instagram — 4x a month</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SPLIT — Boxed (v3) -->
+  <div class="ds-section">
+    <div class="ds-section-title" style="margin-top:var(--space-7)">Split — Boxed 50/50</div>
+    <div class="split-boxed">
+      <div class="split-content">
+        <div class="overline">Our Approach</div>
+        <h2>Built Around <em>People</em>,<br>Designed to Grow</h2>
+        <p>We don't start with products — we start with people. Whether you're building your business or your financial future, we deliver personal guidance.</p>
+        <button class="btn btn-ghost" style="align-self:flex-start">Explore Our Model</button>
+      </div>
+      <div class="split-visual"><div class="frame-line"></div></div>
+    </div>
+  </div>
+
+  <!-- CENTERED SECTION (v5) -->
+  <div class="centered-block">
+    <div class="ds-section-title" style="max-width:1200px;margin:0 auto var(--space-7)">Centered Feature</div>
+    <div class="overline">Why Families Choose Us</div>
+    <h2>Why Families and Businesses Choose Coastal Wealth <em>Insurance</em></h2>
+    <div class="lead">Tailored solutions. Trusted advisors. A partnership that grows with you through every milestone.</div>
+    <div class="feature-images">
+      <div class="feature-img" style="background:linear-gradient(135deg,var(--coastal-700),var(--coastal-800))"><span class="cap">Advisor meeting</span></div>
+      <div class="feature-img" style="background:linear-gradient(135deg,var(--coastal-600),var(--coastal-900))"><span class="cap">Family planning</span></div>
+    </div>
+  </div>
+
+  <!-- TRUST BAR (v5) -->
+  <div class="trust-bar">
+    <div class="overline" style="justify-content:center;margin-bottom:var(--space-3)">Our Partners</div>
+    <h3>Backed by the Best in the Business</h3>
+    <div class="logo-row"><span class="logo-placeholder">MassMutual</span><span class="logo-placeholder">Guardian</span><span class="logo-placeholder">Lincoln</span><span class="logo-placeholder">Prudential</span><span class="logo-placeholder">John Hancock</span></div>
+    <button class="btn btn-accent btn-sm">Learn More</button>
+  </div>
+
+  <!-- DARK CALLOUT — Checklist (v5) -->
+  <div class="ds-section"><div class="ds-section-title">Dark Callout — Checklist</div></div>
+  <div class="dark-callout">
+    <div class="dark-callout-content">
+      <div class="overline" style="color:var(--coastal-400)">Our Process</div>
+      <h2>Simple, Straightforward, and <em>Stress-Free</em></h2>
+      <p>We believe insurance doesn't have to be complicated. Our process is designed to make things easy.</p>
+      <ul class="check-list"><li>Free consultation and personalized assessment</li><li>Clear, transparent pricing with no hidden fees</li><li>Ongoing support from dedicated advisors</li><li>Claims assistance when you need it most</li></ul>
+      <button class="btn btn-accent">Schedule a Call</button>
+    </div>
+    <div class="dark-callout-visual"></div>
+  </div>
+
+  <!-- TEAM BANNER (v5) -->
+  <div class="ds-section"><div class="ds-section-title" style="margin-top:var(--space-7)">Team Banner</div></div>
+  <div class="team-banner">
+    <div class="team-banner-bg"></div>
+    <div><h2>Meet the People Behind the <em>Protection</em></h2><p>Our team of experienced advisors is here to guide you through every decision with care and expertise.</p></div>
+  </div>
+
+  <!-- TESTIMONIALS — Both variants -->
+  <div class="ds-section">
+    <div class="ds-section-title" style="margin-top:var(--space-7)">Testimonial A — Sand Block</div>
+    <div class="testimonial-sand">
+      <div class="qm">"</div>
+      <div>
+        <blockquote>The structure, support, and mentorship I needed to actually grow. I came from a restrictive environment, and the difference here is night and day.</blockquote>
+        <cite><strong>Financial Advisor</strong>Tampa, FL</cite>
+      </div>
+    </div>
+  </div>
+  <div class="ds-section" style="padding-top:0">
+    <div class="ds-section-title">Testimonial B — Full-Width Dark</div>
+  </div>
+  <div class="testimonial-dark">
+    <div class="qm">"</div>
+    <blockquote>The structure, support, and mentorship I needed to actually grow.</blockquote>
+    <cite><strong>Financial Advisor</strong>Tampa, FL</cite>
+  </div>
+
+  <!-- CTA — Both variants -->
+  <div class="ds-section">
+    <div class="ds-section-title" style="margin-top:var(--space-7)">CTA — Dark</div>
+    <div class="dark-cta">
+      <div class="overline" style="color:var(--coastal-400);justify-content:center;margin-bottom:var(--space-5)">Get Started</div>
+      <h2>Ready to Explore<br>a New <em>Future</em>?</h2>
+      <p>No obligation, no pressure. Just a conversation about what's possible.</p>
+      <button class="btn btn-accent">Schedule a Call</button>
+    </div>
+  </div>
+  <div class="ds-section" style="padding-top:0">
+    <div class="ds-section-title">CTA — Sand</div>
+    <div class="sand-cta">
+      <div class="overline" style="justify-content:center;margin-bottom:var(--space-5)">Get Started</div>
+      <h2>Let's Take the First<br>Step <em>Together</em></h2>
+      <p>No obligation, no pressure. Just a conversation about what's possible for your future.</p>
+      <button class="btn btn-primary">Schedule a Call</button>
+    </div>
+  </div>
+
+  <!-- FORM CARD (v5) -->
+  <div class="form-section">
+    <div class="overline">Get Started</div>
+    <h2>Let's Find the Right<br>Coverage for <em>You</em></h2>
+    <div class="form-card">
+      <div class="form-card-logo">Coastal Wealth</div>
+      <div class="form-group"><label>Full Name</label><input type="text" class="form-input" placeholder="John Smith"></div>
+      <div class="form-group"><label>Email</label><input type="email" class="form-input" placeholder="john@example.com"></div>
+      <div class="form-group"><label>Phone</label><input type="tel" class="form-input" placeholder="(555) 123-4567"></div>
+      <button class="btn btn-primary">Request a Quote</button>
+      <div class="form-note">By submitting, you agree to our privacy policy.</div>
+    </div>
+  </div>
+
+  <!-- SIMPLE INPUT -->
+  <div class="ds-section">
+    <div class="ds-section-title">Simple Input Row</div>
+    <div class="input-group">
+      <input type="email" class="input-field" placeholder="Enter your email address">
+      <button class="btn btn-primary btn-sm">Subscribe</button>
+    </div>
+  </div>
+
+  <!-- MEGA FOOTER (v5) -->
+  <div class="mega-footer">
+    <div class="footer-grid">
+      <div><div class="footer-col-head">Navigate</div><ul class="footer-links"><li><a href="#">Home</a></li><li><a href="#">Coverage</a></li><li><a href="#">About Us</a></li><li><a href="#">Contact</a></li></ul></div>
+      <div><div class="footer-col-head">Coverage</div><ul class="footer-links"><li><a href="#">Life Insurance</a></li><li><a href="#">Disability</a></li><li><a href="#">Long-Term Care</a></li><li><a href="#">Annuities</a></li></ul></div>
+      <div><div class="footer-col-head">Resources</div><ul class="footer-links"><li><a href="#">Blog</a></li><li><a href="#">FAQ</a></li><li><a href="#">Client Portal</a></li><li><a href="#">Privacy Policy</a></li></ul></div>
+    </div>
+    <div class="footer-mega-logo">Coastal Wealth</div>
+    <div class="footer-badges"><span class="footer-badge">Insurance</span><span class="footer-badge">Powered by Revolt</span></div>
+    <div class="footer-bottom"><p>© 2026 Coastal Wealth Insurance. All rights reserved.</p></div>
+  </div>
+
+</body>
+</html>

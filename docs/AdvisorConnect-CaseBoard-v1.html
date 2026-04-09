@@ -1,0 +1,1806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AdvisorConnect — The Case Board | Coastal Wealth</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://use.typekit.net/tpw8nnl.css">
+<style>
+/* ========================================
+   COASTAL PRECISION TOKENS
+   ======================================== */
+:root {
+  --coastal-900: #252f4a;
+  --coastal-800: #3c506f;
+  --coastal-700: #5d7fa0;
+  --coastal-600: #6b95ba;
+  --coastal-500: #6b95ba;
+  --coastal-400: #89adc8;
+  --coastal-300: #a7c4d8;
+  --coastal-200: #c9dce8;
+  --coastal-100: #e8f0f5;
+  --coastal-50:  #f4f8fb;
+
+  --sand-50:  #fdfcfa;
+  --sand-100: #faf7f2;
+  --sand-200: #f3ede4;
+  --sand-300: #e5ddd0;
+  --sand-400: #d1c5b4;
+  --sand-500: #b5a895;
+
+  --white: #ffffff;
+  --gray-50:  #fafafa;
+  --gray-100: #f5f5f5;
+  --gray-200: #e8e8e8;
+  --gray-300: #d4d4d4;
+  --gray-400: #a3a3a3;
+  --gray-500: #737373;
+  --gray-600: #525252;
+  --gray-700: #404040;
+
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --error:   #ef4444;
+  --info:    var(--coastal-600);
+
+  --font-display:    'marlide-display-variable', 'Playfair Display', Georgia, serif;
+  --font-body-serif: 'Minion Pro', 'Source Serif 4', Georgia, serif;
+  --font-ui:         'NHaasGroteskDSPro', 'DM Sans', -apple-system, sans-serif;
+
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+  --space-5: 24px; --space-6: 32px; --space-7: 48px; --space-8: 64px;
+  --space-9: 96px; --space-10: 128px; --space-11: 192px;
+
+  --shadow-sm: 0 1px 3px rgba(37,47,74,0.04);
+  --shadow-md: 0 4px 16px rgba(37,47,74,0.06);
+  --shadow-lg: 0 12px 40px rgba(37,47,74,0.08);
+  --shadow-xl: 0 24px 64px rgba(37,47,74,0.12);
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 200ms;
+  --duration-normal: 400ms;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: var(--font-ui);
+  background: var(--gray-50);
+  color: var(--coastal-900);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+}
+
+/* ========================================
+   NAVIGATION
+   ======================================== */
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 32px;
+  background: var(--white);
+  border-bottom: 1px solid var(--gray-200);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 20px;
+  color: var(--coastal-900);
+  font-weight: 400;
+  text-decoration: none;
+}
+.nav-divider {
+  width: 1px;
+  height: 20px;
+  background: var(--gray-200);
+}
+.nav-product {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  color: var(--coastal-600);
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+.nav-links {
+  display: flex;
+  gap: var(--space-5);
+  list-style: none;
+  align-items: center;
+}
+.nav-links a {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  color: var(--gray-500);
+  text-decoration: none;
+  font-weight: 400;
+  transition: color var(--duration-fast);
+  position: relative;
+}
+.nav-links a:hover { color: var(--coastal-900); }
+.nav-links a.active { color: var(--coastal-900); font-weight: 500; }
+.nav-links a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0; right: 0;
+  height: 1.5px;
+  background: var(--coastal-600);
+}
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+.nav-notif {
+  position: relative;
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  border: 1px solid var(--gray-200);
+  background: var(--white);
+  transition: all var(--duration-fast);
+}
+.nav-notif:hover { border-color: var(--coastal-600); }
+.nav-notif svg { width: 18px; height: 18px; color: var(--gray-500); }
+.nav-notif .badge {
+  position: absolute;
+  top: -4px; right: -4px;
+  width: 16px; height: 16px;
+  background: var(--error);
+  color: var(--white);
+  font-size: 9px;
+  font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+}
+.nav-avatar {
+  width: 32px; height: 32px;
+  background: var(--coastal-600);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--white);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* ========================================
+   HERO — SPLIT GRID (v3 pattern)
+   ======================================== */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 420px;
+  border-bottom: 1px solid var(--gray-200);
+}
+.hero-left {
+  padding: var(--space-8);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--sand-100);
+}
+.hero-right {
+  background: var(--coastal-900);
+  position: relative;
+  overflow: hidden;
+}
+.hero-right::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, var(--coastal-800), var(--coastal-900) 60%, #1a2540);
+}
+.hero-right .deco {
+  position: absolute;
+  bottom: -30px; right: 24px;
+  font-family: var(--font-display);
+  font-size: 200px;
+  color: rgba(255,255,255,0.03);
+  line-height: 0.85;
+  letter-spacing: -0.03em;
+  font-weight: 400;
+}
+.overline {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--coastal-600);
+  margin-bottom: var(--space-5);
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.overline::before { content: ''; width: 24px; height: 1.5px; background: var(--coastal-600); }
+.hero-left h1 {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 4vw, 56px);
+  line-height: 0.96;
+  letter-spacing: -0.02em;
+  color: var(--coastal-900);
+  margin-bottom: var(--space-5);
+  font-weight: 400;
+}
+.hero-left h1 em { font-style: italic; color: var(--coastal-700); }
+.hero-left .lead {
+  font-family: var(--font-body-serif);
+  font-size: 17px;
+  color: var(--gray-500);
+  max-width: 420px;
+  line-height: 1.7;
+  font-weight: 300;
+  margin-bottom: var(--space-7);
+}
+.btn-row { display: flex; gap: var(--space-3); flex-wrap: wrap; align-items: center; }
+.btn {
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  font-family: var(--font-ui); font-weight: 500; border: none; cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out); text-decoration: none;
+  font-size: 14px; padding: 14px 32px;
+}
+.btn-primary { background: var(--coastal-900); color: var(--white); }
+.btn-primary:hover { background: var(--coastal-800); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+.btn-accent { background: var(--coastal-600); color: var(--white); }
+.btn-accent:hover { background: var(--coastal-400); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+.btn-outline { background: transparent; color: var(--coastal-900); box-shadow: inset 0 0 0 1.5px var(--gray-300); }
+.btn-outline:hover { box-shadow: inset 0 0 0 1.5px var(--coastal-900); }
+.btn-sand { background: var(--sand-200); color: var(--coastal-900); }
+.btn-sand:hover { background: var(--sand-300); }
+.btn-ghost { background: none; color: var(--coastal-600); padding: 14px 16px; }
+.btn-ghost::after { content: ' →'; transition: transform 200ms var(--ease-out); display: inline-block; }
+.btn-ghost:hover::after { transform: translateX(5px); }
+.btn-ghost:hover { color: var(--coastal-700); }
+.btn-sm { font-size: 13px; padding: 10px 24px; }
+.btn-xs { font-size: 12px; padding: 8px 18px; }
+
+/* Hero stats on dark side */
+.hero-stats {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--space-8);
+  gap: var(--space-7);
+}
+.hero-stat-item {
+  display: flex;
+  flex-direction: column;
+}
+.hero-stat-num {
+  font-family: var(--font-display);
+  font-size: 48px;
+  color: var(--white);
+  line-height: 1;
+  margin-bottom: var(--space-2);
+  font-weight: 400;
+}
+.hero-stat-label {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: var(--coastal-400);
+  font-weight: 400;
+  letter-spacing: 0.5px;
+}
+
+/* ========================================
+   STATS BAR
+   ======================================== */
+.stats-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-bottom: 1px solid var(--gray-200);
+  background: var(--white);
+}
+.stat-item {
+  padding: var(--space-5) var(--space-6);
+  text-align: center;
+  border-right: 1px solid var(--gray-200);
+}
+.stat-item:last-child { border-right: none; }
+.stat-num {
+  font-family: var(--font-display);
+  font-size: 36px;
+  color: var(--coastal-900);
+  line-height: 1;
+  margin-bottom: var(--space-1);
+  font-weight: 400;
+}
+.stat-label {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  color: var(--gray-400);
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* ========================================
+   MAIN LAYOUT — Board + Sidebar
+   ======================================== */
+.main-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: 80vh;
+}
+
+/* ========================================
+   FILTER SIDEBAR
+   ======================================== */
+.sidebar {
+  padding: var(--space-6) var(--space-5);
+  background: var(--white);
+  border-right: 1px solid var(--gray-200);
+  position: sticky;
+  top: 65px;
+  height: calc(100vh - 65px);
+  overflow-y: auto;
+}
+.sidebar-title {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gray-400);
+  font-weight: 500;
+  margin-bottom: var(--space-5);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.sidebar-title::after { content: ''; flex: 1; height: 1px; background: var(--gray-200); }
+.filter-group {
+  margin-bottom: var(--space-5);
+}
+.filter-label {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--coastal-900);
+  margin-bottom: var(--space-2);
+  display: block;
+}
+.filter-select {
+  width: 100%;
+  padding: 10px 12px;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  color: var(--coastal-900);
+  border: 1px solid var(--gray-200);
+  background: var(--white);
+  outline: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23a3a3a3' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  cursor: pointer;
+  transition: border-color var(--duration-fast);
+}
+.filter-select:focus { border-color: var(--coastal-600); }
+
+.chip-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.chip {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  padding: 6px 12px;
+  background: var(--coastal-100);
+  color: var(--coastal-800);
+  cursor: pointer;
+  transition: all var(--duration-fast);
+  font-weight: 400;
+  border: 1px solid transparent;
+}
+.chip:hover { background: var(--coastal-200); }
+.chip.active {
+  background: var(--coastal-600);
+  color: var(--white);
+}
+.complexity-dots {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.c-dot {
+  width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--gray-400);
+  border: 1px solid var(--gray-200);
+  cursor: pointer;
+  transition: all var(--duration-fast);
+}
+.c-dot:hover { border-color: var(--coastal-600); color: var(--coastal-600); }
+.c-dot.active { background: var(--coastal-600); color: var(--white); border-color: var(--coastal-600); }
+.filter-reset {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: var(--coastal-600);
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-top: var(--space-4);
+  padding: 0;
+  font-weight: 500;
+}
+.filter-reset:hover { color: var(--coastal-700); text-decoration: underline; }
+
+.saved-presets {
+  margin-top: var(--space-5);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--gray-200);
+}
+.preset-tag {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--sand-100);
+  border: 1px solid var(--sand-200);
+  margin-bottom: 6px;
+  cursor: pointer;
+  transition: all var(--duration-fast);
+}
+.preset-tag:hover { background: var(--sand-200); }
+.preset-tag .dot { width: 6px; height: 6px; background: var(--coastal-600); flex-shrink: 0; }
+.preset-tag span { font-family: var(--font-ui); font-size: 12px; color: var(--coastal-900); font-weight: 400; }
+
+/* ========================================
+   BOARD — Card Feed
+   ======================================== */
+.board {
+  padding: var(--space-6);
+}
+.board-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-5);
+}
+.board-header h2 {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gray-400);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.board-header h2::after { content: ''; width: 80px; height: 1px; background: var(--gray-200); }
+.sort-select {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: var(--gray-500);
+  border: 1px solid var(--gray-200);
+  padding: 8px 32px 8px 12px;
+  background: var(--white);
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23a3a3a3' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  cursor: pointer;
+  outline: none;
+}
+
+/* NEW THIS WEEK banner */
+.new-banner {
+  background: var(--coastal-100);
+  border: 1px solid var(--coastal-200);
+  padding: 12px 20px;
+  margin-bottom: var(--space-5);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.new-banner .pulse {
+  width: 8px; height: 8px;
+  background: var(--coastal-600);
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.3); }
+}
+.new-banner span {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  color: var(--coastal-800);
+  font-weight: 500;
+}
+.new-banner .count {
+  font-family: var(--font-display);
+  font-size: 18px;
+  color: var(--coastal-600);
+  margin-left: auto;
+  font-weight: 400;
+}
+
+/* Case Cards */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+.case-card {
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  padding: var(--space-5);
+  position: relative;
+  transition: all 300ms var(--ease-out);
+  cursor: pointer;
+}
+.case-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--coastal-600), var(--coastal-400));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 300ms var(--ease-out);
+}
+.case-card:hover { background: var(--coastal-50); box-shadow: var(--shadow-md); z-index: 1; }
+.case-card:hover::after { transform: scaleX(1); }
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--space-3);
+}
+.card-meta {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.tag {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  padding: 4px 10px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+.tag-type { background: var(--coastal-100); color: var(--coastal-700); }
+.tag-industry { background: var(--sand-100); color: var(--sand-500); border: 1px solid var(--sand-200); }
+.tag-aum { background: var(--coastal-900); color: var(--white); }
+.tag-new {
+  background: var(--success);
+  color: var(--white);
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+
+.complexity-indicator {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+}
+.cx-dot {
+  width: 8px; height: 8px;
+  background: var(--gray-200);
+  border-radius: 50%;
+  transition: background var(--duration-fast);
+}
+.cx-dot.filled { background: var(--coastal-600); }
+.cx-dot.filled.high { background: var(--warning); }
+.cx-dot.filled.critical { background: var(--error); }
+
+.card-title {
+  font-family: var(--font-ui);
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--coastal-900);
+  margin-bottom: var(--space-2);
+  line-height: 1.3;
+}
+.card-desc {
+  font-family: var(--font-body-serif);
+  font-size: 14px;
+  color: var(--gray-500);
+  line-height: 1.65;
+  font-weight: 300;
+  margin-bottom: var(--space-4);
+}
+.card-tags {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-bottom: var(--space-4);
+}
+.spec-tag {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  padding: 3px 8px;
+  background: var(--gray-100);
+  color: var(--gray-600);
+  font-weight: 400;
+}
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--gray-100);
+}
+.card-advisor {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.card-avatar {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--white);
+}
+.card-advisor-info {
+  display: flex;
+  flex-direction: column;
+}
+.card-advisor-name {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--coastal-900);
+}
+.card-advisor-detail {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  color: var(--gray-400);
+}
+.card-date {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: var(--gray-400);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.card-date svg { width: 14px; height: 14px; }
+.card-needs {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-bottom: var(--space-3);
+}
+.need-chip {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  padding: 3px 8px;
+  background: var(--coastal-50);
+  color: var(--coastal-700);
+  border: 1px solid var(--coastal-100);
+  font-weight: 500;
+}
+.card-region {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  color: var(--gray-400);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ========================================
+   MATCH CARD — Tinder-style split view
+   ======================================== */
+.match-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(37, 47, 74, 0.6);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+.match-overlay.active { display: flex; }
+.match-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 820px;
+  max-width: 95vw;
+  background: var(--white);
+  box-shadow: var(--shadow-xl);
+  animation: matchIn 500ms var(--ease-out);
+  overflow: hidden;
+}
+@keyframes matchIn {
+  from { opacity: 0; transform: scale(0.95) translateY(20px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.match-side {
+  padding: var(--space-6);
+}
+.match-left {
+  background: var(--coastal-50);
+  border-right: 1px solid var(--gray-200);
+}
+.match-side-label {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gray-400);
+  font-weight: 500;
+  margin-bottom: var(--space-4);
+}
+.match-side h3 {
+  font-family: var(--font-display);
+  font-size: 26px;
+  color: var(--coastal-900);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+  margin-bottom: var(--space-4);
+}
+.match-detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--gray-100);
+}
+.match-detail-row:last-child { border-bottom: none; }
+.match-detail-key {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: var(--gray-400);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.match-detail-val {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  color: var(--coastal-900);
+  font-weight: 400;
+  text-align: right;
+}
+.match-profile {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: var(--space-5);
+}
+.match-profile-avatar {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  background: var(--coastal-600);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--white);
+  font-family: var(--font-ui);
+  font-size: 18px;
+  font-weight: 500;
+}
+.match-profile-info h4 {
+  font-family: var(--font-ui);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--coastal-900);
+}
+.match-profile-info span {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: var(--gray-400);
+}
+.match-bio {
+  font-family: var(--font-body-serif);
+  font-size: 14px;
+  color: var(--gray-600);
+  line-height: 1.65;
+  font-weight: 300;
+  font-style: italic;
+  margin-bottom: var(--space-4);
+}
+.match-specs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: var(--space-4);
+}
+.match-spec {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  padding: 4px 10px;
+  background: var(--coastal-100);
+  color: var(--coastal-700);
+  font-weight: 500;
+}
+.match-style-tag {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--gray-500);
+  margin-bottom: 6px;
+}
+.match-style-tag::before {
+  content: '✓';
+  color: var(--coastal-400);
+  font-size: 11px;
+  font-weight: 500;
+}
+.match-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  border-top: 1px solid var(--gray-200);
+  background: var(--white);
+}
+
+/* ========================================
+   POST CASE — Modal Form
+   ======================================== */
+.post-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(37, 47, 74, 0.6);
+  z-index: 200;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: var(--space-8);
+  overflow-y: auto;
+  backdrop-filter: blur(4px);
+}
+.post-overlay.active { display: flex; }
+.post-form {
+  width: 640px;
+  max-width: 95vw;
+  background: var(--white);
+  box-shadow: var(--shadow-xl);
+  animation: matchIn 500ms var(--ease-out);
+  margin-bottom: var(--space-8);
+}
+.post-form-header {
+  padding: var(--space-5) var(--space-6);
+  border-bottom: 1px solid var(--gray-200);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.post-form-header h2 {
+  font-family: var(--font-display);
+  font-size: 24px;
+  color: var(--coastal-900);
+  font-weight: 400;
+}
+.close-btn {
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  color: var(--gray-400);
+  border: 1px solid var(--gray-200);
+  background: var(--white);
+  font-size: 18px;
+  transition: all var(--duration-fast);
+}
+.close-btn:hover { border-color: var(--coastal-900); color: var(--coastal-900); }
+.post-form-body {
+  padding: var(--space-6);
+}
+.form-row {
+  margin-bottom: var(--space-5);
+}
+.form-row label {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--coastal-900);
+  margin-bottom: var(--space-2);
+  display: block;
+}
+.form-row label .req { color: var(--error); margin-left: 2px; }
+.form-input {
+  width: 100%;
+  padding: 12px 14px;
+  font-family: var(--font-ui);
+  font-size: 14px;
+  color: var(--coastal-900);
+  border: 1px solid var(--gray-200);
+  background: var(--white);
+  outline: none;
+  transition: border-color var(--duration-fast);
+}
+.form-input:focus { border-color: var(--coastal-600); }
+.form-input::placeholder { color: var(--gray-300); }
+textarea.form-input { resize: vertical; min-height: 80px; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+.form-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.form-chip {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  padding: 8px 14px;
+  background: var(--gray-100);
+  color: var(--gray-600);
+  cursor: pointer;
+  transition: all var(--duration-fast);
+  border: 1px solid transparent;
+}
+.form-chip:hover { background: var(--coastal-100); color: var(--coastal-700); }
+.form-chip.active { background: var(--coastal-600); color: var(--white); border-color: var(--coastal-600); }
+.compliance-notice {
+  background: var(--sand-100);
+  border: 1px solid var(--sand-200);
+  padding: 12px 16px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin-top: var(--space-3);
+}
+.compliance-notice svg { width: 16px; height: 16px; color: var(--warning); flex-shrink: 0; margin-top: 1px; }
+.compliance-notice span {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: var(--gray-600);
+  line-height: 1.5;
+}
+.post-form-footer {
+  padding: var(--space-5) var(--space-6);
+  border-top: 1px solid var(--gray-200);
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+}
+
+/* ========================================
+   DARK CTA SECTION
+   ======================================== */
+.cta-dark {
+  background: var(--coastal-900);
+  padding: var(--space-9) var(--space-8);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cta-dark::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, rgba(107,149,186,0.1) 0%, transparent 60%);
+}
+.cta-dark > * { position: relative; z-index: 1; }
+.cta-dark h2 {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4vw, 52px);
+  color: var(--white);
+  line-height: 1.06;
+  letter-spacing: -0.015em;
+  font-weight: 400;
+  margin-bottom: var(--space-4);
+}
+.cta-dark h2 em { font-style: italic; color: var(--coastal-400); }
+.cta-dark p {
+  font-family: var(--font-body-serif);
+  font-size: 17px;
+  color: rgba(255,255,255,0.4);
+  max-width: 500px;
+  margin: 0 auto var(--space-6);
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+.footer {
+  background: var(--coastal-900);
+  padding: var(--space-7) var(--space-8) var(--space-5);
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-logo {
+  font-family: var(--font-display);
+  font-size: 18px;
+  color: rgba(255,255,255,0.3);
+  font-weight: 400;
+}
+.footer-copy {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  color: rgba(255,255,255,0.2);
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (max-width: 1024px) {
+  .card-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero-right { display: none; }
+  .main-layout { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .stats-bar { grid-template-columns: repeat(2, 1fr); }
+  .match-card { grid-template-columns: 1fr; }
+  .form-grid { grid-template-columns: 1fr; }
+  .nav-links { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ========================================
+     NAVIGATION
+     ======================================== -->
+<nav class="nav">
+  <div class="nav-brand">
+    <a href="#" class="nav-logo">Coastal Wealth</a>
+    <div class="nav-divider"></div>
+    <span class="nav-product">AdvisorConnect</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#" class="active">Case Board</a></li>
+    <li><a href="#">My Posts</a></li>
+    <li><a href="#">My Matches</a></li>
+    <li><a href="#">Senior Profiles</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="nav-notif" title="3 new matches">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <span class="badge">3</span>
+    </div>
+    <div class="nav-avatar" title="KD">KD</div>
+  </div>
+</nav>
+
+<!-- ========================================
+     HERO — SPLIT GRID
+     ======================================== -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="overline">The Case Board</div>
+    <h1>Find your <em>perfect</em> collaboration</h1>
+    <p class="lead">Post an upcoming client opportunity. Get matched with a senior advisor who has the exact expertise you need. Collaborate and close together.</p>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="document.querySelector('.post-overlay').classList.add('active')">Post a Case</button>
+      <button class="btn btn-outline">Browse Opportunities</button>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="deco">AC</div>
+    <div class="hero-stats">
+      <div class="hero-stat-item">
+        <div class="hero-stat-num">23</div>
+        <div class="hero-stat-label">Active Cases This Week</div>
+      </div>
+      <div class="hero-stat-item">
+        <div class="hero-stat-num">87</div>
+        <div class="hero-stat-label">Senior Advisors Available</div>
+      </div>
+      <div class="hero-stat-item">
+        <div class="hero-stat-num">94%</div>
+        <div class="hero-stat-label">Match Satisfaction Rate</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================
+     STATS BAR
+     ======================================== -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="stat-num">156</div>
+    <div class="stat-label">Cases Matched</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">42</div>
+    <div class="stat-label">Active Mentors</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">68%</div>
+    <div class="stat-label">Close Rate Lift</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">&lt;24h</div>
+    <div class="stat-label">Avg. Time to Match</div>
+  </div>
+</div>
+
+<!-- ========================================
+     MAIN LAYOUT
+     ======================================== -->
+<div class="main-layout">
+
+  <!-- FILTER SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-title">Filters</div>
+
+    <div class="filter-group">
+      <label class="filter-label">Specialization</label>
+      <div class="chip-grid">
+        <span class="chip active">All</span>
+        <span class="chip">Retirement</span>
+        <span class="chip">Estate</span>
+        <span class="chip">Business</span>
+        <span class="chip">Insurance</span>
+        <span class="chip">Tax Strategy</span>
+        <span class="chip">Investment</span>
+        <span class="chip">Exec Comp</span>
+        <span class="chip">Special Sit.</span>
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <label class="filter-label">Client Type</label>
+      <select class="filter-select">
+        <option>All Client Types</option>
+        <option>Business Owner</option>
+        <option>Professional (Dr/DDS/JD)</option>
+        <option>Executive</option>
+        <option>Individual</option>
+        <option>Family / Multi-gen</option>
+        <option>Nonprofit</option>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label class="filter-label">Industry</label>
+      <select class="filter-select">
+        <option>All Industries</option>
+        <option>Healthcare</option>
+        <option>Dental</option>
+        <option>Legal</option>
+        <option>Technology</option>
+        <option>Real Estate</option>
+        <option>Manufacturing</option>
+        <option>Construction</option>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label class="filter-label">AUM Range</label>
+      <select class="filter-select">
+        <option>Any AUM</option>
+        <option>&lt; $250K</option>
+        <option>$250K – $500K</option>
+        <option>$500K – $1M</option>
+        <option>$1M – $3M</option>
+        <option>$3M – $5M</option>
+        <option>$5M – $10M</option>
+        <option>$10M+</option>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label class="filter-label">Region</label>
+      <select class="filter-select">
+        <option>All Regions</option>
+        <option>South Florida</option>
+        <option>Central Florida</option>
+        <option>North Florida</option>
+        <option>Tampa Bay</option>
+        <option>Georgia</option>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label class="filter-label">Complexity</label>
+      <div class="complexity-dots">
+        <span class="c-dot active">1</span>
+        <span class="c-dot active">2</span>
+        <span class="c-dot active">3</span>
+        <span class="c-dot">4</span>
+        <span class="c-dot">5</span>
+      </div>
+    </div>
+
+    <button class="filter-reset">Reset All Filters</button>
+
+    <div class="saved-presets">
+      <div class="sidebar-title">Saved Presets</div>
+      <div class="preset-tag">
+        <span class="dot"></span>
+        <span>Business Succession + $2M+ + SoFla</span>
+      </div>
+      <div class="preset-tag">
+        <span class="dot"></span>
+        <span>Dental Practice + Estate Planning</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- BOARD -->
+  <main class="board">
+    <div class="board-header">
+      <h2>Active Opportunities</h2>
+      <select class="sort-select">
+        <option>Newest First</option>
+        <option>Meeting Date (Soonest)</option>
+        <option>Complexity (Highest)</option>
+        <option>Best Match</option>
+      </select>
+    </div>
+
+    <div class="new-banner">
+      <span class="pulse"></span>
+      <span>New This Week</span>
+      <span class="count">7 new cases</span>
+    </div>
+
+    <div class="card-grid">
+
+      <!-- CASE 1 -->
+      <div class="case-card" onclick="document.querySelector('.match-overlay').classList.add('active')">
+        <div class="card-top">
+          <div class="card-meta">
+            <span class="tag tag-type">Business Owner</span>
+            <span class="tag tag-industry">Dental</span>
+            <span class="tag tag-aum">$3M–$5M</span>
+            <span class="tag tag-new">New</span>
+          </div>
+          <div class="complexity-indicator" title="Complexity: 4/5">
+            <span class="cx-dot filled"></span>
+            <span class="cx-dot filled"></span>
+            <span class="cx-dot filled"></span>
+            <span class="cx-dot filled high"></span>
+            <span class="cx-dot"></span>
+          </div>
+        </div>
+        <div class="card-title">Dental Practice Succession & Exit Strategy</div>
+        <div class="card-desc">Multi-location dental practice owner (3 offices) exploring retirement timeline and succession options. Needs expertise in business valuation, buy-sell agreements, and tax-efficient exit structuring.</div>
+        <div class="card-tags">
+          <span class="spec-tag">Succession Planning</span>
+          <span class="spec-tag">Business Valuation</span>
+          <span class="spec-tag">Tax Strategy</span>
+          <span class="spec-tag">Buy-Sell Agreements</span>
+        </div>
+        <div class="card-needs">
+          <span class="need-chip">Co-attend meeting</span>
+          <span class="need-chip">Pre-meeting strategy call</span>
+        </div>
+        <div class="card-footer">
+          <div class="card-advisor">
+            <div class="card-avatar" style="background: var(--coastal-700);">MR</div>
+            <div class="card-advisor-info">
+              <span class="card-advisor-name">Marcus Reeves</span>
+              <span class="card-advisor-detail">3 yrs · Tampa Bay</span>
+            </div>
+          </div>
+          <div class="card-date">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Apr 18
+          </div>
+        </div>
+      </div>
+
+      <!-- CASE 2 -->
+      <div class="case-card">
+        <div class="card-top">
+          <div class="card-meta">
+            <span class="tag tag-type">Executive</span>
+            <span class="tag tag-industry">Technology</span>
+            <span class="tag tag-aum">$5M–$10M</span>
+            <span class="tag tag-new">New</span>
+          </div>
+          <div class="complexity-indicator" title="Complexity: 5/5">
+            <span class="cx-dot filled"></span>
+            <span class="cx-dot filled"></span>
+            <span class="cx-dot filled"></span>
+            <span class="cx-dot filled critical"></span>
+            <span class="cx-dot filled critical"></span>
+          </div>
+        </div>
+        <div class="card-title">Pre-IPO Equity Comp & Concentrated Stock</div>
+        <div class="card-desc">VP Engineering at late-stage startup preparing for IPO in Q3. Significant RSU/ISO position, needs liquidity planning, 10b5-1 plan guidance, and overall wealth management strategy for sudden wealth event.</div>
+        <div class="card-tags">
+          <span class="spec-tag">Executive Comp</span>
+          <span class="spec-tag">Stock Options</span>
+          <span class="spec-tag">10b5-1 Plans</span>
+          <span class="spec-tag">Sudden Wealth</span>
+        </div>
+        <div class="card-needs">
+          <span class="need-chip">Co-attend meeting</span>
+          <span class="need-chip">Ongoing mentorship</span>
+        </div>
+        <div class="card-footer">
+          <div class="card-advisor">
+            <div class="card-avatar" style="background: var(--coastal-600);">JH</div>
+            <div class="card-advisor-info">
+              <span class="card-advisor-name">Jamie Hernandez</span>
+              <span class="card-advisor-detail">2 yrs · South Florida</span>
+            </div>
+          </div>
+          <div class="card-date">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Apr 22
+          </div>
+        </div>
+      </div>
+
+      <!-- CASE 3 -->
+      <div class="case-card">
+        <div class="card-top">
+          <div class="card-meta">
+            <span class="tag tag-type">Family</span>
+            <span class="tag tag-industry">Real Estate</span>
+            <span class="tag tag-aum">$10M+</span>
+          </div>
+          <div class="complexity-indicator" title="Complexity: 5/5">
+            <span class="cx-dot filled"></span>
+            <span class="cx-dot filled"></span>
+            <span class="cx-dot filled"></span>
+            <span class="cx-dot filled critical"></span>
+            <span class="cx-dot filled critical"></span>
+          </div>
+        </div>
+        <div class="card-title">Multi-Generational Wealth Transfer & Trust Restructuring</div>
+        <div class="card-desc">Second-generation family with commercial real estate portfolio. Patriarch planning wealth transfer to 3 adult children with differing financial goals. Existing trust structure needs review and potential GRAT/IDGT restructuring.</div>
+        <div class="card-tags">
+          <span class="spec-tag">Estate Planning</span>
+          <span class="spec-tag">Trust Restructuring</span>
+          <span class="spec-tag">Wealth Transfer</span>
+          <span class="spec-tag">Family Governance</span>
+        </div>
+        <div class="card-needs">
+          <span class="need-chip">Case review</span>
+          <span class="need-chip">Co-attend meeting</span>
+        </div>
+        <div class="card-footer">
+          <div class="card-advisor">
+            <div class="card-avatar" style="background: var(--sand-500);">AP</div>
+            <div class="card-advisor-info">
+              <span class="card-advisor-name">Aisha Patel</span>
+              <span class="card-advisor-detail">5 yrs · Central Florida</span>
+            </div>
+          </div>
+          <div class="card-date">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Apr 25
+          </div>
+        </div>
+      </div>
+
+      <!-- CASE 4 -->
+      <div class="case-card">
+        <div class="card-top">
+          <div class="card-meta">
+            <span class="tag tag-type">Professional</span>
+            <span class="tag tag-industry">Healthcare</span>
+            <span class="tag tag-aum">$1M–$3M</span>
+          </div>
+          <div class="complexity-indicator" title="Complexity: 3/5">
+            <span class="cx-dot filled"></span>
+            <span class="cx-dot filled"></span>
+            <span class="cx-dot filled"></span>
+            <span class="cx-dot"></span>
+            <span class="cx-dot"></span>
+          </div>
+        </div>
+        <div class="card-title">Physician Practice Buy-In & Disability Coverage</div>
+        <div class="card-desc">Orthopedic surgeon (early 40s) negotiating partnership buy-in at established practice. Needs guidance on practice valuation, key person insurance, own-occupation disability, and retirement plan integration.</div>
+        <div class="card-tags">
+          <span class="spec-tag">Insurance & Risk</span>
+          <span class="spec-tag">Business Planning</span>
+          <span class="spec-tag">Retirement</span>
+        </div>
+        <div class="card-needs">
+          <span class="need-chip">Pre-meeting strategy call</span>
+          <span class="need-chip">Case review</span>
+        </div>
+        <div class="card-footer">
+          <div class="card-advisor">
+            <div class="card-avatar" style="background: var(--coastal-400);">TK</div>
+            <div class="card-advisor-info">
+              <span class="card-advisor-name">Tyler Kim</span>
+              <span class="card-advisor-detail">4 yrs · Georgia</span>
+            </div>
+          </div>
+          <div class="card-date">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Apr 20
+          </div>
+        </div>
+      </div>
+
+      <!-- CASE 5 -->
+      <div class="case-card">
+        <div class="card-top">
+          <div class="card-meta">
+            <span class="tag tag-type">Business Owner</span>
+            <span class="tag tag-industry">Construction</span>
+            <span class="tag tag-aum">$500K–$1M</span>
+          </div>
+          <div class="complexity-indicator" title="Complexity: 2/5">
+            <span class="cx-dot filled"></span>
+            <span class="cx-dot filled"></span>
+            <span class="cx-dot"></span>
+            <span class="cx-dot"></span>
+            <span class="cx-dot"></span>
+          </div>
+        </div>
+        <div class="card-title">GC Retirement Plan Setup & Key Employee Retention</div>
+        <div class="card-desc">General contractor with 15 employees looking to establish first qualified retirement plan. Also needs key employee retention strategy for two project managers critical to operations.</div>
+        <div class="card-tags">
+          <span class="spec-tag">Retirement Planning</span>
+          <span class="spec-tag">Executive Benefits</span>
+        </div>
+        <div class="card-needs">
+          <span class="need-chip">Pre-meeting strategy call</span>
+        </div>
+        <div class="card-footer">
+          <div class="card-advisor">
+            <div class="card-avatar" style="background: var(--coastal-800);">LW</div>
+            <div class="card-advisor-info">
+              <span class="card-advisor-name">Lauren Watts</span>
+              <span class="card-advisor-detail">1 yr · Tampa Bay</span>
+            </div>
+          </div>
+          <div class="card-date">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Apr 16
+          </div>
+        </div>
+      </div>
+
+      <!-- CASE 6 -->
+      <div class="case-card">
+        <div class="card-top">
+          <div class="card-meta">
+            <span class="tag tag-type">Individual</span>
+            <span class="tag tag-industry">Finance</span>
+            <span class="tag tag-aum">$3M–$5M</span>
+            <span class="tag tag-new">New</span>
+          </div>
+          <div class="complexity-indicator" title="Complexity: 3/5">
+            <span class="cx-dot filled"></span>
+            <span class="cx-dot filled"></span>
+            <span class="cx-dot filled"></span>
+            <span class="cx-dot"></span>
+            <span class="cx-dot"></span>
+          </div>
+        </div>
+        <div class="card-title">Early Retiree Roth Conversion & Income Strategy</div>
+        <div class="card-desc">Former portfolio manager, age 52, recently retired early with significant traditional IRA. Seeking multi-year Roth conversion ladder strategy, ACA subsidy optimization, and income sequencing through age 59.5 gap.</div>
+        <div class="card-tags">
+          <span class="spec-tag">Retirement Planning</span>
+          <span class="spec-tag">Tax Strategy</span>
+          <span class="spec-tag">Roth Conversions</span>
+        </div>
+        <div class="card-needs">
+          <span class="need-chip">Case review</span>
+          <span class="need-chip">Referral partner</span>
+        </div>
+        <div class="card-footer">
+          <div class="card-advisor">
+            <div class="card-avatar" style="background: var(--success);">DS</div>
+            <div class="card-advisor-info">
+              <span class="card-advisor-name">David Shah</span>
+              <span class="card-advisor-detail">3 yrs · South Florida</span>
+            </div>
+          </div>
+          <div class="card-date">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Apr 24
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<!-- ========================================
+     DARK CTA
+     ======================================== -->
+<section class="cta-dark">
+  <h2>Your expertise is someone's <em>breakthrough</em></h2>
+  <p>Set up your senior advisor profile once and get matched with collaboration opportunities that fit your specialization.</p>
+  <div class="btn-row" style="justify-content: center;">
+    <button class="btn btn-accent">Create Senior Profile</button>
+    <button class="btn btn-ghost" style="color: var(--coastal-400);">Learn More</button>
+  </div>
+</section>
+
+<!-- ========================================
+     FOOTER
+     ======================================== -->
+<footer class="footer">
+  <div class="footer-inner">
+    <span class="footer-logo">Coastal Wealth</span>
+    <span class="footer-copy">AdvisorConnect &mdash; Internal Use Only &mdash; &copy; 2026 Coastal Wealth. All rights reserved.</span>
+  </div>
+</footer>
+
+<!-- ========================================
+     MATCH CARD OVERLAY
+     ======================================== -->
+<div class="match-overlay" onclick="if(event.target===this) this.classList.remove('active')">
+  <div class="match-card">
+    <div class="match-side match-left">
+      <div class="match-side-label">The Opportunity</div>
+      <h3>Dental Practice Succession &amp; Exit Strategy</h3>
+      <div style="margin-bottom: var(--space-4);">
+        <div class="card-meta" style="margin-bottom: 12px;">
+          <span class="tag tag-type">Business Owner</span>
+          <span class="tag tag-industry">Dental</span>
+          <span class="tag tag-aum">$3M–$5M</span>
+        </div>
+      </div>
+      <div class="match-detail-row">
+        <span class="match-detail-key">Meeting</span>
+        <span class="match-detail-val">Initial Discovery</span>
+      </div>
+      <div class="match-detail-row">
+        <span class="match-detail-key">Complexity</span>
+        <span class="match-detail-val">4 / 5 — Highly Complex</span>
+      </div>
+      <div class="match-detail-row">
+        <span class="match-detail-key">Date</span>
+        <span class="match-detail-val">April 18, 2026</span>
+      </div>
+      <div class="match-detail-row">
+        <span class="match-detail-key">Region</span>
+        <span class="match-detail-val">Tampa Bay</span>
+      </div>
+      <div class="match-detail-row">
+        <span class="match-detail-key">Needs</span>
+        <span class="match-detail-val">Co-attend + Strategy Call</span>
+      </div>
+      <div style="margin-top: var(--space-4);">
+        <div class="card-advisor">
+          <div class="card-avatar" style="background: var(--coastal-700);">MR</div>
+          <div class="card-advisor-info">
+            <span class="card-advisor-name">Marcus Reeves</span>
+            <span class="card-advisor-detail">3 yrs · Tampa Bay</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="match-side">
+      <div class="match-side-label">Interested Senior Advisor</div>
+      <div class="match-profile">
+        <div class="match-profile-avatar">PD</div>
+        <div class="match-profile-info">
+          <h4>Patricia Delgado</h4>
+          <span>18 years experience · Tampa Bay</span>
+        </div>
+      </div>
+      <div class="match-bio">"I've spent 18 years working with dental and medical practice owners on succession planning, M&A advisory, and tax-efficient exit strategies. This is my bread and butter."</div>
+      <div class="match-specs">
+        <span class="match-spec">Succession Planning</span>
+        <span class="match-spec">Business Valuation</span>
+        <span class="match-spec">Tax Strategy</span>
+        <span class="match-spec">Buy-Sell Agreements</span>
+        <span class="match-spec">Healthcare</span>
+        <span class="match-spec">Dental</span>
+      </div>
+      <div style="margin-bottom: var(--space-4);">
+        <div class="match-style-tag">Co-attend meetings</div>
+        <div class="match-style-tag">Pre-meeting strategy calls</div>
+        <div class="match-style-tag">Ongoing mentorship</div>
+      </div>
+      <div class="match-detail-row">
+        <span class="match-detail-key">Matches</span>
+        <span class="match-detail-val">24 completed</span>
+      </div>
+      <div class="match-detail-row">
+        <span class="match-detail-key">Rating</span>
+        <span class="match-detail-val">4.9 / 5.0</span>
+      </div>
+    </div>
+
+    <div class="match-actions">
+      <button class="btn btn-outline btn-sm" onclick="document.querySelector('.match-overlay').classList.remove('active')">Decline</button>
+      <button class="btn btn-sand btn-sm">Save for Later</button>
+      <button class="btn btn-primary" onclick="document.querySelector('.match-overlay').classList.remove('active')">Accept Match</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========================================
+     POST CASE OVERLAY
+     ======================================== -->
+<div class="post-overlay" onclick="if(event.target===this) this.classList.remove('active')">
+  <div class="post-form">
+    <div class="post-form-header">
+      <h2>Post a Case</h2>
+      <div class="close-btn" onclick="document.querySelector('.post-overlay').classList.remove('active')">&times;</div>
+    </div>
+    <div class="post-form-body">
+
+      <div class="form-row">
+        <label>Case Title <span class="req">*</span></label>
+        <input type="text" class="form-input" placeholder="e.g., Business owner succession planning" maxlength="60">
+      </div>
+
+      <div class="form-grid">
+        <div class="form-row">
+          <label>Client Type <span class="req">*</span></label>
+          <select class="form-input">
+            <option value="">Select type...</option>
+            <option>Business Owner</option>
+            <option>Professional (Dr/DDS/JD)</option>
+            <option>Executive</option>
+            <option>Individual</option>
+            <option>Family / Multi-gen</option>
+            <option>Nonprofit</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>AUM Range <span class="req">*</span></label>
+          <select class="form-input">
+            <option value="">Select range...</option>
+            <option>&lt; $250K</option>
+            <option>$250K – $500K</option>
+            <option>$500K – $1M</option>
+            <option>$1M – $3M</option>
+            <option>$3M – $5M</option>
+            <option>$5M – $10M</option>
+            <option>$10M+</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label>Industry <span class="req">*</span></label>
+        <div class="form-chips">
+          <span class="form-chip">Healthcare</span>
+          <span class="form-chip">Dental</span>
+          <span class="form-chip">Legal</span>
+          <span class="form-chip">Technology</span>
+          <span class="form-chip">Real Estate</span>
+          <span class="form-chip">Manufacturing</span>
+          <span class="form-chip">Retail</span>
+          <span class="form-chip">Construction</span>
+          <span class="form-chip">Finance</span>
+          <span class="form-chip">Hospitality</span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label>Specialization Needed <span class="req">*</span></label>
+        <div class="form-chips">
+          <span class="form-chip">Retirement</span>
+          <span class="form-chip">Estate Planning</span>
+          <span class="form-chip">Business Planning</span>
+          <span class="form-chip">Insurance & Risk</span>
+          <span class="form-chip">Tax Strategy</span>
+          <span class="form-chip">Investment Mgmt</span>
+          <span class="form-chip">Exec Comp</span>
+          <span class="form-chip">Special Situations</span>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-row">
+          <label>Meeting Type <span class="req">*</span></label>
+          <select class="form-input">
+            <option value="">Select type...</option>
+            <option>Initial Discovery</option>
+            <option>Plan Presentation</option>
+            <option>Annual Review</option>
+            <option>Complex Case Review</option>
+            <option>Estate/Trust Discussion</option>
+            <option>Business Valuation</option>
+            <option>Insurance Review</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>Meeting Date <span class="req">*</span></label>
+          <input type="date" class="form-input">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label>Complexity <span class="req">*</span></label>
+        <div class="complexity-dots" style="gap: 8px;">
+          <span class="c-dot" style="width: 36px; height: 36px;">1</span>
+          <span class="c-dot" style="width: 36px; height: 36px;">2</span>
+          <span class="c-dot active" style="width: 36px; height: 36px;">3</span>
+          <span class="c-dot" style="width: 36px; height: 36px;">4</span>
+          <span class="c-dot" style="width: 36px; height: 36px;">5</span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label>What I'm Looking For <span class="req">*</span></label>
+        <div class="form-chips">
+          <span class="form-chip">Co-attend meeting</span>
+          <span class="form-chip">Pre-meeting strategy call</span>
+          <span class="form-chip">Case review / second opinion</span>
+          <span class="form-chip">Ongoing mentorship</span>
+          <span class="form-chip">Referral / warm handoff</span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label>Additional Context</label>
+        <textarea class="form-input" placeholder="Any additional details about the opportunity..." maxlength="300"></textarea>
+        <div class="compliance-notice">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <span>Do not include any personally identifiable client information. This platform is for matching purposes only. All case descriptions should use anonymized descriptors.</span>
+        </div>
+      </div>
+
+    </div>
+    <div class="post-form-footer">
+      <button class="btn btn-outline btn-sm" onclick="document.querySelector('.post-overlay').classList.remove('active')">Cancel</button>
+      <button class="btn btn-primary btn-sm">Post Opportunity</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========================================
+     INTERACTIVITY
+     ======================================== -->
+<script>
+// Chip toggle
+document.querySelectorAll('.chip, .form-chip').forEach(chip => {
+  chip.addEventListener('click', function() {
+    // For filter chips, handle "All" logic
+    if (this.classList.contains('chip')) {
+      const grid = this.closest('.chip-grid');
+      if (this.textContent === 'All') {
+        grid.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+        this.classList.add('active');
+      } else {
+        grid.querySelector('.chip:first-child')?.classList.remove('active');
+        this.classList.toggle('active');
+        if (!grid.querySelector('.chip.active')) {
+          grid.querySelector('.chip:first-child')?.classList.add('active');
+        }
+      }
+    } else {
+      this.classList.toggle('active');
+    }
+  });
+});
+
+// Complexity dot toggle
+document.querySelectorAll('.c-dot').forEach(dot => {
+  dot.addEventListener('click', function() {
+    this.classList.toggle('active');
+  });
+});
+
+// Filter reset
+document.querySelector('.filter-reset')?.addEventListener('click', function() {
+  document.querySelectorAll('.sidebar .chip.active').forEach(c => c.classList.remove('active'));
+  document.querySelector('.sidebar .chip')?.classList.add('active');
+  document.querySelectorAll('.sidebar .c-dot').forEach(d => d.classList.add('active'));
+  document.querySelectorAll('.sidebar .filter-select').forEach(s => s.selectedIndex = 0);
+});
+</script>
+
+</body>
+</html>

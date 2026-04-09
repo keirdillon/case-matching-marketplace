@@ -1,0 +1,263 @@
+import type { CaseWithAdvisor, Tag } from "@/lib/database.types";
+
+export const SPECIALIZATION_TAGS: Pick<Tag, "id" | "name" | "category">[] = [
+  { id: "1", name: "Retirement", category: "specialization" },
+  { id: "2", name: "Estate", category: "specialization" },
+  { id: "3", name: "Business", category: "specialization" },
+  { id: "4", name: "Insurance", category: "specialization" },
+  { id: "5", name: "Tax Strategy", category: "specialization" },
+  { id: "6", name: "Investment", category: "specialization" },
+  { id: "7", name: "Exec Comp", category: "specialization" },
+  { id: "8", name: "Special Sit.", category: "specialization" },
+];
+
+export const CLIENT_TYPES = [
+  "All Client Types",
+  "Business Owner",
+  "Professional (Dr/DDS/JD)",
+  "Executive",
+  "Individual",
+  "Family / Multi-gen",
+  "Nonprofit",
+];
+
+export const INDUSTRIES = [
+  "All Industries",
+  "Healthcare",
+  "Dental",
+  "Legal",
+  "Technology",
+  "Real Estate",
+  "Manufacturing",
+  "Construction",
+];
+
+export const AUM_RANGES = [
+  "Any AUM",
+  "< $250K",
+  "$250K - $500K",
+  "$500K - $1M",
+  "$1M - $3M",
+  "$3M - $5M",
+  "$5M - $10M",
+  "$10M+",
+];
+
+export const REGIONS = [
+  "All Regions",
+  "South Florida",
+  "Central Florida",
+  "North Florida",
+  "Tampa Bay",
+  "Georgia",
+];
+
+export const MOCK_CASES: CaseWithAdvisor[] = [
+  {
+    id: "c0000001",
+    poster_id: "11111111",
+    title: "Dental Practice Succession & Exit Strategy",
+    client_type: "Business Owner",
+    industry: ["Dental"],
+    aum_range: "$3M-$5M",
+    meeting_type: "Initial Discovery",
+    complexity: 4,
+    region: "Tampa Bay",
+    meeting_date: "2026-04-18",
+    needs: ["co_attend", "strategy_call"],
+    additional_context:
+      "Multi-location dental practice owner (3 offices) exploring retirement timeline and succession options. Needs expertise in business valuation, buy-sell agreements, and tax-efficient exit structuring.",
+    status: "active",
+    created_at: "2026-04-08T10:00:00Z",
+    updated_at: "2026-04-08T10:00:00Z",
+    advisor: {
+      id: "11111111",
+      full_name: "Marcus Reeves",
+      years_experience: 3,
+      region: "Tampa Bay",
+      role: "junior",
+    },
+    tags: [
+      { id: "t1", name: "Succession Planning", category: "specialization" },
+      { id: "t2", name: "Business Valuation", category: "specialization" },
+      { id: "t3", name: "Tax Strategy", category: "specialization" },
+      { id: "t4", name: "Buy-Sell Agreements", category: "specialization" },
+    ],
+  },
+  {
+    id: "c0000002",
+    poster_id: "22222222",
+    title: "Pre-IPO Equity Comp & Concentrated Stock",
+    client_type: "Executive",
+    industry: ["Technology"],
+    aum_range: "$5M-$10M",
+    meeting_type: "Complex Case Review",
+    complexity: 5,
+    region: "South Florida",
+    meeting_date: "2026-04-22",
+    needs: ["co_attend", "ongoing"],
+    additional_context:
+      "VP Engineering at late-stage startup preparing for IPO in Q3. Significant RSU/ISO position, needs liquidity planning, 10b5-1 plan guidance, and overall wealth management strategy for sudden wealth event.",
+    status: "active",
+    created_at: "2026-04-07T14:00:00Z",
+    updated_at: "2026-04-07T14:00:00Z",
+    advisor: {
+      id: "22222222",
+      full_name: "Jamie Hernandez",
+      years_experience: 2,
+      region: "South Florida",
+      role: "junior",
+    },
+    tags: [
+      { id: "t5", name: "Executive Comp", category: "specialization" },
+      { id: "t6", name: "Stock Options", category: "specialization" },
+      { id: "t7", name: "10b5-1 Plans", category: "specialization" },
+      { id: "t8", name: "Sudden Wealth", category: "specialization" },
+    ],
+  },
+  {
+    id: "c0000003",
+    poster_id: "33333333",
+    title: "Multi-Generational Wealth Transfer & Trust Restructuring",
+    client_type: "Family / Multi-gen",
+    industry: ["Real Estate"],
+    aum_range: "$10M+",
+    meeting_type: "Estate/Trust Discussion",
+    complexity: 5,
+    region: "Central Florida",
+    meeting_date: "2026-04-25",
+    needs: ["case_review", "co_attend"],
+    additional_context:
+      "Second-generation family with commercial real estate portfolio. Patriarch planning wealth transfer to 3 adult children with differing financial goals. Existing trust structure needs review and potential GRAT/IDGT restructuring.",
+    status: "active",
+    created_at: "2026-04-06T09:00:00Z",
+    updated_at: "2026-04-06T09:00:00Z",
+    advisor: {
+      id: "33333333",
+      full_name: "Aisha Patel",
+      years_experience: 5,
+      region: "Central Florida",
+      role: "mid",
+    },
+    tags: [
+      { id: "t9", name: "Estate Planning", category: "specialization" },
+      { id: "t10", name: "Trust Restructuring", category: "specialization" },
+      { id: "t11", name: "Wealth Transfer", category: "specialization" },
+      { id: "t12", name: "Family Governance", category: "specialization" },
+    ],
+  },
+  {
+    id: "c0000004",
+    poster_id: "44444444",
+    title: "Physician Practice Buy-In & Disability Coverage",
+    client_type: "Professional (Dr/DDS/JD)",
+    industry: ["Healthcare"],
+    aum_range: "$1M-$3M",
+    meeting_type: "Insurance Review",
+    complexity: 3,
+    region: "Georgia",
+    meeting_date: "2026-04-20",
+    needs: ["strategy_call", "case_review"],
+    additional_context:
+      "Orthopedic surgeon (early 40s) negotiating partnership buy-in at established practice. Needs guidance on practice valuation, key person insurance, own-occupation disability, and retirement plan integration.",
+    status: "active",
+    created_at: "2026-04-05T11:00:00Z",
+    updated_at: "2026-04-05T11:00:00Z",
+    advisor: {
+      id: "44444444",
+      full_name: "Tyler Kim",
+      years_experience: 4,
+      region: "Georgia",
+      role: "mid",
+    },
+    tags: [
+      { id: "t13", name: "Insurance & Risk", category: "specialization" },
+      { id: "t14", name: "Business Planning", category: "specialization" },
+      { id: "t15", name: "Retirement", category: "specialization" },
+    ],
+  },
+  {
+    id: "c0000005",
+    poster_id: "55555555",
+    title: "GC Retirement Plan Setup & Key Employee Retention",
+    client_type: "Business Owner",
+    industry: ["Construction"],
+    aum_range: "$500K-$1M",
+    meeting_type: "Plan Presentation",
+    complexity: 2,
+    region: "Tampa Bay",
+    meeting_date: "2026-04-16",
+    needs: ["strategy_call"],
+    additional_context:
+      "General contractor with 15 employees looking to establish first qualified retirement plan. Also needs key employee retention strategy for two project managers critical to operations.",
+    status: "active",
+    created_at: "2026-04-04T15:00:00Z",
+    updated_at: "2026-04-04T15:00:00Z",
+    advisor: {
+      id: "55555555",
+      full_name: "Lauren Watts",
+      years_experience: 1,
+      region: "Tampa Bay",
+      role: "junior",
+    },
+    tags: [
+      { id: "t16", name: "Retirement Planning", category: "specialization" },
+      { id: "t17", name: "Executive Benefits", category: "specialization" },
+    ],
+  },
+  {
+    id: "c0000006",
+    poster_id: "66666666",
+    title: "Early Retiree Roth Conversion & Income Strategy",
+    client_type: "Individual",
+    industry: ["Finance"],
+    aum_range: "$3M-$5M",
+    meeting_type: "Complex Case Review",
+    complexity: 3,
+    region: "South Florida",
+    meeting_date: "2026-04-24",
+    needs: ["case_review", "referral"],
+    additional_context:
+      "Former portfolio manager, age 52, recently retired early with significant traditional IRA. Seeking multi-year Roth conversion ladder strategy, ACA subsidy optimization, and income sequencing through age 59.5 gap.",
+    status: "active",
+    created_at: "2026-04-07T16:00:00Z",
+    updated_at: "2026-04-07T16:00:00Z",
+    advisor: {
+      id: "66666666",
+      full_name: "David Shah",
+      years_experience: 3,
+      region: "South Florida",
+      role: "junior",
+    },
+    tags: [
+      { id: "t18", name: "Retirement Planning", category: "specialization" },
+      { id: "t19", name: "Tax Strategy", category: "specialization" },
+      { id: "t20", name: "Roth Conversions", category: "specialization" },
+    ],
+  },
+];
+
+export const AVATAR_COLORS: Record<string, string> = {
+  MR: "var(--coastal-700)",
+  JH: "var(--coastal-600)",
+  AP: "var(--sand-500)",
+  TK: "var(--coastal-400)",
+  LW: "var(--coastal-800)",
+  DS: "var(--success)",
+};
+
+export function getInitials(name: string): string {
+  return name
+    .split(" ")
+    .map((n) => n[0])
+    .join("")
+    .toUpperCase();
+}
+
+export const NEEDS_LABELS: Record<string, string> = {
+  co_attend: "Co-attend meeting",
+  strategy_call: "Pre-meeting strategy call",
+  case_review: "Case review",
+  ongoing: "Ongoing mentorship",
+  referral: "Referral partner",
+};
