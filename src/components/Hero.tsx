@@ -1,4 +1,4 @@
-export function Hero() {
+export function Hero({ onPostCase }: { onPostCase?: () => void }) {
   return (
     <section
       className="grid min-h-[420px]"
@@ -47,7 +47,7 @@ export function Hero() {
           who has the exact expertise you need. Collaborate and close together.
         </p>
         <div className="flex flex-wrap items-center" style={{ gap: "var(--space-3)" }}>
-          <button className="btn btn-primary">Post a Case</button>
+          <button className="btn btn-primary" onClick={onPostCase}>Post a Case</button>
           <button className="btn btn-outline">Browse Opportunities</button>
         </div>
       </div>
