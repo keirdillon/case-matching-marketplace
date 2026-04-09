@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import type { CaseWithAdvisor } from "@/lib/database.types";
 import { CaseCard } from "@/components/CaseCard";
+import { CaseDetailModal } from "@/components/CaseDetailModal";
 import {
   SPECIALIZATION_TAGS,
   CLIENT_TYPES,
@@ -26,6 +27,7 @@ export function CaseBoard({ cases }: CaseBoardProps) {
   const [region, setRegion] = useState("All Regions");
   const [activeComplexity, setActiveComplexity] = useState<number[]>([1, 2, 3, 4, 5]);
   const [sort, setSort] = useState<SortOption>("newest");
+  const [selectedCase, setSelectedCase] = useState<CaseWithAdvisor | null>(null);
 
   function toggleSpec(name: string) {
     if (name === "All") {
@@ -293,7 +295,7 @@ export function CaseBoard({ cases }: CaseBoardProps) {
         {filtered.length > 0 ? (
           <div className="grid grid-cols-1 lg:grid-cols-2" style={{ gap: "16px" }}>
             {filtered.map((caseData) => (
-              <CaseCard key={caseData.id} caseData={caseData} isNew={newCaseIds.has(caseData.id)} />
+              <CaseCard key={caseData.id} caseData={caseData} isNew={newCaseIds.has(caseData.id)} onClick={() => setSelectedCase(caseData)} />
             ))}
           </div>
         ) : (
@@ -318,6 +320,8 @@ export function CaseBoard({ cases }: CaseBoardProps) {
           </div>
         )}
       </main>
+
+      <CaseDetailModal caseData={selectedCase} onClose={() => setSelectedCase(null)} />
     </div>
   );
 }

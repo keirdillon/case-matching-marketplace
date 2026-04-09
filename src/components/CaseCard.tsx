@@ -4,9 +4,10 @@ import { getInitials, AVATAR_COLORS, NEEDS_LABELS } from "@/lib/mock-data";
 interface CaseCardProps {
   caseData: CaseWithAdvisor;
   isNew?: boolean;
+  onClick?: () => void;
 }
 
-export function CaseCard({ caseData, isNew = false }: CaseCardProps) {
+export function CaseCard({ caseData, isNew = false, onClick }: CaseCardProps) {
   const initials = getInitials(caseData.advisor.full_name);
   const avatarColor = AVATAR_COLORS[initials] || "var(--coastal-600)";
 
@@ -19,6 +20,7 @@ export function CaseCard({ caseData, isNew = false }: CaseCardProps) {
   return (
     <div
       className="group relative cursor-pointer"
+      onClick={onClick}
       style={{
         background: "var(--white)",
         border: "1px solid var(--gray-200)",
