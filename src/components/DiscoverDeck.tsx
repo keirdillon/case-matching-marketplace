@@ -763,9 +763,13 @@ function SwipeCard({
             {initials}
           </div>
           <div>
-            <div style={{ fontFamily: "var(--font-ui)", fontSize: "13px", fontWeight: 500, color: "var(--coastal-900)" }}>
+            <Link
+              href={`/directory/${caseData.advisor.id}`}
+              onClick={(e) => e.stopPropagation()}
+              style={{ fontFamily: "var(--font-ui)", fontSize: "13px", fontWeight: 500, color: "var(--coastal-900)", textDecoration: "none" }}
+            >
               {caseData.advisor.full_name}
-            </div>
+            </Link>
             <div style={{ fontFamily: "var(--font-ui)", fontSize: "11px", color: "var(--gray-400)" }}>
               {caseData.advisor.years_experience} yrs &middot; {caseData.advisor.region}
             </div>

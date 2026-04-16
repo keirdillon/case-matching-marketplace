@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { CaseWithAdvisor } from "@/lib/database.types";
 import { getInitials, AVATAR_COLORS } from "@/lib/mock-data";
 
@@ -212,16 +213,19 @@ export function CaseCard({ caseData, isNew = false, onClick, onSuggest }: CaseCa
               {initials}
             </div>
             <div className="flex flex-col">
-              <span
+              <Link
+                href={`/directory/${caseData.advisor.id}`}
+                onClick={(e) => e.stopPropagation()}
                 style={{
                   fontFamily: "var(--font-ui)",
                   fontSize: "13px",
                   fontWeight: 500,
                   color: "var(--coastal-900)",
+                  textDecoration: "none",
                 }}
               >
                 {caseData.advisor.full_name}
-              </span>
+              </Link>
               <span
                 style={{
                   fontFamily: "var(--font-ui)",
