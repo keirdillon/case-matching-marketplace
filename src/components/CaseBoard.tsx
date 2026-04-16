@@ -13,6 +13,10 @@ import {
 } from "@/lib/mock-data";
 
 type SortOption = "newest" | "meeting_date" | "complexity";
+type DateRange = "all" | "this_week" | "next_week";
+
+const STATES = ["All States", "FL", "GA", "NY", "NJ", "CT", "TX", "NC", "SC", "AL"];
+const MEETING_FORMATS = ["All Formats", "In-Person", "Zoom", "Phone"];
 
 interface CaseBoardProps {
   cases: CaseWithAdvisor[];
@@ -25,8 +29,11 @@ export function CaseBoard({ cases }: CaseBoardProps) {
   const [industry, setIndustry] = useState("All Industries");
   const [aumRange, setAumRange] = useState("Any AUM");
   const [region, setRegion] = useState("All Regions");
+  const [stateFilter, setStateFilter] = useState("All States");
+  const [formatFilter, setFormatFilter] = useState("All Formats");
+  const [dateRange, setDateRange] = useState<DateRange>("all");
   const [activeComplexity, setActiveComplexity] = useState<number[]>([1, 2, 3, 4, 5]);
-  const [sort, setSort] = useState<SortOption>("newest");
+  const [sort, setSort] = useState<SortOption>("meeting_date");
   const [selectedCase, setSelectedCase] = useState<CaseWithAdvisor | null>(null);
 
   function toggleSpec(name: string) {
@@ -58,11 +65,23 @@ export function CaseBoard({ cases }: CaseBoardProps) {
     setIndustry("All Industries");
     setAumRange("Any AUM");
     setRegion("All Regions");
+    setStateFilter("All States");
+    setFormatFilter("All Formats");
+    setDateRange("all");
     setActiveComplexity([1, 2, 3, 4, 5]);
   }
 
   // Filter + sort
   const filtered = useMemo(() => {
+    const now = new Date();
+    const startOfWeek = new Date(now);
+    startOfWeek.setDate(now.getDate() - now.getDay());
+    startOfWeek.setHours(0, 0, 0, 0);
+    const endOfWeek = new Date(startOfWeek);
+    endOfWeek.setDate(startOfWeek.getDate() + 7);
+    const endOfNextWeek = new Date(endOfWeek);
+    endOfNextWeek.setDate(endOfWeek.getDate() + 7);
+
     let result = cases.filter((c) => {
       // Specialization
       if (!activeSpecs.includes("All")) {
@@ -80,6 +99,19 @@ export function CaseBoard({ cases }: CaseBoardProps) {
       if (aumRange !== "Any AUM" && c.aum_range !== aumRange) return false;
       // Region
       if (region !== "All Regions" && c.region !== region) return false;
+      // State
+      if (stateFilter !== "All States" && c.state !== stateFilter) return false;
+      // Meeting format
+      if (formatFilter !== "All Formats") {
+        const formatMap: Record<string, string> = { "In-Person": "in_person", "Zoom": "zoom", "Phone": "phone" };
+        if (c.meeting_format !== formatMap[formatFilter]) return false;
+      }
+      // Date range
+      if (dateRange !== "all") {
+        const meetingDate = new Date(c.meeting_date + "T00:00:00");
+        if (dateRange === "this_week" && (meetingDate < startOfWeek || meetingDate >= endOfWeek)) return false;
+        if (dateRange === "next_week" && (meetingDate < endOfWeek || meetingDate >= endOfNextWeek)) return false;
+      }
       // Complexity
       if (!activeComplexity.includes(c.complexity)) return false;
       return true;
@@ -95,7 +127,7 @@ export function CaseBoard({ cases }: CaseBoardProps) {
     }
 
     return result;
-  }, [cases, activeSpecs, clientType, industry, aumRange, region, activeComplexity, sort]);
+  }, [cases, activeSpecs, clientType, industry, aumRange, region, stateFilter, formatFilter, dateRange, activeComplexity, sort]);
 
   // New this week count
   const oneWeekAgo = new Date();
@@ -154,6 +186,24 @@ export function CaseBoard({ cases }: CaseBoardProps) {
 
         <FilterGroup label="Region">
           <FilterSelect options={REGIONS} value={region} onChange={setRegion} />
+        </FilterGroup>
+
+        <FilterGroup label="State">
+          <FilterSelect options={STATES} value={stateFilter} onChange={setStateFilter} />
+        </FilterGroup>
+
+        <FilterGroup label="Meeting Format">
+          <FilterSelect options={MEETING_FORMATS} value={formatFilter} onChange={setFormatFilter} />
+        </FilterGroup>
+
+        <FilterGroup label="Date Range">
+          <div className="flex flex-wrap" style={{ gap: "6px" }}>
+            {([["all", "All"], ["this_week", "This Week"], ["next_week", "Next Week"]] as const).map(([value, label]) => (
+              <Chip key={value} active={dateRange === value} onClick={() => setDateRange(value)}>
+                {label}
+              </Chip>
+            ))}
+          </div>
         </FilterGroup>
 
         <FilterGroup label="Complexity">
@@ -277,10 +327,10 @@ export function CaseBoard({ cases }: CaseBoardProps) {
         >
           <span style={{ width: "8px", height: "8px", background: "var(--coastal-600)", borderRadius: "50%", animation: "pulse 2s ease-in-out infinite" }} />
           <span style={{ fontFamily: "var(--font-ui)", fontSize: "13px", color: "var(--coastal-800)", fontWeight: 500 }}>
-            New This Week
+            Joint Work Needed This Week
           </span>
           <span className="ml-auto" style={{ fontFamily: "var(--font-display)", fontSize: "18px", color: "var(--coastal-600)", fontWeight: 400 }}>
-            {newThisWeek} new case{newThisWeek !== 1 ? "s" : ""}
+            {newThisWeek} case{newThisWeek !== 1 ? "s" : ""}
           </span>
         </div>
 
