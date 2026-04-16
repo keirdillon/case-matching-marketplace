@@ -313,7 +313,7 @@ WHERE id = 'c0000014-0000-0000-0000-000000000014';
 
 INSERT INTO advisors (id, email, full_name, years_experience, role, region, office, is_senior_profile_active, bio, availability_status, mentorship_styles, licensed_states, production_level, closing_rate, avg_appointments_per_week, education, certifications, joined_date, total_joint_work_completed, phone, verified)
 VALUES
-  ('gggg7777-gggg-gggg-gggg-gggggggggggg',
+  ('aa007777-aa00-aa00-aa00-aa0000000007',
    'greg.harrison@coastalwealth.com',
    'Greg Harrison',
    20, 'manager', 'Tampa Bay', 'Tampa Main', true,
@@ -325,7 +325,7 @@ VALUES
    '2006-08-01', 72,
    '(813) 555-7007', true),
 
-  ('hhhh8888-hhhh-hhhh-hhhh-hhhhhhhhhhhh',
+  ('bb008888-bb00-bb00-bb00-bb0000000008',
    'sandra.lopez@coastalwealth.com',
    'Sandra Lopez',
    17, 'manager', 'South Florida', 'Fort Lauderdale', true,
@@ -340,12 +340,12 @@ VALUES
 -- Manager tags (they have specializations too)
 -- Greg Harrison — Business Planning, Succession, Insurance
 INSERT INTO advisor_tags (advisor_id, tag_id, tag_category) VALUES
-  ('gggg7777-gggg-gggg-gggg-gggggggggggg', 'a1000000-0000-0000-0000-000000000003', 'specialization'),
-  ('gggg7777-gggg-gggg-gggg-gggggggggggg', 'a1000000-0000-0000-0000-000000000009', 'specialization'),
-  ('gggg7777-gggg-gggg-gggg-gggggggggggg', 'a1000000-0000-0000-0000-000000000004', 'specialization');
+  ('aa007777-aa00-aa00-aa00-aa0000000007', 'a1000000-0000-0000-0000-000000000003', 'specialization'),
+  ('aa007777-aa00-aa00-aa00-aa0000000007', 'a1000000-0000-0000-0000-000000000009', 'specialization'),
+  ('aa007777-aa00-aa00-aa00-aa0000000007', 'a1000000-0000-0000-0000-000000000004', 'specialization');
 
 -- Sandra Lopez — Estate Planning, Wealth Transfer, Retirement
 INSERT INTO advisor_tags (advisor_id, tag_id, tag_category) VALUES
-  ('hhhh8888-hhhh-hhhh-hhhh-hhhhhhhhhhhh', 'a1000000-0000-0000-0000-000000000002', 'specialization'),
-  ('hhhh8888-hhhh-hhhh-hhhh-hhhhhhhhhhhh', 'a1000000-0000-0000-0000-000000000012', 'specialization'),
-  ('hhhh8888-hhhh-hhhh-hhhh-hhhhhhhhhhhh', 'a1000000-0000-0000-0000-000000000001', 'specialization');
+  ('bb008888-bb00-bb00-bb00-bb0000000008', 'a1000000-0000-0000-0000-000000000002', 'specialization'),
+  ('bb008888-bb00-bb00-bb00-bb0000000008', 'a1000000-0000-0000-0000-000000000012', 'specialization'),
+  ('bb008888-bb00-bb00-bb00-bb0000000008', 'a1000000-0000-0000-0000-000000000001', 'specialization');

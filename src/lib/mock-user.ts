@@ -11,7 +11,7 @@ export const MOCK_USER = {
 
 // Hardcoded mock manager for manager workflow testing
 export const MOCK_MANAGER = {
-  id: "gggg7777-gggg-gggg-gggg-gggggggggggg",
+  id: "aa007777-aa00-aa00-aa00-aa0000000007",
   full_name: "Greg Harrison",
   email: "greg.harrison@coastalwealth.com",
   role: "manager" as const,
