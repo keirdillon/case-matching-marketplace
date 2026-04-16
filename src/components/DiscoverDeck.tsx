@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import type { CaseWithAdvisor } from "@/lib/database.types";
@@ -41,11 +41,22 @@ function getThisWeekCaseCount(cases: CaseWithAdvisor[]): number {
   }).length;
 }
 
-export function DiscoverDeck({ cases }: { cases: CaseWithAdvisor[] }) {
+export function DiscoverDeck({ cases, profileSetUp = true }: { cases: CaseWithAdvisor[]; profileSetUp?: boolean }) {
   const router = useRouter();
   const [deck, setDeck] = useState(cases);
   const [swiping, setSwiping] = useState(false);
   const [resetting, setResetting] = useState(false);
+  const [tipDismissed, setTipDismissed] = useState(true);
+
+  useEffect(() => {
+    const dismissed = localStorage.getItem("ac_discover_tip_dismissed");
+    if (!dismissed) setTipDismissed(false);
+  }, []);
+
+  function dismissTip() {
+    setTipDismissed(true);
+    localStorage.setItem("ac_discover_tip_dismissed", "true");
+  }
 
   const thisWeekCount = getThisWeekCaseCount(cases);
   const currentIndex = cases.length - deck.length + 1;
@@ -144,6 +155,68 @@ export function DiscoverDeck({ cases }: { cases: CaseWithAdvisor[] }) {
         className="flex flex-col items-center"
         style={{ padding: "var(--space-5) var(--space-5) var(--space-7)", position: "relative", zIndex: 1 }}
       >
+        {/* Onboarding: profile not set up */}
+        {!profileSetUp && (
+          <div
+            style={{
+              maxWidth: "460px",
+              width: "100%",
+              marginBottom: "var(--space-4)",
+              padding: "16px 20px",
+              background: "rgba(107,149,186,0.15)",
+              border: "1px solid rgba(107,149,186,0.25)",
+            }}
+          >
+            <div style={{ fontFamily: "var(--font-ui)", fontSize: "14px", fontWeight: 500, color: "var(--white)", marginBottom: "6px" }}>
+              Set up your profile to get matched
+            </div>
+            <p style={{ fontFamily: "var(--font-ui)", fontSize: "12px", color: "var(--coastal-300)", lineHeight: 1.5, marginBottom: "12px" }}>
+              We need your specializations and licensed states to show you the right opportunities.
+            </p>
+            <Link
+              href="/profile"
+              style={{
+                fontFamily: "var(--font-ui)",
+                fontSize: "12px",
+                fontWeight: 500,
+                color: "var(--white)",
+                padding: "8px 16px",
+                background: "var(--coastal-600)",
+                textDecoration: "none",
+                display: "inline-block",
+              }}
+            >
+              Complete Your Profile &rarr;
+            </Link>
+          </div>
+        )}
+
+        {/* Onboarding tip for returning users */}
+        {profileSetUp && !tipDismissed && (
+          <div
+            className="flex items-center justify-between"
+            style={{
+              maxWidth: "460px",
+              width: "100%",
+              marginBottom: "var(--space-3)",
+              padding: "10px 16px",
+              background: "rgba(255,255,255,0.04)",
+              border: "1px solid rgba(255,255,255,0.08)",
+            }}
+          >
+            <span style={{ fontFamily: "var(--font-ui)", fontSize: "12px", color: "var(--coastal-300)" }}>
+              Swipe through this week&apos;s opportunities. Right = interested, left = pass.
+            </span>
+            <button
+              onClick={dismissTip}
+              className="cursor-pointer"
+              style={{ background: "none", border: "none", color: "var(--coastal-400)", fontSize: "16px", marginLeft: "12px", flexShrink: 0 }}
+            >
+              &times;
+            </button>
+          </div>
+        )}
+
         {/* Top bar: counter + board view toggle */}
         <div
           className="flex justify-between items-center w-full"
