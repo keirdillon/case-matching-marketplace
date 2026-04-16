@@ -1,6 +1,7 @@
 "use client";
 
 import { getInitials, AVATAR_COLORS } from "@/lib/mock-data";
+import { pluralYr } from "@/lib/format";
 import { InfoTooltip } from "@/components/InfoTooltip";
 
 export interface BaseballCardAdvisor {
@@ -432,7 +433,7 @@ function CompactCard({
               )}
             </div>
             <div style={{ fontFamily: "var(--font-ui)", fontSize: "12px", color: "var(--text-muted)" }}>
-              {advisor.years_experience} yrs &middot; {advisor.region}
+              {advisor.years_experience} {pluralYr(advisor.years_experience)} &middot; {advisor.region}
               {advisor.office && ` \u00B7 ${advisor.office}`}
             </div>
           </div>

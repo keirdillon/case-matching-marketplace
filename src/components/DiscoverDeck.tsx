@@ -7,6 +7,7 @@ import type { CaseWithAdvisor } from "@/lib/database.types";
 import { getSupabase } from "@/lib/supabase";
 import { MOCK_SENIOR } from "@/lib/mock-user";
 import { getInitials, AVATAR_COLORS } from "@/lib/mock-data";
+import { pluralYr } from "@/lib/format";
 import { InfoTooltip } from "@/components/InfoTooltip";
 import { HelpAnnotation } from "@/components/HelpAnnotation";
 import { useExtraHelp } from "@/components/ExtraHelpProvider";
@@ -792,7 +793,7 @@ function SwipeCard({
               {caseData.advisor.full_name}
             </Link>
             <div style={{ fontFamily: "var(--font-ui)", fontSize: "11px", color: "var(--text-muted)" }}>
-              {caseData.advisor.years_experience} yrs &middot; {caseData.advisor.region}
+              {caseData.advisor.years_experience} {pluralYr(caseData.advisor.years_experience)} &middot; {caseData.advisor.region}
             </div>
           </div>
           <span

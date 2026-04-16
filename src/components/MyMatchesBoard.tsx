@@ -1,6 +1,7 @@
 "use client";
 
 import type { MatchItem } from "@/app/matches/page";
+import { pluralYr } from "@/lib/format";
 
 export function MyMatchesBoard({ matches }: { matches: MatchItem[] }) {
   if (matches.length === 0) {
@@ -47,7 +48,7 @@ export function MyMatchesBoard({ matches }: { matches: MatchItem[] }) {
                   {match.other_party_name}
                 </div>
                 <div style={{ fontFamily: "var(--font-ui)", fontSize: "11px", color: "var(--text-muted)" }}>
-                  {match.other_party_experience} yrs &middot; {match.other_party_region}
+                  {match.other_party_experience} {pluralYr(match.other_party_experience)} &middot; {match.other_party_region}
                 </div>
               </div>
               <span style={{ fontFamily: "var(--font-ui)", fontSize: "11px", color: "var(--text-muted)", marginLeft: "auto" }}>

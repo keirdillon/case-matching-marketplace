@@ -6,6 +6,7 @@ import type { CaseWithAdvisor, Advisor } from "@/lib/database.types";
 import { getSupabase } from "@/lib/supabase";
 import { MOCK_USER, MOCK_SENIOR } from "@/lib/mock-user";
 import { getInitials, AVATAR_COLORS, NEEDS_LABELS } from "@/lib/mock-data";
+import { pluralYr } from "@/lib/format";
 
 interface MatchRow {
   id: string;
@@ -161,7 +162,7 @@ export function CaseDetailModal({ caseData, onClose }: CaseDetailModalProps) {
             </div>
             <div>
               <div style={{ fontFamily: "var(--font-ui)", fontSize: "13px", fontWeight: 500, color: "var(--text-primary)" }}>{caseData.advisor.full_name}</div>
-              <div style={{ fontFamily: "var(--font-ui)", fontSize: "11px", color: "var(--text-muted)" }}>{caseData.advisor.years_experience} yrs &middot; {caseData.advisor.region}</div>
+              <div style={{ fontFamily: "var(--font-ui)", fontSize: "11px", color: "var(--text-muted)" }}>{caseData.advisor.years_experience} {pluralYr(caseData.advisor.years_experience)} &middot; {caseData.advisor.region}</div>
             </div>
           </div>
         </div>
@@ -181,7 +182,7 @@ export function CaseDetailModal({ caseData, onClose }: CaseDetailModalProps) {
                   </div>
                   <div>
                     <div style={{ fontFamily: "var(--font-ui)", fontSize: "15px", fontWeight: 500, color: "var(--text-primary)" }}>{match.advisor?.full_name || "Unknown"}</div>
-                    <div style={{ fontFamily: "var(--font-ui)", fontSize: "12px", color: "var(--text-muted)" }}>{match.advisor?.years_experience} yrs &middot; {match.advisor?.region}</div>
+                    <div style={{ fontFamily: "var(--font-ui)", fontSize: "12px", color: "var(--text-muted)" }}>{match.advisor?.years_experience} {pluralYr(match.advisor?.years_experience ?? 0)} &middot; {match.advisor?.region}</div>
                   </div>
                 </div>
                 {match.advisor?.bio && (

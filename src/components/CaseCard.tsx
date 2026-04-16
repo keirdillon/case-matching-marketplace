@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { CaseWithAdvisor } from "@/lib/database.types";
 import { getInitials, AVATAR_COLORS } from "@/lib/mock-data";
+import { pluralYr } from "@/lib/format";
 
 interface CaseCardProps {
   caseData: CaseWithAdvisor;
@@ -228,7 +229,7 @@ export function CaseCard({ caseData, isNew = false, onClick, onSuggest }: CaseCa
                   color: "var(--text-muted)",
                 }}
               >
-                {caseData.advisor.years_experience} yrs &middot; {caseData.advisor.region}
+                {caseData.advisor.years_experience} {pluralYr(caseData.advisor.years_experience)} &middot; {caseData.advisor.region}
               </span>
             </div>
           </div>
