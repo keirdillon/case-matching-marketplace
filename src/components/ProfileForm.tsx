@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { getSupabase } from "@/lib/supabase";
 import { MOCK_SENIOR } from "@/lib/mock-user";
 import { InfoTooltip } from "@/components/InfoTooltip";
+import { useExtraHelp } from "@/components/ExtraHelpProvider";
+import { AnnotatedOverlay } from "@/components/AnnotatedCardOverlay";
 
 interface TagOption {
   id: string;
@@ -44,6 +46,7 @@ const CERTIFICATION_OPTIONS = ["CFP", "ChFC", "CLU", "CIMA", "CFA", "RICP", "QKA
 
 export function ProfileForm({ advisor, tags, currentTagIds }: ProfileFormProps) {
   const router = useRouter();
+  const { isHelpEnabled } = useExtraHelp();
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
 
@@ -163,6 +166,7 @@ export function ProfileForm({ advisor, tags, currentTagIds }: ProfileFormProps) 
   return (
     <div style={{ background: "var(--card-bg)", border: "1px solid var(--card-border)" }}>
       <div style={{ padding: "var(--space-6)" }}>
+        {isHelpEnabled && <AnnotatedOverlay page="profile" />}
         {/* Bio */}
         <FormSection label="About You" description="Share what you specialize in and why advisors should work with you.">
           <textarea

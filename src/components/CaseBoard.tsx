@@ -13,6 +13,7 @@ import {
 } from "@/lib/mock-data";
 import { InfoTooltip } from "@/components/InfoTooltip";
 import { useExtraHelp } from "@/components/ExtraHelpProvider";
+import { AnnotatedOverlay } from "@/components/AnnotatedCardOverlay";
 
 type SortOption = "newest" | "meeting_date" | "complexity";
 type DateRange = "all" | "this_week" | "next_week";
@@ -163,11 +164,6 @@ export function CaseBoard({ cases }: CaseBoardProps) {
         }}
       >
         <SidebarTitle>Filters <InfoTooltip text="Filter cases by specialization, client type, industry, and more to find the right opportunities." /></SidebarTitle>
-        {isHelpEnabled && (
-          <div style={{ marginBottom: "var(--space-4)", padding: "8px 12px", background: "var(--coastal-100)", borderLeft: "2px solid var(--coastal-600)", fontFamily: "var(--font-ui)", fontSize: "11px", color: "var(--coastal-600)", lineHeight: 1.4 }}>
-            Use these filters to narrow down cases by specialization, state, meeting format, and date range.
-          </div>
-        )}
 
         <FilterGroup label="Specialization">
           <div className="flex flex-wrap" style={{ gap: "6px" }}>
@@ -281,6 +277,8 @@ export function CaseBoard({ cases }: CaseBoardProps) {
 
       {/* BOARD */}
       <main style={{ padding: "var(--space-6)" }}>
+        {isHelpEnabled && <AnnotatedOverlay page="board" />}
+
         {/* Header with sort */}
         <div className="flex justify-between items-center" style={{ marginBottom: "var(--space-5)" }}>
           <h2

@@ -1,5 +1,8 @@
 "use client";
 
+import { useExtraHelp } from "@/components/ExtraHelpProvider";
+import { AnnotatedOverlay } from "@/components/AnnotatedCardOverlay";
+
 interface PostItem {
   id: string;
   title: string;
@@ -16,6 +19,8 @@ interface PostItem {
 }
 
 export function MyPostsBoard({ posts }: { posts: PostItem[] }) {
+  const { isHelpEnabled } = useExtraHelp();
+
   if (posts.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center" style={{ padding: "var(--space-9) var(--space-6)", background: "var(--card-bg)", border: "1px solid var(--card-border)", textAlign: "center" }}>
@@ -30,6 +35,7 @@ export function MyPostsBoard({ posts }: { posts: PostItem[] }) {
 
   return (
     <div className="flex flex-col" style={{ gap: "12px" }}>
+      {isHelpEnabled && <AnnotatedOverlay page="posts" />}
       {posts.map((post) => {
         const meetingDate = new Date(post.meeting_date + "T00:00:00");
         const formattedDate = meetingDate.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
