@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Playfair_Display, Source_Serif_4, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { OnboardingTour } from "@/components/OnboardingTour";
+import { ExtraHelpProvider } from "@/components/ExtraHelpProvider";
 
 const playfairDisplay = Playfair_Display({
   variable: "--font-playfair",
@@ -44,8 +45,10 @@ export default function RootLayout({
         <link rel="stylesheet" href="https://use.typekit.net/tpw8nnl.css" />
       </head>
       <body>
-        {children}
-        <OnboardingTour />
+        <ExtraHelpProvider>
+          {children}
+          <OnboardingTour />
+        </ExtraHelpProvider>
       </body>
     </html>
   );

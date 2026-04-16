@@ -8,6 +8,8 @@ import { getSupabase } from "@/lib/supabase";
 import { MOCK_SENIOR } from "@/lib/mock-user";
 import { getInitials, AVATAR_COLORS } from "@/lib/mock-data";
 import { InfoTooltip } from "@/components/InfoTooltip";
+import { HelpAnnotation } from "@/components/HelpAnnotation";
+import { useExtraHelp } from "@/components/ExtraHelpProvider";
 
 const SWIPE_THRESHOLD = 120;
 const FLY_DURATION = 400;
@@ -43,6 +45,7 @@ function getThisWeekCaseCount(cases: CaseWithAdvisor[]): number {
 
 export function DiscoverDeck({ cases, profileSetUp = true }: { cases: CaseWithAdvisor[]; profileSetUp?: boolean }) {
   const router = useRouter();
+  const { isHelpEnabled } = useExtraHelp();
   const [deck, setDeck] = useState(cases);
   const [swiping, setSwiping] = useState(false);
   const [resetting, setResetting] = useState(false);
@@ -155,6 +158,24 @@ export function DiscoverDeck({ cases, profileSetUp = true }: { cases: CaseWithAd
         className="flex flex-col items-center"
         style={{ padding: "var(--space-5) var(--space-5) var(--space-7)", position: "relative", zIndex: 1 }}
       >
+        {/* Extra Help banner */}
+        {isHelpEnabled && (
+          <div
+            style={{
+              maxWidth: "460px",
+              width: "100%",
+              marginBottom: "var(--space-3)",
+              padding: "12px 16px",
+              background: "rgba(107,149,186,0.12)",
+              borderLeft: "3px solid var(--coastal-600)",
+            }}
+          >
+            <span style={{ fontFamily: "var(--font-ui)", fontSize: "12px", color: "var(--coastal-300)", lineHeight: 1.5 }}>
+              Swipe right on cases you want to join. Swipe left to pass. Cards are matched to your specializations and licensed states.
+            </span>
+          </div>
+        )}
+
         {/* Onboarding: profile not set up */}
         {!profileSetUp && (
           <div

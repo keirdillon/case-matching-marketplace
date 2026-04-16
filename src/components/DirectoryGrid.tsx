@@ -4,11 +4,13 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import { BaseballCard, BaseballCardModal } from "@/components/BaseballCard";
 import type { BaseballCardAdvisor } from "@/components/BaseballCard";
+import { useExtraHelp } from "@/components/ExtraHelpProvider";
 
 const REGIONS = ["All Regions", "South Florida", "Central Florida", "Tampa Bay", "Georgia"];
 const STATES = ["All States", "FL", "GA", "NY", "NJ", "CT", "TX", "NC", "SC", "AL"];
 
 export function DirectoryGrid({ advisors }: { advisors: BaseballCardAdvisor[] }) {
+  const { isHelpEnabled } = useExtraHelp();
   const [tab, setTab] = useState<"senior" | "all">("senior");
   const [search, setSearch] = useState("");
   const [region, setRegion] = useState("All Regions");
@@ -53,6 +55,12 @@ export function DirectoryGrid({ advisors }: { advisors: BaseballCardAdvisor[] })
           >
             {seniorCount} Senior Advisors <em style={{ fontStyle: "italic", color: "var(--coastal-600)" }}>Available</em>
           </h1>
+
+          {isHelpEnabled && (
+            <div style={{ marginBottom: "var(--space-4)", padding: "8px 12px", background: "var(--coastal-100)", borderLeft: "2px solid var(--coastal-600)", fontFamily: "var(--font-ui)", fontSize: "11px", color: "var(--coastal-600)", lineHeight: 1.4 }}>
+              Browse advisor profiles. Verified (&#10003;) = above-average production &amp; closing rate. Platinum = top tier, Gold = high performer. Closing rate = % of prospects that become clients.
+            </div>
+          )}
 
           {/* Tabs */}
           <div className="flex" style={{ gap: "var(--space-4)", marginBottom: "var(--space-5)" }}>

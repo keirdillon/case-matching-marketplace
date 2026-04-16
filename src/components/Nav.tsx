@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NewHereButton } from "@/components/OnboardingTour";
 import { DarkModeToggle } from "@/components/DarkModeToggle";
+import { useExtraHelp } from "@/components/ExtraHelpProvider";
 
 const NAV_LINKS = [
   { label: "Discover", href: "/" },
@@ -16,6 +17,7 @@ const NAV_LINKS = [
 
 export function Nav() {
   const pathname = usePathname();
+  const { isHelpEnabled, toggleHelp } = useExtraHelp();
 
   function isActive(href: string) {
     if (href === "/") return pathname === "/";
@@ -102,6 +104,28 @@ export function Nav() {
 
       <div className="flex items-center" style={{ gap: "var(--space-4)" }}>
         <NewHereButton />
+        <button
+          onClick={toggleHelp}
+          className="flex items-center cursor-pointer"
+          title={isHelpEnabled ? "Hide help labels" : "Show help labels"}
+          style={{
+            padding: "6px 12px",
+            fontFamily: "var(--font-ui)",
+            fontSize: "12px",
+            color: isHelpEnabled ? "var(--text-on-brand)" : "var(--text-muted)",
+            background: isHelpEnabled ? "var(--coastal-600)" : "none",
+            border: `1px solid ${isHelpEnabled ? "var(--coastal-600)" : "var(--card-border)"}`,
+            gap: "6px",
+            transition: "all 200ms",
+          }}
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+            <line x1="12" y1="17" x2="12.01" y2="17" />
+          </svg>
+          Help
+        </button>
         <DarkModeToggle />
         <button
           className="relative flex items-center justify-center cursor-pointer"
