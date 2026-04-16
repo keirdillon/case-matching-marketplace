@@ -26,9 +26,20 @@ const MENTORSHIP_STYLES = [
 ];
 
 const AVAILABILITY_OPTIONS = [
-  { value: "active", label: "Active — accepting new matches" },
-  { value: "paused", label: "Paused — not accepting right now" },
+  { value: "active", label: "Active \u2014 accepting new matches" },
+  { value: "paused", label: "Paused \u2014 not accepting right now" },
 ];
+
+const US_STATES = [
+  "AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA",
+  "KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ",
+  "NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT",
+  "VA","WA","WV","WI","WY",
+];
+
+const PRODUCTION_LEVELS = ["Platinum", "Gold", "Silver", "Bronze"];
+
+const CERTIFICATION_OPTIONS = ["CFP", "ChFC", "CLU", "CIMA", "CFA", "RICP", "QKA", "AEP", "CEPA"];
 
 export function ProfileForm({ advisor, tags, currentTagIds }: ProfileFormProps) {
   const router = useRouter();
@@ -43,6 +54,32 @@ export function ProfileForm({ advisor, tags, currentTagIds }: ProfileFormProps) 
     (advisor?.mentorship_styles as string[]) || []
   );
   const [selectedTagIds, setSelectedTagIds] = useState<string[]>(currentTagIds);
+
+  // New v2 fields
+  const [licensedStates, setLicensedStates] = useState<string[]>(
+    (advisor?.licensed_states as string[]) || []
+  );
+  const [productionLevel, setProductionLevel] = useState(
+    (advisor?.production_level as string) || ""
+  );
+  const [certifications, setCertifications] = useState<string[]>(
+    (advisor?.certifications as string[]) || []
+  );
+  const [education, setEducation] = useState(
+    (advisor?.education as string) || ""
+  );
+  const [phone, setPhone] = useState(
+    (advisor?.phone as string) || ""
+  );
+  const [calendlyUrl, setCalendlyUrl] = useState(
+    (advisor?.calendly_url as string) || ""
+  );
+  const [closingRate, setClosingRate] = useState(
+    advisor?.closing_rate ? String(Math.round((advisor.closing_rate as number) * 100)) : ""
+  );
+  const [avgAppts, setAvgAppts] = useState(
+    advisor?.avg_appointments_per_week ? String(advisor.avg_appointments_per_week) : ""
+  );
 
   const specTags = tags.filter((t) => t.category === "specialization");
   const industryTags = tags.filter((t) => t.category === "industry");
@@ -59,13 +96,24 @@ export function ProfileForm({ advisor, tags, currentTagIds }: ProfileFormProps) 
     );
   }
 
+  function toggleState(st: string) {
+    setLicensedStates((prev) =>
+      prev.includes(st) ? prev.filter((s) => s !== st) : [...prev, st]
+    );
+  }
+
+  function toggleCert(cert: string) {
+    setCertifications((prev) =>
+      prev.includes(cert) ? prev.filter((c) => c !== cert) : [...prev, cert]
+    );
+  }
+
   async function handleSave() {
     const supabase = getSupabase();
     if (!supabase) return;
 
     setSaving(true);
 
-    // Update advisor profile
     const { error: advError } = await supabase
       .from("advisors")
       .update({
@@ -73,6 +121,14 @@ export function ProfileForm({ advisor, tags, currentTagIds }: ProfileFormProps) 
         availability_status: availability,
         mentorship_styles: mentorshipStyles,
         is_senior_profile_active: true,
+        licensed_states: licensedStates,
+        production_level: productionLevel || null,
+        certifications,
+        education: education || null,
+        phone: phone || null,
+        calendly_url: calendlyUrl || null,
+        closing_rate: closingRate ? parseFloat(closingRate) / 100 : null,
+        avg_appointments_per_week: avgAppts ? parseInt(avgAppts) : null,
       })
       .eq("id", MOCK_SENIOR.id);
 
@@ -83,7 +139,6 @@ export function ProfileForm({ advisor, tags, currentTagIds }: ProfileFormProps) 
       return;
     }
 
-    // Replace advisor_tags: delete existing, insert new
     await supabase.from("advisor_tags").delete().eq("advisor_id", MOCK_SENIOR.id);
 
     if (selectedTagIds.length > 0) {
@@ -125,6 +180,39 @@ export function ProfileForm({ advisor, tags, currentTagIds }: ProfileFormProps) 
           </div>
         </FormSection>
 
+        {/* Licensed States */}
+        <FormSection label="Licensed States" description="Select all states where you hold an active license. This determines which cases you can see.">
+          <div className="flex flex-wrap" style={{ gap: "6px" }}>
+            {US_STATES.map((st) => (
+              <TagChip key={st} active={licensedStates.includes(st)} onClick={() => toggleState(st)}>
+                {st}
+              </TagChip>
+            ))}
+          </div>
+        </FormSection>
+
+        {/* Production Level */}
+        <FormSection label="Production Level" description="Your current production tier at Coastal Wealth.">
+          <div className="flex flex-wrap" style={{ gap: "6px" }}>
+            {PRODUCTION_LEVELS.map((level) => (
+              <TagChip key={level} active={productionLevel === level} onClick={() => setProductionLevel(productionLevel === level ? "" : level)}>
+                {level}
+              </TagChip>
+            ))}
+          </div>
+        </FormSection>
+
+        {/* Certifications */}
+        <FormSection label="Certifications" description="Professional designations and certifications.">
+          <div className="flex flex-wrap" style={{ gap: "6px" }}>
+            {CERTIFICATION_OPTIONS.map((cert) => (
+              <TagChip key={cert} active={certifications.includes(cert)} onClick={() => toggleCert(cert)}>
+                {cert}
+              </TagChip>
+            ))}
+          </div>
+        </FormSection>
+
         {/* Specializations */}
         <FormSection label="Specializations" description="What areas of expertise can you offer?">
           <div className="flex flex-wrap" style={{ gap: "6px" }}>
@@ -155,6 +243,88 @@ export function ProfileForm({ advisor, tags, currentTagIds }: ProfileFormProps) 
                 {style.label}
               </TagChip>
             ))}
+          </div>
+        </FormSection>
+
+        {/* Education */}
+        <FormSection label="Education" description="School and degree.">
+          <input
+            type="text"
+            value={education}
+            onChange={(e) => setEducation(e.target.value)}
+            placeholder="e.g., University of Florida, M.B.A."
+            style={{
+              width: "100%", padding: "12px 14px", fontFamily: "var(--font-ui)", fontSize: "14px",
+              color: "var(--coastal-900)", border: "1px solid var(--gray-200)", background: "var(--white)", outline: "none",
+            }}
+          />
+        </FormSection>
+
+        {/* Contact info */}
+        <FormSection label="Contact Information" description="How advisors can reach you.">
+          <div className="grid" style={{ gridTemplateColumns: "1fr 1fr", gap: "var(--space-4)" }}>
+            <div>
+              <label style={{ fontFamily: "var(--font-ui)", fontSize: "11px", color: "var(--gray-400)", display: "block", marginBottom: "4px" }}>Phone</label>
+              <input
+                type="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="(813) 555-1234"
+                style={{
+                  width: "100%", padding: "12px 14px", fontFamily: "var(--font-ui)", fontSize: "14px",
+                  color: "var(--coastal-900)", border: "1px solid var(--gray-200)", background: "var(--white)", outline: "none",
+                }}
+              />
+            </div>
+            <div>
+              <label style={{ fontFamily: "var(--font-ui)", fontSize: "11px", color: "var(--gray-400)", display: "block", marginBottom: "4px" }}>Calendly URL</label>
+              <input
+                type="url"
+                value={calendlyUrl}
+                onChange={(e) => setCalendlyUrl(e.target.value)}
+                placeholder="https://calendly.com/your-name"
+                style={{
+                  width: "100%", padding: "12px 14px", fontFamily: "var(--font-ui)", fontSize: "14px",
+                  color: "var(--coastal-900)", border: "1px solid var(--gray-200)", background: "var(--white)", outline: "none",
+                }}
+              />
+            </div>
+          </div>
+        </FormSection>
+
+        {/* Performance stats */}
+        <FormSection label="Performance Stats" description="Optional — helps build your baseball card profile.">
+          <div className="grid" style={{ gridTemplateColumns: "1fr 1fr", gap: "var(--space-4)" }}>
+            <div>
+              <label style={{ fontFamily: "var(--font-ui)", fontSize: "11px", color: "var(--gray-400)", display: "block", marginBottom: "4px" }}>Closing Rate (%)</label>
+              <input
+                type="number"
+                min="0"
+                max="100"
+                value={closingRate}
+                onChange={(e) => setClosingRate(e.target.value)}
+                placeholder="e.g., 72"
+                style={{
+                  width: "100%", padding: "12px 14px", fontFamily: "var(--font-ui)", fontSize: "14px",
+                  color: "var(--coastal-900)", border: "1px solid var(--gray-200)", background: "var(--white)", outline: "none",
+                }}
+              />
+            </div>
+            <div>
+              <label style={{ fontFamily: "var(--font-ui)", fontSize: "11px", color: "var(--gray-400)", display: "block", marginBottom: "4px" }}>Avg Appointments/Week</label>
+              <input
+                type="number"
+                min="0"
+                max="50"
+                value={avgAppts}
+                onChange={(e) => setAvgAppts(e.target.value)}
+                placeholder="e.g., 12"
+                style={{
+                  width: "100%", padding: "12px 14px", fontFamily: "var(--font-ui)", fontSize: "14px",
+                  color: "var(--coastal-900)", border: "1px solid var(--gray-200)", background: "var(--white)", outline: "none",
+                }}
+              />
+            </div>
           </div>
         </FormSection>
 
