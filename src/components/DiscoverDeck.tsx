@@ -2,29 +2,61 @@
 
 import { useState, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import type { CaseWithAdvisor } from "@/lib/database.types";
 import { getSupabase } from "@/lib/supabase";
 import { MOCK_SENIOR } from "@/lib/mock-user";
-import { getInitials, AVATAR_COLORS, NEEDS_LABELS } from "@/lib/mock-data";
+import { getInitials, AVATAR_COLORS } from "@/lib/mock-data";
 
 const SWIPE_THRESHOLD = 120;
 const FLY_DURATION = 400;
+
+function formatMeetingDateTime(dateStr: string, timeStr: string | null): string {
+  const date = new Date(dateStr + "T00:00:00");
+  const dayName = date.toLocaleDateString("en-US", { weekday: "long" });
+  const month = date.toLocaleDateString("en-US", { month: "long" });
+  const day = date.getDate();
+
+  if (!timeStr) return `${dayName}, ${month} ${day}`;
+
+  const [hours, minutes] = timeStr.split(":").map(Number);
+  const period = hours >= 12 ? "PM" : "AM";
+  const displayHour = hours % 12 || 12;
+  const displayMin = minutes > 0 ? `:${minutes.toString().padStart(2, "0")}` : ":00";
+  return `${dayName}, ${month} ${day} · ${displayHour}${displayMin} ${period}`;
+}
+
+function getThisWeekCaseCount(cases: CaseWithAdvisor[]): number {
+  const now = new Date();
+  const startOfWeek = new Date(now);
+  startOfWeek.setDate(now.getDate() - now.getDay());
+  startOfWeek.setHours(0, 0, 0, 0);
+  const endOfWeek = new Date(startOfWeek);
+  endOfWeek.setDate(startOfWeek.getDate() + 7);
+
+  return cases.filter((c) => {
+    const meetingDate = new Date(c.meeting_date + "T00:00:00");
+    return meetingDate >= startOfWeek && meetingDate < endOfWeek;
+  }).length;
+}
 
 export function DiscoverDeck({ cases }: { cases: CaseWithAdvisor[] }) {
   const router = useRouter();
   const [deck, setDeck] = useState(cases);
   const [swiping, setSwiping] = useState(false);
-
   const [resetting, setResetting] = useState(false);
+
+  const thisWeekCount = getThisWeekCaseCount(cases);
+  const currentIndex = cases.length - deck.length + 1;
 
   async function resetDemo() {
     setResetting(true);
     const supabase = getSupabase();
     if (supabase) {
-      await supabase
-        .from("matches")
-        .delete()
-        .eq("senior_advisor_id", MOCK_SENIOR.id);
+      await Promise.all([
+        supabase.from("matches").delete().eq("senior_advisor_id", MOCK_SENIOR.id),
+        supabase.from("swipe_history").delete().eq("advisor_id", MOCK_SENIOR.id),
+      ]);
     }
     router.refresh();
     setDeck(cases);
@@ -37,9 +69,17 @@ export function DiscoverDeck({ cases }: { cases: CaseWithAdvisor[] }) {
       const current = deck[0];
       setSwiping(true);
 
-      if (direction === "right") {
-        const supabase = getSupabase();
-        if (supabase) {
+      const supabase = getSupabase();
+      if (supabase) {
+        // Always write to swipe_history
+        await supabase.from("swipe_history").insert({
+          case_id: current.id,
+          advisor_id: MOCK_SENIOR.id,
+          action: direction === "right" ? "interested" : "pass",
+        });
+
+        // Right swipe also creates match
+        if (direction === "right") {
           await supabase.from("matches").insert({
             case_id: current.id,
             senior_advisor_id: MOCK_SENIOR.id,
@@ -48,7 +88,6 @@ export function DiscoverDeck({ cases }: { cases: CaseWithAdvisor[] }) {
         }
       }
 
-      // Small delay for fly-off animation to finish
       setTimeout(() => {
         setDeck((prev) => prev.slice(1));
         setSwiping(false);
@@ -66,7 +105,21 @@ export function DiscoverDeck({ cases }: { cases: CaseWithAdvisor[] }) {
         overflow: "hidden",
       }}
     >
-      {/* Background decoration */}
+      {/* Radial gradient glow */}
+      <div
+        style={{
+          position: "absolute",
+          top: "30%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          width: "800px",
+          height: "800px",
+          background: "radial-gradient(circle, rgba(107,149,186,0.08) 0%, transparent 70%)",
+          pointerEvents: "none",
+        }}
+      />
+
+      {/* Background watermark */}
       <div
         style={{
           position: "absolute",
@@ -88,11 +141,52 @@ export function DiscoverDeck({ cases }: { cases: CaseWithAdvisor[] }) {
 
       <div
         className="flex flex-col items-center"
-        style={{ padding: "var(--space-7) var(--space-5)", position: "relative", zIndex: 1 }}
+        style={{ padding: "var(--space-5) var(--space-5) var(--space-7)", position: "relative", zIndex: 1 }}
       >
-        {/* Header */}
-        <div className="overline" style={{ marginBottom: "var(--space-5)", color: "var(--coastal-400)" }}>
-          Discover Opportunities
+        {/* Top bar: counter + board view toggle */}
+        <div
+          className="flex justify-between items-center w-full"
+          style={{ maxWidth: "460px", marginBottom: "var(--space-5)" }}
+        >
+          <div
+            style={{
+              fontFamily: "var(--font-ui)",
+              fontSize: "13px",
+              color: "var(--coastal-400)",
+              letterSpacing: "0.3px",
+            }}
+          >
+            {deck.length > 0 ? (
+              <>
+                <span style={{ fontFamily: "var(--font-display)", fontSize: "16px", color: "var(--white)" }}>
+                  {currentIndex}
+                </span>
+                {" "}of{" "}
+                <span style={{ fontFamily: "var(--font-display)", fontSize: "16px", color: "var(--white)" }}>
+                  {cases.length}
+                </span>
+                {" "}opportunities{thisWeekCount > 0 && ` · ${thisWeekCount} this week`}
+              </>
+            ) : (
+              <span>{cases.length} opportunities reviewed</span>
+            )}
+          </div>
+
+          <Link
+            href="/board"
+            style={{
+              fontFamily: "var(--font-ui)",
+              fontSize: "12px",
+              color: "var(--coastal-400)",
+              textDecoration: "none",
+              padding: "6px 14px",
+              border: "1px solid rgba(255,255,255,0.12)",
+              transition: "all 200ms",
+              letterSpacing: "0.3px",
+            }}
+          >
+            Board View &rarr;
+          </Link>
         </div>
 
         {deck.length > 0 ? (
@@ -102,12 +196,12 @@ export function DiscoverDeck({ cases }: { cases: CaseWithAdvisor[] }) {
               style={{
                 position: "relative",
                 width: "100%",
-                maxWidth: "420px",
-                height: "580px",
-                marginBottom: "var(--space-6)",
+                maxWidth: "460px",
+                height: "620px",
+                marginBottom: "var(--space-5)",
               }}
             >
-              {/* Background cards (stack effect) */}
+              {/* Stack shadow cards */}
               {deck.length > 2 && (
                 <div
                   style={{
@@ -135,7 +229,6 @@ export function DiscoverDeck({ cases }: { cases: CaseWithAdvisor[] }) {
                 />
               )}
 
-              {/* Active card */}
               <SwipeCard
                 key={deck[0].id}
                 caseData={deck[0]}
@@ -246,13 +339,13 @@ export function DiscoverDeck({ cases }: { cases: CaseWithAdvisor[] }) {
             >
               Check back Monday for new opportunities. New cases are posted throughout the week as advisors prepare for client meetings.
             </p>
-            <a
-              href="/"
+            <Link
+              href="/board"
               className="btn btn-accent btn-sm"
               style={{ textDecoration: "none" }}
             >
-              Back to Case Board
-            </a>
+              Browse the Board
+            </Link>
             <ResetButton resetting={resetting} onClick={resetDemo} />
           </div>
         )}
@@ -262,7 +355,7 @@ export function DiscoverDeck({ cases }: { cases: CaseWithAdvisor[] }) {
 }
 
 /* ========================================
-   SWIPE CARD — Drag-to-swipe with physics
+   MEETING-FIRST SWIPE CARD
    ======================================== */
 
 function SwipeCard({
@@ -280,8 +373,10 @@ function SwipeCard({
 
   const initials = getInitials(caseData.advisor.full_name);
   const avatarColor = AVATAR_COLORS[initials] || "var(--coastal-600)";
-  const meetingDate = new Date(caseData.meeting_date + "T00:00:00");
-  const formattedDate = meetingDate.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+  const dateTimeStr = formatMeetingDateTime(caseData.meeting_date, caseData.meeting_time ?? null);
+
+  const locationIcon = caseData.meeting_format === "zoom" ? "\uD83D\uDCBB" : caseData.meeting_format === "phone" ? "\uD83D\uDCDE" : "\uD83D\uDCCD";
+  const locationText = caseData.meeting_location || caseData.region;
 
   function onPointerDown(e: React.PointerEvent) {
     if (swiping) return;
@@ -300,23 +395,19 @@ function SwipeCard({
 
   function onPointerUp() {
     if (!drag.dragging) return;
-
     if (Math.abs(drag.x) > SWIPE_THRESHOLD) {
       const dir = drag.x > 0 ? "right" : "left";
       setFlyDir(dir);
       onSwipe(dir);
     }
-
     setDrag({ x: 0, y: 0, dragging: false, startX: 0, startY: 0 });
   }
 
-  // Calculate card transform
   const rotation = drag.dragging ? drag.x * 0.08 : 0;
   const opacity = drag.dragging ? Math.max(0.5, 1 - Math.abs(drag.x) / 400) : 1;
   const flyX = flyDir === "right" ? "120vw" : flyDir === "left" ? "-120vw" : `${drag.x}px`;
   const flyRotation = flyDir ? (flyDir === "right" ? 30 : -30) : rotation;
 
-  // Interest indicator
   const showInterest = drag.dragging && drag.x > 60;
   const showPass = drag.dragging && drag.x < -60;
 
@@ -339,20 +430,22 @@ function SwipeCard({
         touchAction: "none",
         userSelect: "none",
         overflow: "hidden",
+        display: "flex",
+        flexDirection: "column",
       }}
     >
-      {/* Interest / Pass overlay indicators */}
+      {/* Swipe overlay indicators */}
       {showInterest && (
         <div
           style={{
             position: "absolute",
-            top: "20px",
-            left: "20px",
-            padding: "8px 16px",
+            top: "24px",
+            left: "24px",
+            padding: "8px 20px",
             border: "3px solid var(--success)",
             color: "var(--success)",
             fontFamily: "var(--font-ui)",
-            fontSize: "18px",
+            fontSize: "20px",
             fontWeight: 700,
             letterSpacing: "2px",
             textTransform: "uppercase",
@@ -368,13 +461,13 @@ function SwipeCard({
         <div
           style={{
             position: "absolute",
-            top: "20px",
-            right: "20px",
-            padding: "8px 16px",
+            top: "24px",
+            right: "24px",
+            padding: "8px 20px",
             border: "3px solid var(--error)",
             color: "var(--error)",
             fontFamily: "var(--font-ui)",
-            fontSize: "18px",
+            fontSize: "20px",
             fontWeight: 700,
             letterSpacing: "2px",
             textTransform: "uppercase",
@@ -387,50 +480,122 @@ function SwipeCard({
         </div>
       )}
 
-      {/* Card header — dark bar */}
+      {/* MEETING-FIRST HEADER — Date + Time as headline */}
       <div
         style={{
           background: "var(--coastal-900)",
-          padding: "var(--space-4) var(--space-5)",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
+          padding: "var(--space-5) var(--space-5) var(--space-4)",
         }}
       >
-        <div className="flex flex-wrap" style={{ gap: "6px" }}>
-          <CardTag bg="rgba(255,255,255,0.12)" color="var(--white)">{caseData.client_type}</CardTag>
-          {caseData.industry.map((ind) => (
-            <CardTag key={ind} bg="rgba(255,255,255,0.08)" color="var(--coastal-300)">{ind}</CardTag>
-          ))}
-        </div>
-        <CardTag bg="var(--coastal-600)" color="var(--white)">{caseData.aum_range}</CardTag>
-      </div>
-
-      {/* Card body */}
-      <div style={{ padding: "var(--space-5)" }}>
-        {/* Title */}
+        {/* Date + Time — biggest text */}
         <div
           style={{
             fontFamily: "var(--font-display)",
-            fontSize: "22px",
-            color: "var(--coastal-900)",
+            fontSize: "24px",
+            color: "var(--white)",
             fontWeight: 400,
             lineHeight: 1.15,
             letterSpacing: "-0.01em",
             marginBottom: "var(--space-3)",
           }}
         >
-          {caseData.title}
+          {dateTimeStr}
         </div>
 
-        {/* Description */}
-        {caseData.additional_context && (
+        {/* Meeting type badge */}
+        <div className="flex flex-wrap items-center" style={{ gap: "8px" }}>
+          <span
+            style={{
+              fontFamily: "var(--font-ui)",
+              fontSize: "11px",
+              padding: "4px 12px",
+              background: "rgba(255,255,255,0.15)",
+              color: "var(--white)",
+              fontWeight: 500,
+              letterSpacing: "0.3px",
+              textTransform: "uppercase",
+            }}
+          >
+            {caseData.meeting_type}
+          </span>
+
+          {/* State badge */}
+          {caseData.state && (
+            <span
+              style={{
+                fontFamily: "var(--font-ui)",
+                fontSize: "11px",
+                padding: "4px 10px",
+                background: "var(--coastal-600)",
+                color: "var(--white)",
+                fontWeight: 600,
+                letterSpacing: "0.5px",
+              }}
+            >
+              {caseData.state}
+            </span>
+          )}
+
+          {/* Compensation split */}
+          <span
+            style={{
+              fontFamily: "var(--font-ui)",
+              fontSize: "11px",
+              padding: "4px 10px",
+              background: "rgba(255,255,255,0.08)",
+              color: "var(--coastal-300)",
+              fontWeight: 500,
+              letterSpacing: "0.3px",
+              marginLeft: "auto",
+            }}
+          >
+            {caseData.compensation_split || "50/50"} Split
+          </span>
+        </div>
+      </div>
+
+      {/* CARD BODY */}
+      <div style={{ padding: "var(--space-4) var(--space-5)", flex: 1, overflow: "auto" }}>
+        {/* Location + Format */}
+        <div
+          className="flex items-center"
+          style={{
+            gap: "8px",
+            marginBottom: "var(--space-3)",
+            fontFamily: "var(--font-ui)",
+            fontSize: "13px",
+            color: "var(--gray-600)",
+          }}
+        >
+          <span>{locationIcon}</span>
+          <span>{locationText}</span>
+        </div>
+
+        {/* Client Summary */}
+        {caseData.client_summary && (
           <p
             style={{
               fontFamily: "var(--font-body-serif)",
-              fontSize: "13px",
-              color: "var(--gray-500)",
-              lineHeight: 1.65,
+              fontSize: "14px",
+              color: "var(--gray-600)",
+              lineHeight: 1.7,
+              fontWeight: 300,
+              fontStyle: "normal",
+              marginBottom: "var(--space-4)",
+            }}
+          >
+            {caseData.client_summary}
+          </p>
+        )}
+
+        {/* Fallback to additional_context if no client_summary */}
+        {!caseData.client_summary && caseData.additional_context && (
+          <p
+            style={{
+              fontFamily: "var(--font-body-serif)",
+              fontSize: "14px",
+              color: "var(--gray-600)",
+              lineHeight: 1.7,
               fontWeight: 300,
               marginBottom: "var(--space-4)",
             }}
@@ -458,29 +623,15 @@ function SwipeCard({
           ))}
         </div>
 
-        {/* What they need */}
-        <div className="flex flex-wrap" style={{ gap: "4px", marginBottom: "var(--space-4)" }}>
-          {(caseData.needs || []).map((need) => (
-            <span
-              key={need}
-              style={{
-                fontFamily: "var(--font-ui)",
-                fontSize: "10px",
-                padding: "4px 10px",
-                background: "var(--coastal-50)",
-                color: "var(--coastal-700)",
-                border: "1px solid var(--coastal-100)",
-                fontWeight: 500,
-              }}
-            >
-              {NEEDS_LABELS[need] || need}
+        {/* Bottom details: Complexity + AUM */}
+        <div
+          className="flex justify-between items-center"
+          style={{ borderTop: "1px solid var(--gray-100)", paddingTop: "var(--space-3)" }}
+        >
+          <div className="flex items-center" style={{ gap: "8px" }}>
+            <span style={{ fontFamily: "var(--font-ui)", fontSize: "11px", color: "var(--gray-400)", fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.5px" }}>
+              Complexity
             </span>
-          ))}
-        </div>
-
-        {/* Detail rows */}
-        <div style={{ borderTop: "1px solid var(--gray-100)", paddingTop: "var(--space-3)" }}>
-          <DetailRow label="Complexity">
             <div className="flex items-center" style={{ gap: "3px" }}>
               {[1, 2, 3, 4, 5].map((n) => {
                 const filled = n <= caseData.complexity;
@@ -489,18 +640,22 @@ function SwipeCard({
                 if (filled && n >= 4 && caseData.complexity >= 4) bg = n === 4 && caseData.complexity === 4 ? "var(--warning)" : "var(--error)";
                 return <span key={n} style={{ width: "8px", height: "8px", borderRadius: "50%", background: bg }} />;
               })}
-              <span style={{ fontFamily: "var(--font-ui)", fontSize: "11px", color: "var(--gray-500)", marginLeft: "6px" }}>{caseData.complexity}/5</span>
             </div>
-          </DetailRow>
-          <DetailRow label="Meeting">
-            <span style={{ fontFamily: "var(--font-ui)", fontSize: "12px", color: "var(--coastal-900)" }}>{formattedDate}</span>
-          </DetailRow>
-          <DetailRow label="Region">
-            <span style={{ fontFamily: "var(--font-ui)", fontSize: "12px", color: "var(--coastal-900)" }}>{caseData.region}</span>
-          </DetailRow>
-          <DetailRow label="Type">
-            <span style={{ fontFamily: "var(--font-ui)", fontSize: "12px", color: "var(--coastal-900)" }}>{caseData.meeting_type}</span>
-          </DetailRow>
+          </div>
+          <span
+            style={{
+              fontFamily: "var(--font-ui)",
+              fontSize: "10px",
+              padding: "4px 10px",
+              background: "var(--coastal-900)",
+              color: "var(--white)",
+              fontWeight: 500,
+              letterSpacing: "0.3px",
+              textTransform: "uppercase",
+            }}
+          >
+            {caseData.aum_range}
+          </span>
         </div>
 
         {/* Poster info */}
@@ -508,8 +663,8 @@ function SwipeCard({
           className="flex items-center"
           style={{
             gap: "10px",
-            marginTop: "var(--space-4)",
-            paddingTop: "var(--space-4)",
+            marginTop: "var(--space-3)",
+            paddingTop: "var(--space-3)",
             borderTop: "1px solid var(--gray-100)",
           }}
         >
@@ -523,6 +678,7 @@ function SwipeCard({
               fontSize: "11px",
               fontWeight: 500,
               color: "var(--white)",
+              flexShrink: 0,
             }}
           >
             {initials}
@@ -554,23 +710,6 @@ function SwipeCard({
         </div>
       </div>
     </div>
-  );
-}
-
-function DetailRow({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <div className="flex justify-between items-center" style={{ padding: "6px 0" }}>
-      <span style={{ fontFamily: "var(--font-ui)", fontSize: "11px", color: "var(--gray-400)", fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.5px" }}>{label}</span>
-      {children}
-    </div>
-  );
-}
-
-function CardTag({ children, bg, color }: { children: React.ReactNode; bg: string; color: string }) {
-  return (
-    <span style={{ fontFamily: "var(--font-ui)", fontSize: "10px", padding: "4px 10px", fontWeight: 500, letterSpacing: "0.3px", textTransform: "uppercase", background: bg, color }}>
-      {children}
-    </span>
   );
 }
 

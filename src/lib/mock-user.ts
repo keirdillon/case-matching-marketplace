@@ -6,6 +6,7 @@ export const MOCK_USER = {
   role: "junior" as const,
   region: "Tampa Bay",
   years_experience: 3,
+  licensed_states: ["FL"],
 };
 
 // Hardcoded mock senior advisor for match testing
@@ -16,4 +17,5 @@ export const MOCK_SENIOR = {
   role: "senior" as const,
   region: "Tampa Bay",
   years_experience: 18,
+  licensed_states: ["FL", "GA", "TX"],
 };

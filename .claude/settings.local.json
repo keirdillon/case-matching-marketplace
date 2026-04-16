@@ -10,7 +10,12 @@
       "Bash(git init:*)",
       "Bash(git branch:*)",
       "Bash(git checkout:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(gh repo:*)",
+      "Bash(npx tsc:*)",
+      "Bash(git push:*)",
+      "Bash(git rm:*)"
     ]
   }
 }

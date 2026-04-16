@@ -47,11 +47,12 @@ export function Nav() {
         style={{ gap: "var(--space-5)" }}
       >
         {[
-          { label: "Case Board", href: "/", active: true },
-          { label: "Discover", href: "/discover" },
+          { label: "Discover", href: "/", active: true },
+          { label: "Board", href: "/board" },
           { label: "My Posts", href: "/posts" },
           { label: "My Matches", href: "/matches" },
-          { label: "Senior Profiles", href: "/profile" },
+          { label: "Directory", href: "/directory" },
+          { label: "Profile", href: "/profile" },
         ].map((link) => (
           <li key={link.label}>
             <Link

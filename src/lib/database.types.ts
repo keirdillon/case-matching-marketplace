@@ -1,4 +1,4 @@
-export type AdvisorRole = "junior" | "mid" | "senior";
+export type AdvisorRole = "junior" | "mid" | "senior" | "manager";
 export type AvailabilityStatus = "active" | "paused";
 export type CaseStatus = "active" | "matched" | "closed" | "expired";
 export type MatchStatus =
@@ -33,6 +33,17 @@ export interface Advisor {
   availability_status: AvailabilityStatus;
   mentorship_styles: MentorshipStyle[];
   notification_preferences: Record<string, unknown>;
+  licensed_states: string[];
+  production_level: string | null;
+  closing_rate: number | null;
+  avg_appointments_per_week: number | null;
+  education: string | null;
+  certifications: string[];
+  joined_date: string | null;
+  total_joint_work_completed: number;
+  calendly_url: string | null;
+  phone: string | null;
+  verified: boolean;
   created_at: string;
   updated_at: string;
 }
@@ -57,7 +68,32 @@ export interface Case {
   meeting_date: string;
   needs: MentorshipStyle[];
   additional_context: string | null;
+  state: string | null;
+  meeting_time: string | null;
+  meeting_location: string | null;
+  meeting_format: string | null;
+  compensation_split: string;
+  client_summary: string | null;
   status: CaseStatus;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface SwipeHistory {
+  id: string;
+  case_id: string;
+  advisor_id: string;
+  action: "pass" | "interested";
+  created_at: string;
+}
+
+export interface ManagerAssignment {
+  id: string;
+  manager_id: string;
+  case_id: string;
+  assigned_advisor_id: string;
+  message: string | null;
+  status: "pending" | "accepted" | "declined";
   created_at: string;
   updated_at: string;
 }
@@ -99,6 +135,8 @@ export interface Database {
       cases: { Row: Case };
       matches: { Row: Match };
       feedback: { Row: Feedback };
+      swipe_history: { Row: SwipeHistory };
+      manager_assignments: { Row: ManagerAssignment };
       advisor_tags: {
         Row: { advisor_id: string; tag_id: string; tag_category: string };
       };
