@@ -5,6 +5,7 @@ interface CaseCardProps {
   caseData: CaseWithAdvisor;
   isNew?: boolean;
   onClick?: () => void;
+  onSuggest?: () => void;
 }
 
 function formatCardDateTime(dateStr: string, timeStr: string | null): string {
@@ -22,7 +23,7 @@ function formatCardDateTime(dateStr: string, timeStr: string | null): string {
   return `${dayName}, ${month} ${day} \u00B7 ${displayHour}${displayMin} ${period}`;
 }
 
-export function CaseCard({ caseData, isNew = false, onClick }: CaseCardProps) {
+export function CaseCard({ caseData, isNew = false, onClick, onSuggest }: CaseCardProps) {
   const initials = getInitials(caseData.advisor.full_name);
   const avatarColor = AVATAR_COLORS[initials] || "var(--coastal-600)";
   const dateTimeStr = formatCardDateTime(caseData.meeting_date, caseData.meeting_time ?? null);
@@ -251,6 +252,29 @@ export function CaseCard({ caseData, isNew = false, onClick }: CaseCardProps) {
             </span>
           </div>
         </div>
+
+        {/* Manager: Suggest to Advisor button */}
+        {onSuggest && (
+          <div style={{ paddingTop: "var(--space-3)", borderTop: "1px solid var(--gray-100)" }}>
+            <button
+              onClick={(e) => { e.stopPropagation(); onSuggest(); }}
+              className="cursor-pointer"
+              style={{
+                width: "100%",
+                padding: "8px",
+                fontFamily: "var(--font-ui)",
+                fontSize: "12px",
+                fontWeight: 500,
+                color: "var(--coastal-600)",
+                background: "var(--coastal-50)",
+                border: "1px solid var(--coastal-100)",
+                transition: "all 200ms",
+              }}
+            >
+              Suggest to Advisor
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

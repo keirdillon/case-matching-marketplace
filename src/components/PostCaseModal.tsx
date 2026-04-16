@@ -13,6 +13,30 @@ const INDUSTRIES = [
 const SPECIALIZATIONS = [
   "Retirement", "Estate Planning", "Business Planning", "Insurance & Risk",
   "Tax Strategy", "Investment Mgmt", "Exec Comp", "Special Situations",
+  "Succession Planning", "Business Valuation", "Buy-Sell Agreements",
+  "Wealth Transfer", "Trust Restructuring", "Family Governance",
+  "Stock Options", "10b5-1 Plans", "Sudden Wealth", "Roth Conversions",
+  "Executive Benefits",
+];
+
+const MEETING_TYPES = [
+  "Opening Meeting",
+  "Discovery",
+  "Strategy Session",
+  "Closing Meeting",
+  "Annual Review",
+  "Complex Case Review",
+  "Estate/Trust Discussion",
+  "Insurance Review",
+];
+
+const COMPENSATION_SPLITS = ["50/50", "60/40", "70/30", "Referral Fee", "To Be Discussed"];
+
+const US_STATES = [
+  "AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA",
+  "KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ",
+  "NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT",
+  "VA","WA","WV","WI","WY",
 ];
 
 const NEEDS_OPTIONS = [
@@ -33,7 +57,6 @@ export function PostCaseModal({ open, onClose }: PostCaseModalProps) {
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  // Form state
   const [title, setTitle] = useState("");
   const [clientType, setClientType] = useState("");
   const [aumRange, setAumRange] = useState("");
@@ -41,6 +64,12 @@ export function PostCaseModal({ open, onClose }: PostCaseModalProps) {
   const [selectedSpecs, setSelectedSpecs] = useState<string[]>([]);
   const [meetingType, setMeetingType] = useState("");
   const [meetingDate, setMeetingDate] = useState("");
+  const [meetingTime, setMeetingTime] = useState("");
+  const [meetingFormat, setMeetingFormat] = useState<"in_person" | "zoom" | "phone">("in_person");
+  const [meetingLocation, setMeetingLocation] = useState("");
+  const [state, setState] = useState(MOCK_USER.licensed_states?.[0] || "FL");
+  const [compensationSplit, setCompensationSplit] = useState("50/50");
+  const [clientSummary, setClientSummary] = useState("");
   const [complexity, setComplexity] = useState(3);
   const [selectedNeeds, setSelectedNeeds] = useState<string[]>([]);
   const [additionalContext, setAdditionalContext] = useState("");
@@ -50,30 +79,25 @@ export function PostCaseModal({ open, onClose }: PostCaseModalProps) {
   }
 
   function resetForm() {
-    setTitle("");
-    setClientType("");
-    setAumRange("");
-    setSelectedIndustries([]);
-    setSelectedSpecs([]);
-    setMeetingType("");
-    setMeetingDate("");
-    setComplexity(3);
-    setSelectedNeeds([]);
-    setAdditionalContext("");
-    setSuccess(false);
+    setTitle(""); setClientType(""); setAumRange(""); setSelectedIndustries([]);
+    setSelectedSpecs([]); setMeetingType(""); setMeetingDate(""); setMeetingTime("");
+    setMeetingFormat("in_person"); setMeetingLocation(""); setState(MOCK_USER.licensed_states?.[0] || "FL");
+    setCompensationSplit("50/50"); setClientSummary(""); setComplexity(3);
+    setSelectedNeeds([]); setAdditionalContext(""); setSuccess(false);
   }
 
   async function handleSubmit() {
-    if (!title || !clientType || !aumRange || !meetingType || !meetingDate || selectedNeeds.length === 0) return;
+    if (!title || !clientType || !aumRange || !meetingType || !meetingDate || !meetingTime || selectedNeeds.length === 0) return;
 
     setSubmitting(true);
-
     const supabase = getSupabase();
     if (!supabase) {
       alert("Supabase not configured");
       setSubmitting(false);
       return;
     }
+
+    const locationValue = meetingFormat === "zoom" ? "Zoom" : meetingFormat === "phone" ? "Phone" : meetingLocation;
 
     const { data: caseData, error: caseError } = await supabase
       .from("cases")
@@ -87,6 +111,12 @@ export function PostCaseModal({ open, onClose }: PostCaseModalProps) {
         complexity,
         region: MOCK_USER.region,
         meeting_date: meetingDate,
+        meeting_time: meetingTime,
+        meeting_format: meetingFormat,
+        meeting_location: locationValue,
+        state,
+        compensation_split: compensationSplit,
+        client_summary: clientSummary || null,
         needs: selectedNeeds,
         additional_context: additionalContext || null,
         status: "active",
@@ -101,9 +131,7 @@ export function PostCaseModal({ open, onClose }: PostCaseModalProps) {
       return;
     }
 
-    // Insert case_tags for selected specializations
     if (caseData && selectedSpecs.length > 0) {
-      // Look up tag IDs by name
       const { data: tags } = await supabase
         .from("tags")
         .select("id, name")
@@ -118,8 +146,6 @@ export function PostCaseModal({ open, onClose }: PostCaseModalProps) {
 
     setSubmitting(false);
     setSuccess(true);
-
-    // Auto-close after 1.5s and refresh
     setTimeout(() => {
       resetForm();
       onClose();
@@ -145,7 +171,7 @@ export function PostCaseModal({ open, onClose }: PostCaseModalProps) {
               Case Posted
             </div>
             <p style={{ fontFamily: "var(--font-body-serif)", fontSize: "15px", color: "var(--gray-500)", lineHeight: 1.6 }}>
-              Your opportunity is now live on the Case Board. Senior advisors will be notified.
+              Your opportunity is now live. Senior advisors will see it in their Discover deck.
             </p>
           </div>
         </div>
@@ -159,7 +185,7 @@ export function PostCaseModal({ open, onClose }: PostCaseModalProps) {
       style={{ background: "rgba(37, 47, 74, 0.6)", paddingTop: "var(--space-8)", backdropFilter: "blur(4px)" }}
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
-      <div style={{ width: "640px", maxWidth: "95vw", background: "var(--white)", boxShadow: "var(--shadow-xl)", marginBottom: "var(--space-8)" }}>
+      <div style={{ width: "680px", maxWidth: "95vw", background: "var(--white)", boxShadow: "var(--shadow-xl)", marginBottom: "var(--space-8)" }}>
         {/* Header */}
         <div className="flex justify-between items-center" style={{ padding: "var(--space-5) var(--space-6)", borderBottom: "1px solid var(--gray-200)" }}>
           <h2 style={{ fontFamily: "var(--font-display)", fontSize: "24px", color: "var(--coastal-900)", fontWeight: 400 }}>Post a Case</h2>
@@ -168,20 +194,77 @@ export function PostCaseModal({ open, onClose }: PostCaseModalProps) {
           </button>
         </div>
 
-        {/* Body */}
         <div style={{ padding: "var(--space-6)" }}>
           {/* Title */}
           <FormRow label="Case Title" required>
-            <input
-              type="text"
-              className="form-input"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="e.g., Business owner succession planning"
-              maxLength={60}
-              style={inputStyle}
-            />
+            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="e.g., Business owner succession planning" maxLength={60} style={inputStyle} />
           </FormRow>
+
+          {/* Meeting Date + Time — prominent */}
+          <div className="grid" style={{ gridTemplateColumns: "1fr 1fr", gap: "var(--space-4)" }}>
+            <FormRow label="Meeting Date" required>
+              <input type="date" value={meetingDate} onChange={(e) => setMeetingDate(e.target.value)} style={inputStyle} />
+            </FormRow>
+            <FormRow label="Meeting Time" required>
+              <input type="time" value={meetingTime} onChange={(e) => setMeetingTime(e.target.value)} style={inputStyle} />
+            </FormRow>
+          </div>
+
+          {/* Meeting Format */}
+          <FormRow label="Meeting Format" required>
+            <div className="flex" style={{ gap: "var(--space-3)" }}>
+              {([
+                { value: "in_person", label: "In-Person" },
+                { value: "zoom", label: "Zoom" },
+                { value: "phone", label: "Phone" },
+              ] as const).map((opt) => (
+                <label
+                  key={opt.value}
+                  className="flex items-center cursor-pointer"
+                  style={{
+                    gap: "8px",
+                    padding: "10px 16px",
+                    border: `1px solid ${meetingFormat === opt.value ? "var(--coastal-600)" : "var(--gray-200)"}`,
+                    background: meetingFormat === opt.value ? "var(--coastal-50)" : "var(--white)",
+                    flex: 1,
+                  }}
+                >
+                  <input
+                    type="radio"
+                    name="meetingFormat"
+                    checked={meetingFormat === opt.value}
+                    onChange={() => setMeetingFormat(opt.value)}
+                    style={{ accentColor: "var(--coastal-600)" }}
+                  />
+                  <span style={{ fontFamily: "var(--font-ui)", fontSize: "13px", color: "var(--coastal-900)" }}>
+                    {opt.label}
+                  </span>
+                </label>
+              ))}
+            </div>
+          </FormRow>
+
+          {/* Meeting Location — conditional */}
+          {meetingFormat === "in_person" && (
+            <FormRow label="Meeting Location" required>
+              <input type="text" value={meetingLocation} onChange={(e) => setMeetingLocation(e.target.value)} placeholder="e.g., Tampa Main Office" style={inputStyle} />
+            </FormRow>
+          )}
+
+          {/* State + Meeting Type */}
+          <div className="grid" style={{ gridTemplateColumns: "1fr 1fr", gap: "var(--space-4)" }}>
+            <FormRow label="State" required>
+              <select value={state} onChange={(e) => setState(e.target.value)} style={inputStyle}>
+                {US_STATES.map((s) => <option key={s} value={s}>{s}</option>)}
+              </select>
+            </FormRow>
+            <FormRow label="Meeting Type" required>
+              <select value={meetingType} onChange={(e) => setMeetingType(e.target.value)} style={inputStyle}>
+                <option value="">Select type...</option>
+                {MEETING_TYPES.map((mt) => <option key={mt}>{mt}</option>)}
+              </select>
+            </FormRow>
+          </div>
 
           {/* Client Type + AUM */}
           <div className="grid" style={{ gridTemplateColumns: "1fr 1fr", gap: "var(--space-4)" }}>
@@ -210,8 +293,15 @@ export function PostCaseModal({ open, onClose }: PostCaseModalProps) {
             </FormRow>
           </div>
 
+          {/* Compensation Split */}
+          <FormRow label="Compensation Split" required>
+            <select value={compensationSplit} onChange={(e) => setCompensationSplit(e.target.value)} style={inputStyle}>
+              {COMPENSATION_SPLITS.map((s) => <option key={s}>{s}</option>)}
+            </select>
+          </FormRow>
+
           {/* Industry chips */}
-          <FormRow label="Industry" required>
+          <FormRow label="Industry">
             <div className="flex flex-wrap" style={{ gap: "6px" }}>
               {INDUSTRIES.map((ind) => (
                 <FormChip key={ind} active={selectedIndustries.includes(ind)} onClick={() => toggleChip(selectedIndustries, setSelectedIndustries, ind)}>
@@ -231,25 +321,6 @@ export function PostCaseModal({ open, onClose }: PostCaseModalProps) {
               ))}
             </div>
           </FormRow>
-
-          {/* Meeting Type + Date */}
-          <div className="grid" style={{ gridTemplateColumns: "1fr 1fr", gap: "var(--space-4)" }}>
-            <FormRow label="Meeting Type" required>
-              <select value={meetingType} onChange={(e) => setMeetingType(e.target.value)} style={inputStyle}>
-                <option value="">Select type...</option>
-                <option>Initial Discovery</option>
-                <option>Plan Presentation</option>
-                <option>Annual Review</option>
-                <option>Complex Case Review</option>
-                <option>Estate/Trust Discussion</option>
-                <option>Business Valuation</option>
-                <option>Insurance Review</option>
-              </select>
-            </FormRow>
-            <FormRow label="Meeting Date" required>
-              <input type="date" value={meetingDate} onChange={(e) => setMeetingDate(e.target.value)} style={inputStyle} />
-            </FormRow>
-          </div>
 
           {/* Complexity */}
           <FormRow label="Complexity" required>
@@ -285,6 +356,20 @@ export function PostCaseModal({ open, onClose }: PostCaseModalProps) {
             </div>
           </FormRow>
 
+          {/* Client Summary */}
+          <FormRow label="Client Summary">
+            <textarea
+              value={clientSummary}
+              onChange={(e) => setClientSummary(e.target.value)}
+              placeholder="Describe the client and what the meeting will look like. No names or PII."
+              maxLength={500}
+              style={{ ...inputStyle, resize: "vertical", minHeight: "100px" }}
+            />
+            <div style={{ fontFamily: "var(--font-ui)", fontSize: "11px", color: "var(--gray-400)", marginTop: "4px", textAlign: "right" }}>
+              {clientSummary.length}/500
+            </div>
+          </FormRow>
+
           {/* Additional Context */}
           <FormRow label="Additional Context">
             <textarea
@@ -307,7 +392,7 @@ export function PostCaseModal({ open, onClose }: PostCaseModalProps) {
                 <line x1="12" y1="17" x2="12.01" y2="17" />
               </svg>
               <span style={{ fontFamily: "var(--font-ui)", fontSize: "12px", color: "var(--gray-600)", lineHeight: 1.5 }}>
-                Do not include any personally identifiable client information. This platform is for matching purposes only. All case descriptions should use anonymized descriptors.
+                Do not include any personally identifiable client information. This platform is for matching purposes only.
               </span>
             </div>
           </FormRow>
@@ -318,7 +403,7 @@ export function PostCaseModal({ open, onClose }: PostCaseModalProps) {
           <button onClick={onClose} className="btn btn-outline btn-sm">Cancel</button>
           <button
             onClick={handleSubmit}
-            disabled={submitting || !title || !clientType || !aumRange || !meetingType || !meetingDate || selectedNeeds.length === 0}
+            disabled={submitting || !title || !clientType || !aumRange || !meetingType || !meetingDate || !meetingTime || selectedNeeds.length === 0}
             className="btn btn-primary btn-sm"
             style={{ opacity: submitting ? 0.6 : 1 }}
           >

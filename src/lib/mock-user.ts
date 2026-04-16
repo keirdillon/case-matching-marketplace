@@ -9,6 +9,17 @@ export const MOCK_USER = {
   licensed_states: ["FL"],
 };
 
+// Hardcoded mock manager for manager workflow testing
+export const MOCK_MANAGER = {
+  id: "gggg7777-gggg-gggg-gggg-gggggggggggg",
+  full_name: "Greg Harrison",
+  email: "greg.harrison@coastalwealth.com",
+  role: "manager" as const,
+  region: "Tampa Bay",
+  years_experience: 20,
+  licensed_states: ["FL", "GA"],
+};
+
 // Hardcoded mock senior advisor for match testing
 export const MOCK_SENIOR = {
   id: "aaaa1111-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
