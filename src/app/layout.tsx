@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Source_Serif_4, DM_Sans } from "next/font/google";
 import "./globals.css";
+import { OnboardingTour } from "@/components/OnboardingTour";
 
 const playfairDisplay = Playfair_Display({
   variable: "--font-playfair",
@@ -42,7 +43,10 @@ export default function RootLayout({
       <head>
         <link rel="stylesheet" href="https://use.typekit.net/tpw8nnl.css" />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <OnboardingTour />
+      </body>
     </html>
   );
 }

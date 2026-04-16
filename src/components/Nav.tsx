@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { NewHereButton } from "@/components/OnboardingTour";
 
 const NAV_LINKS = [
   { label: "Discover", href: "/" },
@@ -98,6 +99,7 @@ export function Nav() {
       </ul>
 
       <div className="flex items-center" style={{ gap: "var(--space-4)" }}>
+        <NewHereButton />
         <button
           className="relative flex items-center justify-center cursor-pointer"
           style={{
