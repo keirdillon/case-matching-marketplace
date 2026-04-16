@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { CaseWithAdvisor } from "@/lib/database.types";
 import { getInitials, AVATAR_COLORS } from "@/lib/mock-data";
-import { pluralYr } from "@/lib/format";
+import { pluralYr, relativeTime, timeUntilMeeting } from "@/lib/format";
 import { SalesPipelineCompact } from "@/components/SalesPipeline";
 
 interface CaseCardProps {
@@ -188,6 +188,31 @@ export function CaseCard({ caseData, isNew = false, onClick, onSuggest }: CaseCa
               {tag.name}
             </span>
           ))}
+        </div>
+
+        {/* Signals row */}
+        <div
+          className="flex items-center flex-wrap"
+          style={{
+            gap: "12px",
+            marginBottom: "var(--space-3)",
+            fontFamily: "var(--font-ui)",
+            fontSize: "11px",
+            color: "var(--text-muted)",
+          }}
+        >
+          <span>{timeUntilMeeting(caseData.meeting_date)}</span>
+          <span>&middot;</span>
+          <span>Posted {relativeTime(caseData.created_at)}</span>
+          {(caseData.interested_count ?? 0) > 0 && (
+            <>
+              <span>&middot;</span>
+              <span style={{ color: "var(--coastal-600)" }}>
+                {caseData.interested_count} interested
+                {(caseData.matched_count ?? 0) > 0 && ` \u00B7 ${caseData.matched_count} matched`}
+              </span>
+            </>
+          )}
         </div>
 
         <div

@@ -38,9 +38,10 @@ async function getMatchingCases(): Promise<CaseWithAdvisor[]> {
   const caseIds = cases.map((c: Record<string, unknown>) => c.id as string);
   const posterIds = [...new Set(cases.map((c: Record<string, unknown>) => c.poster_id as string))];
 
-  const [advisorsResult, caseTagsResult] = await Promise.all([
+  const [advisorsResult, caseTagsResult, matchesResult] = await Promise.all([
     supabase.from("advisors").select("id, full_name, years_experience, region, role").in("id", posterIds),
     supabase.from("case_tags").select("case_id, tag_id, tags(id, name, category)").in("case_id", caseIds),
+    supabase.from("matches").select("case_id, status").in("case_id", caseIds),
   ]);
 
   const advisorMap = new Map<string, Record<string, unknown>>();
@@ -59,6 +60,16 @@ async function getMatchingCases(): Promise<CaseWithAdvisor[]> {
     caseTagsMap.set(caseId, existing);
   }
 
+  const matchCountMap = new Map<string, { interested: number; matched: number }>();
+  for (const m of matchesResult.data || []) {
+    const caseId = (m as Record<string, unknown>).case_id as string;
+    const status = (m as Record<string, unknown>).status as string;
+    const counts = matchCountMap.get(caseId) || { interested: 0, matched: 0 };
+    if (status === "interested") counts.interested++;
+    if (status === "accepted") counts.matched++;
+    matchCountMap.set(caseId, counts);
+  }
+
   const allCases: CaseWithAdvisor[] = cases.map((c: Record<string, unknown>) => {
     const advisor = advisorMap.get(c.poster_id as string);
     return {
@@ -74,6 +85,8 @@ async function getMatchingCases(): Promise<CaseWithAdvisor[]> {
         ? { id: advisor.id as string, full_name: advisor.full_name as string, years_experience: advisor.years_experience as number, region: advisor.region as string, role: advisor.role as string }
         : { id: c.poster_id as string, full_name: "Unknown", years_experience: 0, region: "Unknown", role: "junior" },
       tags: caseTagsMap.get(c.id as string) || [],
+      interested_count: matchCountMap.get(c.id as string)?.interested || 0,
+      matched_count: matchCountMap.get(c.id as string)?.matched || 0,
     } as CaseWithAdvisor;
   });
 

@@ -7,7 +7,7 @@ import type { CaseWithAdvisor } from "@/lib/database.types";
 import { getSupabase } from "@/lib/supabase";
 import { MOCK_SENIOR } from "@/lib/mock-user";
 import { getInitials, AVATAR_COLORS } from "@/lib/mock-data";
-import { pluralYr } from "@/lib/format";
+import { pluralYr, relativeTime, timeUntilMeeting } from "@/lib/format";
 import { SalesPipelineFull } from "@/components/SalesPipeline";
 import { AnnotatedOverlay } from "@/components/AnnotatedCardOverlay";
 import { InfoTooltip } from "@/components/InfoTooltip";
@@ -66,6 +66,10 @@ export function DiscoverDeck({ cases, profileSetUp = true }: { cases: CaseWithAd
 
   const thisWeekCount = getThisWeekCaseCount(cases);
   const currentIndex = cases.length - deck.length + 1;
+  const totalMatched = cases.reduce((acc, c) => acc + (c.matched_count ?? 0), 0);
+  const oneWeekAgo = new Date();
+  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+  const newThisWeek = cases.filter((c) => new Date(c.created_at) >= oneWeekAgo).length;
 
   async function resetDemo() {
     setResetting(true);
@@ -254,7 +258,6 @@ export function DiscoverDeck({ cases, profileSetUp = true }: { cases: CaseWithAd
                 <span style={{ fontFamily: "var(--font-display)", fontSize: "16px", color: "var(--text-on-brand)" }}>
                   {cases.length}
                 </span>
-                {" "}opportunities{thisWeekCount > 0 && ` · ${thisWeekCount} this week`}
                 <InfoTooltip text="We show you cases that match your specializations and licensed states." />
               </>
             ) : (
@@ -277,6 +280,29 @@ export function DiscoverDeck({ cases, profileSetUp = true }: { cases: CaseWithAd
           >
             Board View &rarr;
           </Link>
+        </div>
+
+        {/* Weekly summary stats */}
+        <div
+          className="flex items-center justify-center w-full"
+          style={{
+            maxWidth: "460px",
+            marginBottom: "var(--space-4)",
+            gap: "var(--space-4)",
+            fontFamily: "var(--font-ui)",
+            fontSize: "11px",
+            color: "var(--coastal-400)",
+          }}
+        >
+          <span>{newThisWeek} new this week</span>
+          <span style={{ opacity: 0.3 }}>&middot;</span>
+          <span>{thisWeekCount} meetings this week</span>
+          {totalMatched > 0 && (
+            <>
+              <span style={{ opacity: 0.3 }}>&middot;</span>
+              <span>{totalMatched} matched</span>
+            </>
+          )}
         </div>
 
         {deck.length > 0 ? (
@@ -717,6 +743,32 @@ function SwipeCard({
               {tag.name}
             </span>
           ))}
+        </div>
+
+        {/* Signals row */}
+        <div
+          className="flex items-center flex-wrap"
+          style={{
+            gap: "10px",
+            marginBottom: "var(--space-3)",
+            fontFamily: "var(--font-ui)",
+            fontSize: "11px",
+            color: "var(--text-muted)",
+          }}
+        >
+          <span style={{ color: "var(--coastal-600)", fontWeight: 500 }}>
+            {timeUntilMeeting(caseData.meeting_date)}
+          </span>
+          <span>&middot;</span>
+          <span>Posted {relativeTime(caseData.created_at)}</span>
+          {(caseData.interested_count ?? 0) > 0 && (
+            <>
+              <span>&middot;</span>
+              <span style={{ color: "var(--coastal-600)" }}>
+                {caseData.interested_count} interested
+              </span>
+            </>
+          )}
         </div>
 
         {/* Bottom details: Complexity + AUM */}

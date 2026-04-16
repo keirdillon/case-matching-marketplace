@@ -24,7 +24,7 @@ export async function getActiveCases(): Promise<CaseWithAdvisor[]> {
   const posterIds = [...new Set(cases.map((c: Record<string, unknown>) => c.poster_id as string))];
   const caseIds = cases.map((c: Record<string, unknown>) => c.id as string);
 
-  const [advisorsResult, caseTagsResult] = await Promise.all([
+  const [advisorsResult, caseTagsResult, matchesResult] = await Promise.all([
     supabase
       .from("advisors")
       .select("id, full_name, years_experience, region, role")
@@ -32,6 +32,10 @@ export async function getActiveCases(): Promise<CaseWithAdvisor[]> {
     supabase
       .from("case_tags")
       .select("case_id, tag_id, tags(id, name, category)")
+      .in("case_id", caseIds),
+    supabase
+      .from("matches")
+      .select("case_id, status")
       .in("case_id", caseIds),
   ]);
 
@@ -59,6 +63,16 @@ export async function getActiveCases(): Promise<CaseWithAdvisor[]> {
       existing.push({ id: t.id, name: t.name, category: t.category });
     }
     caseTagsMap.set(caseId, existing);
+  }
+
+  const matchCountMap = new Map<string, { interested: number; matched: number }>();
+  for (const m of matchesResult.data || []) {
+    const mid = (m as Record<string, unknown>).case_id as string;
+    const status = (m as Record<string, unknown>).status as string;
+    const counts = matchCountMap.get(mid) || { interested: 0, matched: 0 };
+    if (status === "interested") counts.interested++;
+    if (status === "accepted") counts.matched++;
+    matchCountMap.set(mid, counts);
   }
 
   return cases.map((c: Record<string, unknown>) => {
@@ -95,6 +109,8 @@ export async function getActiveCases(): Promise<CaseWithAdvisor[]> {
             role: "junior",
           },
       tags: caseTagsMap.get(c.id as string) || [],
+      interested_count: matchCountMap.get(c.id as string)?.interested || 0,
+      matched_count: matchCountMap.get(c.id as string)?.matched || 0,
     } as CaseWithAdvisor;
   });
 }

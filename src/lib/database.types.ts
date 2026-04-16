@@ -125,6 +125,8 @@ export interface CaseWithAdvisor extends Case {
     "id" | "full_name" | "years_experience" | "region" | "role"
   >;
   tags: Pick<Tag, "id" | "name" | "category">[];
+  interested_count?: number;
+  matched_count?: number;
 }
 
 export interface Database {
