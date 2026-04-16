@@ -1,6 +1,7 @@
 "use client";
 
 import { getInitials, AVATAR_COLORS } from "@/lib/mock-data";
+import { InfoTooltip } from "@/components/InfoTooltip";
 
 export interface BaseballCardAdvisor {
   id: string;
@@ -424,7 +425,10 @@ function CompactCard({
                 {advisor.full_name}
               </span>
               {advisor.verified && (
-                <span title="Verified" style={{ color: "var(--coastal-600)", fontSize: "14px" }}>&#10003;</span>
+                <>
+                  <span style={{ color: "var(--coastal-600)", fontSize: "14px" }}>&#10003;</span>
+                  <InfoTooltip text="Verified advisors have above-average production and closing rates." />
+                </>
               )}
             </div>
             <div style={{ fontFamily: "var(--font-ui)", fontSize: "12px", color: "var(--gray-400)" }}>

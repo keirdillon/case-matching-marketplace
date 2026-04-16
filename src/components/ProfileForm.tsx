@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { getSupabase } from "@/lib/supabase";
 import { MOCK_SENIOR } from "@/lib/mock-user";
+import { InfoTooltip } from "@/components/InfoTooltip";
 
 interface TagOption {
   id: string;
@@ -181,7 +182,7 @@ export function ProfileForm({ advisor, tags, currentTagIds }: ProfileFormProps) 
         </FormSection>
 
         {/* Licensed States */}
-        <FormSection label="Licensed States" description="Select all states where you hold an active license. This determines which cases you can see.">
+        <FormSection label={<>Licensed States <InfoTooltip text="Only cases in states where you're licensed will appear in your Discover feed." /></>} description="Select all states where you hold an active license.">
           <div className="flex flex-wrap" style={{ gap: "6px" }}>
             {US_STATES.map((st) => (
               <TagChip key={st} active={licensedStates.includes(st)} onClick={() => toggleState(st)}>
@@ -214,7 +215,7 @@ export function ProfileForm({ advisor, tags, currentTagIds }: ProfileFormProps) 
         </FormSection>
 
         {/* Specializations */}
-        <FormSection label="Specializations" description="What areas of expertise can you offer?">
+        <FormSection label={<>Specializations <InfoTooltip text="Select your areas of expertise. We use these to match you with relevant cases." /></>} description="What areas of expertise can you offer?">
           <div className="flex flex-wrap" style={{ gap: "6px" }}>
             {specTags.map((tag) => (
               <TagChip key={tag.id} active={selectedTagIds.includes(tag.id)} onClick={() => toggleTag(tag.id)}>
@@ -236,7 +237,7 @@ export function ProfileForm({ advisor, tags, currentTagIds }: ProfileFormProps) 
         </FormSection>
 
         {/* Mentorship Styles */}
-        <FormSection label="How I Like to Help" description="Select the types of collaboration you prefer.">
+        <FormSection label={<>How I Like to Help <InfoTooltip text="Let others know what kind of joint work you prefer." /></>} description="Select the types of collaboration you prefer.">
           <div className="flex flex-wrap" style={{ gap: "6px" }}>
             {MENTORSHIP_STYLES.map((style) => (
               <TagChip key={style.value} active={mentorshipStyles.includes(style.value)} onClick={() => toggleStyle(style.value)}>
@@ -375,7 +376,7 @@ export function ProfileForm({ advisor, tags, currentTagIds }: ProfileFormProps) 
   );
 }
 
-function FormSection({ label, description, children }: { label: string; description: string; children: React.ReactNode }) {
+function FormSection({ label, description, children }: { label: React.ReactNode; description: string; children: React.ReactNode }) {
   return (
     <div style={{ marginBottom: "var(--space-6)", paddingBottom: "var(--space-6)", borderBottom: "1px solid var(--gray-100)" }}>
       <div style={{ fontFamily: "var(--font-ui)", fontSize: "15px", fontWeight: 500, color: "var(--coastal-900)", marginBottom: "var(--space-1)" }}>

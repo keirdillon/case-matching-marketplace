@@ -11,6 +11,7 @@ import {
   AUM_RANGES,
   REGIONS,
 } from "@/lib/mock-data";
+import { InfoTooltip } from "@/components/InfoTooltip";
 
 type SortOption = "newest" | "meeting_date" | "complexity";
 type DateRange = "all" | "this_week" | "next_week";
@@ -159,7 +160,7 @@ export function CaseBoard({ cases }: CaseBoardProps) {
           height: "calc(100vh - 65px)",
         }}
       >
-        <SidebarTitle>Filters</SidebarTitle>
+        <SidebarTitle>Filters <InfoTooltip text="Filter cases by specialization, client type, industry, and more to find the right opportunities." /></SidebarTitle>
 
         <FilterGroup label="Specialization">
           <div className="flex flex-wrap" style={{ gap: "6px" }}>
@@ -327,7 +328,7 @@ export function CaseBoard({ cases }: CaseBoardProps) {
         >
           <span style={{ width: "8px", height: "8px", background: "var(--coastal-600)", borderRadius: "50%", animation: "pulse 2s ease-in-out infinite" }} />
           <span style={{ fontFamily: "var(--font-ui)", fontSize: "13px", color: "var(--coastal-800)", fontWeight: 500 }}>
-            Joint Work Needed This Week
+            Joint Work Needed This Week <InfoTooltip text="These are upcoming meetings where advisors need collaboration support." />
           </span>
           <span className="ml-auto" style={{ fontFamily: "var(--font-display)", fontSize: "18px", color: "var(--coastal-600)", fontWeight: 400 }}>
             {newThisWeek} case{newThisWeek !== 1 ? "s" : ""}

@@ -7,6 +7,7 @@ import type { CaseWithAdvisor } from "@/lib/database.types";
 import { getSupabase } from "@/lib/supabase";
 import { MOCK_SENIOR } from "@/lib/mock-user";
 import { getInitials, AVATAR_COLORS } from "@/lib/mock-data";
+import { InfoTooltip } from "@/components/InfoTooltip";
 
 const SWIPE_THRESHOLD = 120;
 const FLY_DURATION = 400;
@@ -149,11 +150,13 @@ export function DiscoverDeck({ cases }: { cases: CaseWithAdvisor[] }) {
           style={{ maxWidth: "460px", marginBottom: "var(--space-5)" }}
         >
           <div
+            className="flex items-center"
             style={{
               fontFamily: "var(--font-ui)",
               fontSize: "13px",
               color: "var(--coastal-400)",
               letterSpacing: "0.3px",
+              gap: "6px",
             }}
           >
             {deck.length > 0 ? (
@@ -166,6 +169,7 @@ export function DiscoverDeck({ cases }: { cases: CaseWithAdvisor[] }) {
                   {cases.length}
                 </span>
                 {" "}opportunities{thisWeekCount > 0 && ` · ${thisWeekCount} this week`}
+                <InfoTooltip text="We show you cases that match your specializations and licensed states." />
               </>
             ) : (
               <span>{cases.length} opportunities reviewed</span>
@@ -551,6 +555,7 @@ function SwipeCard({
           >
             {caseData.compensation_split || "50/50"} Split
           </span>
+          <InfoTooltip text="This is the standard compensation split for joint work. It's pre-set — no negotiation needed." />
         </div>
       </div>
 
@@ -641,6 +646,7 @@ function SwipeCard({
                 return <span key={n} style={{ width: "8px", height: "8px", borderRadius: "50%", background: bg }} />;
               })}
             </div>
+            <InfoTooltip text="1 = Routine, 3 = Moderate, 5 = Enterprise-grade complexity requiring a team approach." />
           </div>
           <span
             style={{
