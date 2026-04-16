@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NewHereButton } from "@/components/OnboardingTour";
+import { DarkModeToggle } from "@/components/DarkModeToggle";
 
 const NAV_LINKS = [
   { label: "Discover", href: "/" },
@@ -23,10 +24,11 @@ export function Nav() {
 
   return (
     <nav
-      className="flex items-center justify-between sticky top-0 z-100 bg-white"
+      className="flex items-center justify-between sticky top-0 z-100"
       style={{
         padding: "16px 32px",
-        borderBottom: "1px solid var(--gray-200)",
+        borderBottom: "1px solid var(--nav-border)",
+        background: "var(--nav-bg)",
       }}
     >
       <div className="flex items-center" style={{ gap: "16px" }}>
@@ -76,7 +78,7 @@ export function Nav() {
                 style={{
                   fontFamily: "var(--font-ui)",
                   fontSize: "13px",
-                  color: active ? "var(--coastal-900)" : "var(--gray-500)",
+                  color: active ? "var(--text-primary)" : "var(--text-secondary)",
                   fontWeight: active ? 500 : 400,
                   transition: "color var(--duration-fast)",
                 }}
@@ -100,6 +102,7 @@ export function Nav() {
 
       <div className="flex items-center" style={{ gap: "var(--space-4)" }}>
         <NewHereButton />
+        <DarkModeToggle />
         <button
           className="relative flex items-center justify-center cursor-pointer"
           style={{
