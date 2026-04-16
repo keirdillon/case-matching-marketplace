@@ -8,6 +8,7 @@ import { getSupabase } from "@/lib/supabase";
 import { MOCK_SENIOR } from "@/lib/mock-user";
 import { getInitials, AVATAR_COLORS } from "@/lib/mock-data";
 import { pluralYr } from "@/lib/format";
+import { SalesPipelineFull } from "@/components/SalesPipeline";
 import { InfoTooltip } from "@/components/InfoTooltip";
 import { HelpAnnotation } from "@/components/HelpAnnotation";
 import { useExtraHelp } from "@/components/ExtraHelpProvider";
@@ -599,6 +600,11 @@ function SwipeCard({
           }}
         >
           {dateTimeStr}
+        </div>
+
+        {/* Sales Pipeline */}
+        <div style={{ marginBottom: "var(--space-3)" }}>
+          <SalesPipelineFull meetingType={caseData.meeting_type} />
         </div>
 
         {/* Meeting type badge */}
