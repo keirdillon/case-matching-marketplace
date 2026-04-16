@@ -45,7 +45,7 @@ export function DirectoryGrid({ advisors }: { advisors: BaseballCardAdvisor[] })
             style={{
               fontFamily: "var(--font-display)",
               fontSize: "clamp(28px, 3vw, 40px)",
-              color: "var(--coastal-900)",
+              color: "var(--text-primary)",
               fontWeight: 400,
               lineHeight: 1.1,
               marginBottom: "var(--space-5)",
@@ -65,9 +65,9 @@ export function DirectoryGrid({ advisors }: { advisors: BaseballCardAdvisor[] })
                   fontFamily: "var(--font-ui)",
                   fontSize: "13px",
                   padding: "8px 20px",
-                  background: tab === t ? "var(--coastal-900)" : "var(--white)",
-                  color: tab === t ? "var(--white)" : "var(--gray-500)",
-                  border: `1px solid ${tab === t ? "var(--coastal-900)" : "var(--gray-200)"}`,
+                  background: tab === t ? "#252f4a" : "var(--card-bg)",
+                  color: tab === t ? "var(--text-on-brand)" : "var(--text-secondary)",
+                  border: `1px solid ${tab === t ? "#252f4a" : "var(--card-border)"}`,
                   fontWeight: 500,
                   transition: "all 200ms",
                 }}
@@ -88,9 +88,9 @@ export function DirectoryGrid({ advisors }: { advisors: BaseballCardAdvisor[] })
                 padding: "10px 14px",
                 fontFamily: "var(--font-ui)",
                 fontSize: "13px",
-                border: "1px solid var(--gray-200)",
-                background: "var(--white)",
-                color: "var(--coastal-900)",
+                border: "1px solid var(--input-border)",
+                background: "var(--input-bg)",
+                color: "var(--text-primary)",
                 width: "220px",
                 outline: "none",
               }}
@@ -103,9 +103,9 @@ export function DirectoryGrid({ advisors }: { advisors: BaseballCardAdvisor[] })
                 padding: "10px 32px 10px 12px",
                 fontFamily: "var(--font-ui)",
                 fontSize: "13px",
-                border: "1px solid var(--gray-200)",
-                background: "var(--white)",
-                color: "var(--coastal-900)",
+                border: "1px solid var(--input-border)",
+                background: "var(--input-bg)",
+                color: "var(--text-primary)",
                 appearance: "none",
                 outline: "none",
               }}
@@ -120,16 +120,16 @@ export function DirectoryGrid({ advisors }: { advisors: BaseballCardAdvisor[] })
                 padding: "10px 32px 10px 12px",
                 fontFamily: "var(--font-ui)",
                 fontSize: "13px",
-                border: "1px solid var(--gray-200)",
-                background: "var(--white)",
-                color: "var(--coastal-900)",
+                border: "1px solid var(--input-border)",
+                background: "var(--input-bg)",
+                color: "var(--text-primary)",
                 appearance: "none",
                 outline: "none",
               }}
             >
               {STATES.map((s) => <option key={s}>{s}</option>)}
             </select>
-            <span style={{ fontFamily: "var(--font-ui)", fontSize: "12px", color: "var(--gray-400)", marginLeft: "auto" }}>
+            <span style={{ fontFamily: "var(--font-ui)", fontSize: "12px", color: "var(--text-muted)", marginLeft: "auto" }}>
               {filtered.length} advisor{filtered.length !== 1 ? "s" : ""}
             </span>
           </div>
@@ -159,15 +159,15 @@ export function DirectoryGrid({ advisors }: { advisors: BaseballCardAdvisor[] })
             className="flex flex-col items-center justify-center"
             style={{
               padding: "var(--space-9)",
-              background: "var(--white)",
-              border: "1px solid var(--gray-200)",
+              background: "var(--card-bg)",
+              border: "1px solid var(--card-border)",
               textAlign: "center",
             }}
           >
-            <div style={{ fontFamily: "var(--font-display)", fontSize: "24px", color: "var(--coastal-900)", marginBottom: "var(--space-3)" }}>
+            <div style={{ fontFamily: "var(--font-display)", fontSize: "24px", color: "var(--text-primary)", marginBottom: "var(--space-3)" }}>
               No advisors found
             </div>
-            <p style={{ fontFamily: "var(--font-body-serif)", fontSize: "15px", color: "var(--gray-400)" }}>
+            <p style={{ fontFamily: "var(--font-body-serif)", fontSize: "15px", color: "var(--text-muted)" }}>
               Try adjusting your filters or search terms.
             </p>
           </div>

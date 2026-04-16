@@ -38,7 +38,7 @@ export function Nav() {
           style={{
             fontFamily: "var(--font-display)",
             fontSize: "20px",
-            color: "var(--coastal-900)",
+            color: "var(--text-primary)",
             fontWeight: 400,
           }}
         >
@@ -48,7 +48,7 @@ export function Nav() {
           style={{
             width: "1px",
             height: "20px",
-            background: "var(--gray-200)",
+            background: "var(--card-border)",
           }}
         />
         <span
@@ -108,8 +108,8 @@ export function Nav() {
           style={{
             width: "36px",
             height: "36px",
-            border: "1px solid var(--gray-200)",
-            background: "var(--white)",
+            border: "1px solid var(--card-border)",
+            background: "var(--card-bg)",
             transition: "all var(--duration-fast)",
           }}
           title="3 new matches"
@@ -133,7 +133,7 @@ export function Nav() {
               width: "16px",
               height: "16px",
               background: "var(--error)",
-              color: "var(--white)",
+              color: "var(--text-on-brand)",
               fontSize: "9px",
               fontWeight: 600,
               borderRadius: "50%",
@@ -149,7 +149,7 @@ export function Nav() {
             height: "32px",
             background: "var(--coastal-600)",
             borderRadius: "50%",
-            color: "var(--white)",
+            color: "var(--text-on-brand)",
             fontSize: "12px",
             fontWeight: 500,
           }}

@@ -111,7 +111,7 @@ export function DiscoverDeck({ cases, profileSetUp = true }: { cases: CaseWithAd
   return (
     <div
       style={{
-        background: "var(--coastal-900)",
+        background: "#252f4a",
         minHeight: "calc(100vh - 65px)",
         position: "relative",
         overflow: "hidden",
@@ -167,7 +167,7 @@ export function DiscoverDeck({ cases, profileSetUp = true }: { cases: CaseWithAd
               border: "1px solid rgba(107,149,186,0.25)",
             }}
           >
-            <div style={{ fontFamily: "var(--font-ui)", fontSize: "14px", fontWeight: 500, color: "var(--white)", marginBottom: "6px" }}>
+            <div style={{ fontFamily: "var(--font-ui)", fontSize: "14px", fontWeight: 500, color: "var(--text-on-brand)", marginBottom: "6px" }}>
               Set up your profile to get matched
             </div>
             <p style={{ fontFamily: "var(--font-ui)", fontSize: "12px", color: "var(--coastal-300)", lineHeight: 1.5, marginBottom: "12px" }}>
@@ -179,7 +179,7 @@ export function DiscoverDeck({ cases, profileSetUp = true }: { cases: CaseWithAd
                 fontFamily: "var(--font-ui)",
                 fontSize: "12px",
                 fontWeight: 500,
-                color: "var(--white)",
+                color: "var(--text-on-brand)",
                 padding: "8px 16px",
                 background: "var(--coastal-600)",
                 textDecoration: "none",
@@ -234,11 +234,11 @@ export function DiscoverDeck({ cases, profileSetUp = true }: { cases: CaseWithAd
           >
             {deck.length > 0 ? (
               <>
-                <span style={{ fontFamily: "var(--font-display)", fontSize: "16px", color: "var(--white)" }}>
+                <span style={{ fontFamily: "var(--font-display)", fontSize: "16px", color: "var(--text-on-brand)" }}>
                   {currentIndex}
                 </span>
                 {" "}of{" "}
-                <span style={{ fontFamily: "var(--font-display)", fontSize: "16px", color: "var(--white)" }}>
+                <span style={{ fontFamily: "var(--font-display)", fontSize: "16px", color: "var(--text-on-brand)" }}>
                   {cases.length}
                 </span>
                 {" "}opportunities{thisWeekCount > 0 && ` · ${thisWeekCount} this week`}
@@ -396,7 +396,7 @@ export function DiscoverDeck({ cases, profileSetUp = true }: { cases: CaseWithAd
               style={{
                 fontFamily: "var(--font-display)",
                 fontSize: "32px",
-                color: "var(--white)",
+                color: "var(--text-on-brand)",
                 fontWeight: 400,
                 lineHeight: 1.1,
                 marginBottom: "var(--space-4)",
@@ -498,7 +498,7 @@ function SwipeCard({
       style={{
         position: "absolute",
         inset: 0,
-        background: "var(--white)",
+        background: "var(--card-bg)",
         boxShadow: "var(--shadow-xl)",
         cursor: drag.dragging ? "grabbing" : "grab",
         transform: `translate(${flyX}, ${drag.y}px) rotate(${flyRotation}deg)`,
@@ -560,7 +560,7 @@ function SwipeCard({
       {/* MEETING-FIRST HEADER — Date + Time as headline */}
       <div
         style={{
-          background: "var(--coastal-900)",
+          background: "#252f4a",
           padding: "var(--space-5) var(--space-5) var(--space-4)",
         }}
       >
@@ -569,7 +569,7 @@ function SwipeCard({
           style={{
             fontFamily: "var(--font-display)",
             fontSize: "24px",
-            color: "var(--white)",
+            color: "var(--text-on-brand)",
             fontWeight: 400,
             lineHeight: 1.15,
             letterSpacing: "-0.01em",
@@ -587,7 +587,7 @@ function SwipeCard({
               fontSize: "11px",
               padding: "4px 12px",
               background: "rgba(255,255,255,0.15)",
-              color: "var(--white)",
+              color: "var(--text-on-brand)",
               fontWeight: 500,
               letterSpacing: "0.3px",
               textTransform: "uppercase",
@@ -604,7 +604,7 @@ function SwipeCard({
                 fontSize: "11px",
                 padding: "4px 10px",
                 background: "var(--coastal-600)",
-                color: "var(--white)",
+                color: "var(--text-on-brand)",
                 fontWeight: 600,
                 letterSpacing: "0.5px",
               }}
@@ -642,7 +642,7 @@ function SwipeCard({
             marginBottom: "var(--space-3)",
             fontFamily: "var(--font-ui)",
             fontSize: "13px",
-            color: "var(--gray-600)",
+            color: "var(--text-secondary)",
           }}
         >
           <span>{locationIcon}</span>
@@ -655,7 +655,7 @@ function SwipeCard({
             style={{
               fontFamily: "var(--font-body-serif)",
               fontSize: "14px",
-              color: "var(--gray-600)",
+              color: "var(--text-secondary)",
               lineHeight: 1.7,
               fontWeight: 300,
               fontStyle: "normal",
@@ -672,7 +672,7 @@ function SwipeCard({
             style={{
               fontFamily: "var(--font-body-serif)",
               fontSize: "14px",
-              color: "var(--gray-600)",
+              color: "var(--text-secondary)",
               lineHeight: 1.7,
               fontWeight: 300,
               marginBottom: "var(--space-4)",
@@ -691,8 +691,8 @@ function SwipeCard({
                 fontFamily: "var(--font-ui)",
                 fontSize: "10px",
                 padding: "4px 10px",
-                background: "var(--coastal-100)",
-                color: "var(--coastal-700)",
+                background: "var(--tag-specialization-bg)",
+                color: "var(--tag-specialization-text)",
                 fontWeight: 500,
               }}
             >
@@ -707,7 +707,7 @@ function SwipeCard({
           style={{ borderTop: "1px solid var(--gray-100)", paddingTop: "var(--space-3)" }}
         >
           <div className="flex items-center" style={{ gap: "8px" }}>
-            <span style={{ fontFamily: "var(--font-ui)", fontSize: "11px", color: "var(--gray-400)", fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.5px" }}>
+            <span style={{ fontFamily: "var(--font-ui)", fontSize: "11px", color: "var(--text-muted)", fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.5px" }}>
               Complexity
             </span>
             <div className="flex items-center" style={{ gap: "3px" }}>
@@ -726,8 +726,8 @@ function SwipeCard({
               fontFamily: "var(--font-ui)",
               fontSize: "10px",
               padding: "4px 10px",
-              background: "var(--coastal-900)",
-              color: "var(--white)",
+              background: "#252f4a",
+              color: "var(--text-on-brand)",
               fontWeight: 500,
               letterSpacing: "0.3px",
               textTransform: "uppercase",
@@ -756,7 +756,7 @@ function SwipeCard({
               background: avatarColor,
               fontSize: "11px",
               fontWeight: 500,
-              color: "var(--white)",
+              color: "var(--text-on-brand)",
               flexShrink: 0,
             }}
           >
@@ -766,11 +766,11 @@ function SwipeCard({
             <Link
               href={`/directory/${caseData.advisor.id}`}
               onClick={(e) => e.stopPropagation()}
-              style={{ fontFamily: "var(--font-ui)", fontSize: "13px", fontWeight: 500, color: "var(--coastal-900)", textDecoration: "none" }}
+              style={{ fontFamily: "var(--font-ui)", fontSize: "13px", fontWeight: 500, color: "var(--text-primary)", textDecoration: "none" }}
             >
               {caseData.advisor.full_name}
             </Link>
-            <div style={{ fontFamily: "var(--font-ui)", fontSize: "11px", color: "var(--gray-400)" }}>
+            <div style={{ fontFamily: "var(--font-ui)", fontSize: "11px", color: "var(--text-muted)" }}>
               {caseData.advisor.years_experience} yrs &middot; {caseData.advisor.region}
             </div>
           </div>

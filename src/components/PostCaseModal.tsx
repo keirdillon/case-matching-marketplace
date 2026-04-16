@@ -162,15 +162,15 @@ export function PostCaseModal({ open, onClose }: PostCaseModalProps) {
         style={{ background: "rgba(37, 47, 74, 0.6)", paddingTop: "var(--space-8)", backdropFilter: "blur(4px)" }}
         onClick={(e) => { if (e.target === e.currentTarget) { resetForm(); onClose(); } }}
       >
-        <div style={{ width: "640px", maxWidth: "95vw", background: "var(--white)", boxShadow: "var(--shadow-xl)" }}>
+        <div style={{ width: "640px", maxWidth: "95vw", background: "var(--card-bg)", boxShadow: "var(--shadow-xl)" }}>
           <div className="flex flex-col items-center justify-center" style={{ padding: "var(--space-9) var(--space-6)", textAlign: "center" }}>
             <div style={{ width: "56px", height: "56px", background: "var(--success)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "var(--space-5)" }}>
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5"><polyline points="20 6 9 17 4 12" /></svg>
             </div>
-            <div style={{ fontFamily: "var(--font-display)", fontSize: "28px", color: "var(--coastal-900)", marginBottom: "var(--space-3)" }}>
+            <div style={{ fontFamily: "var(--font-display)", fontSize: "28px", color: "var(--text-primary)", marginBottom: "var(--space-3)" }}>
               Case Posted
             </div>
-            <p style={{ fontFamily: "var(--font-body-serif)", fontSize: "15px", color: "var(--gray-500)", lineHeight: 1.6 }}>
+            <p style={{ fontFamily: "var(--font-body-serif)", fontSize: "15px", color: "var(--text-secondary)", lineHeight: 1.6 }}>
               Your opportunity is now live. Senior advisors will see it in their Discover deck.
             </p>
           </div>
@@ -185,11 +185,11 @@ export function PostCaseModal({ open, onClose }: PostCaseModalProps) {
       style={{ background: "rgba(37, 47, 74, 0.6)", paddingTop: "var(--space-8)", backdropFilter: "blur(4px)" }}
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
-      <div style={{ width: "680px", maxWidth: "95vw", background: "var(--white)", boxShadow: "var(--shadow-xl)", marginBottom: "var(--space-8)" }}>
+      <div style={{ width: "680px", maxWidth: "95vw", background: "var(--card-bg)", boxShadow: "var(--shadow-xl)", marginBottom: "var(--space-8)" }}>
         {/* Header */}
-        <div className="flex justify-between items-center" style={{ padding: "var(--space-5) var(--space-6)", borderBottom: "1px solid var(--gray-200)" }}>
-          <h2 style={{ fontFamily: "var(--font-display)", fontSize: "24px", color: "var(--coastal-900)", fontWeight: 400 }}>Post a Case</h2>
-          <button onClick={onClose} className="flex items-center justify-center cursor-pointer" style={{ width: "32px", height: "32px", border: "1px solid var(--gray-200)", background: "var(--white)", fontSize: "18px", color: "var(--gray-400)" }}>
+        <div className="flex justify-between items-center" style={{ padding: "var(--space-5) var(--space-6)", borderBottom: "1px solid var(--card-border)" }}>
+          <h2 style={{ fontFamily: "var(--font-display)", fontSize: "24px", color: "var(--text-primary)", fontWeight: 400 }}>Post a Case</h2>
+          <button onClick={onClose} className="flex items-center justify-center cursor-pointer" style={{ width: "32px", height: "32px", border: "1px solid var(--card-border)", background: "var(--card-bg)", fontSize: "18px", color: "var(--text-muted)" }}>
             &times;
           </button>
         </div>
@@ -225,7 +225,7 @@ export function PostCaseModal({ open, onClose }: PostCaseModalProps) {
                     gap: "8px",
                     padding: "10px 16px",
                     border: `1px solid ${meetingFormat === opt.value ? "var(--coastal-600)" : "var(--gray-200)"}`,
-                    background: meetingFormat === opt.value ? "var(--coastal-50)" : "var(--white)",
+                    background: meetingFormat === opt.value ? "var(--coastal-50)" : "var(--card-bg)",
                     flex: 1,
                   }}
                 >
@@ -236,7 +236,7 @@ export function PostCaseModal({ open, onClose }: PostCaseModalProps) {
                     onChange={() => setMeetingFormat(opt.value)}
                     style={{ accentColor: "var(--coastal-600)" }}
                   />
-                  <span style={{ fontFamily: "var(--font-ui)", fontSize: "13px", color: "var(--coastal-900)" }}>
+                  <span style={{ fontFamily: "var(--font-ui)", fontSize: "13px", color: "var(--text-primary)" }}>
                     {opt.label}
                   </span>
                 </label>
@@ -365,7 +365,7 @@ export function PostCaseModal({ open, onClose }: PostCaseModalProps) {
               maxLength={500}
               style={{ ...inputStyle, resize: "vertical", minHeight: "100px" }}
             />
-            <div style={{ fontFamily: "var(--font-ui)", fontSize: "11px", color: "var(--gray-400)", marginTop: "4px", textAlign: "right" }}>
+            <div style={{ fontFamily: "var(--font-ui)", fontSize: "11px", color: "var(--text-muted)", marginTop: "4px", textAlign: "right" }}>
               {clientSummary.length}/500
             </div>
           </FormRow>
@@ -391,7 +391,7 @@ export function PostCaseModal({ open, onClose }: PostCaseModalProps) {
                 <line x1="12" y1="9" x2="12" y2="13" />
                 <line x1="12" y1="17" x2="12.01" y2="17" />
               </svg>
-              <span style={{ fontFamily: "var(--font-ui)", fontSize: "12px", color: "var(--gray-600)", lineHeight: 1.5 }}>
+              <span style={{ fontFamily: "var(--font-ui)", fontSize: "12px", color: "var(--text-secondary)", lineHeight: 1.5 }}>
                 Do not include any personally identifiable client information. This platform is for matching purposes only.
               </span>
             </div>
@@ -399,7 +399,7 @@ export function PostCaseModal({ open, onClose }: PostCaseModalProps) {
         </div>
 
         {/* Footer */}
-        <div className="flex justify-end" style={{ padding: "var(--space-5) var(--space-6)", borderTop: "1px solid var(--gray-200)", gap: "var(--space-3)" }}>
+        <div className="flex justify-end" style={{ padding: "var(--space-5) var(--space-6)", borderTop: "1px solid var(--card-border)", gap: "var(--space-3)" }}>
           <button onClick={onClose} className="btn btn-outline btn-sm">Cancel</button>
           <button
             onClick={handleSubmit}
@@ -420,16 +420,16 @@ const inputStyle: React.CSSProperties = {
   padding: "12px 14px",
   fontFamily: "var(--font-ui)",
   fontSize: "14px",
-  color: "var(--coastal-900)",
-  border: "1px solid var(--gray-200)",
-  background: "var(--white)",
+  color: "var(--text-primary)",
+  border: "1px solid var(--input-border)",
+  background: "var(--input-bg)",
   outline: "none",
 };
 
 function FormRow({ label, required, children }: { label: string; required?: boolean; children: React.ReactNode }) {
   return (
     <div style={{ marginBottom: "var(--space-5)" }}>
-      <label className="block" style={{ fontFamily: "var(--font-ui)", fontSize: "12px", fontWeight: 500, color: "var(--coastal-900)", marginBottom: "var(--space-2)" }}>
+      <label className="block" style={{ fontFamily: "var(--font-ui)", fontSize: "12px", fontWeight: 500, color: "var(--text-primary)", marginBottom: "var(--space-2)" }}>
         {label}{required && <span style={{ color: "var(--error)", marginLeft: "2px" }}>*</span>}
       </label>
       {children}
@@ -444,8 +444,8 @@ function FormChip({ children, active, onClick }: { children: React.ReactNode; ac
       className="cursor-pointer"
       style={{
         fontFamily: "var(--font-ui)", fontSize: "12px", padding: "8px 14px",
-        background: active ? "var(--coastal-600)" : "var(--gray-100)",
-        color: active ? "var(--white)" : "var(--gray-600)",
+        background: active ? "var(--coastal-600)" : "var(--tag-specialization-bg)",
+        color: active ? "var(--white)" : "var(--tag-specialization-text)",
         border: `1px solid ${active ? "var(--coastal-600)" : "transparent"}`,
         transition: "all var(--duration-fast)",
       }}

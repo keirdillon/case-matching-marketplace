@@ -67,11 +67,11 @@ export function BaseballCard({
   }
 
   return (
-    <div style={{ background: "var(--white)", maxWidth: "560px", width: "100%" }}>
+    <div style={{ background: "var(--card-bg)", maxWidth: "560px", width: "100%" }}>
       {/* Header */}
       <div
         style={{
-          background: "var(--coastal-900)",
+          background: "#252f4a",
           padding: "var(--space-6)",
           position: "relative",
         }}
@@ -86,7 +86,7 @@ export function BaseballCard({
               right: "16px",
               background: "rgba(255,255,255,0.1)",
               border: "none",
-              color: "var(--white)",
+              color: "var(--text-on-brand)",
               width: "32px",
               height: "32px",
               display: "flex",
@@ -109,7 +109,7 @@ export function BaseballCard({
               background: avatarColor,
               fontSize: "24px",
               fontWeight: 500,
-              color: "var(--white)",
+              color: "var(--text-on-brand)",
               flexShrink: 0,
             }}
           >
@@ -121,7 +121,7 @@ export function BaseballCard({
                 style={{
                   fontFamily: "var(--font-display)",
                   fontSize: "24px",
-                  color: "var(--white)",
+                  color: "var(--text-on-brand)",
                   fontWeight: 400,
                   lineHeight: 1.15,
                 }}
@@ -146,7 +146,7 @@ export function BaseballCard({
         className="grid"
         style={{
           gridTemplateColumns: "repeat(4, 1fr)",
-          borderBottom: "1px solid var(--gray-200)",
+          borderBottom: "1px solid var(--card-border)",
         }}
       >
         <StatCell value={`${advisor.years_experience}`} label="Years Exp" />
@@ -213,7 +213,7 @@ export function BaseballCard({
                     fontSize: "11px",
                     padding: "4px 10px",
                     background: "var(--coastal-100)",
-                    color: "var(--coastal-700)",
+                    color: "var(--text-primary)",
                     fontWeight: 500,
                   }}
                 >
@@ -235,8 +235,8 @@ export function BaseballCard({
                     fontFamily: "var(--font-ui)",
                     fontSize: "11px",
                     padding: "4px 12px",
-                    background: "var(--gray-100)",
-                    color: "var(--gray-600)",
+                    background: "var(--tag-specialization-bg)",
+                    color: "var(--tag-specialization-text)",
                     fontWeight: 400,
                   }}
                 >
@@ -258,8 +258,8 @@ export function BaseballCard({
                     fontFamily: "var(--font-ui)",
                     fontSize: "11px",
                     padding: "4px 12px",
-                    background: "var(--gray-100)",
-                    color: "var(--gray-600)",
+                    background: "var(--tag-specialization-bg)",
+                    color: "var(--tag-specialization-text)",
                     fontWeight: 400,
                   }}
                 >
@@ -277,7 +277,7 @@ export function BaseballCard({
               style={{
                 fontFamily: "var(--font-body-serif)",
                 fontSize: "14px",
-                color: "var(--gray-600)",
+                color: "var(--text-secondary)",
                 lineHeight: 1.7,
                 fontStyle: "italic",
                 fontWeight: 300,
@@ -300,7 +300,7 @@ export function BaseballCard({
                     fontSize: "11px",
                     padding: "4px 12px",
                     background: "var(--coastal-50)",
-                    color: "var(--coastal-700)",
+                    color: "var(--text-primary)",
                     border: "1px solid var(--coastal-100)",
                     fontWeight: 500,
                   }}
@@ -315,7 +315,7 @@ export function BaseballCard({
         {/* Education */}
         {advisor.education && (
           <Section label="Education">
-            <span style={{ fontFamily: "var(--font-ui)", fontSize: "13px", color: "var(--gray-600)" }}>
+            <span style={{ fontFamily: "var(--font-ui)", fontSize: "13px", color: "var(--text-secondary)" }}>
               {advisor.education}
             </span>
           </Section>
@@ -325,11 +325,11 @@ export function BaseballCard({
         <Section label="Contact">
           <div className="flex flex-wrap items-center" style={{ gap: "var(--space-3)" }}>
             {advisor.phone && (
-              <span style={{ fontFamily: "var(--font-ui)", fontSize: "13px", color: "var(--gray-600)" }}>
+              <span style={{ fontFamily: "var(--font-ui)", fontSize: "13px", color: "var(--text-secondary)" }}>
                 {advisor.phone}
               </span>
             )}
-            <span style={{ fontFamily: "var(--font-ui)", fontSize: "13px", color: "var(--gray-600)" }}>
+            <span style={{ fontFamily: "var(--font-ui)", fontSize: "13px", color: "var(--text-secondary)" }}>
               {advisor.email}
             </span>
             {advisor.calendly_url && (
@@ -347,7 +347,7 @@ export function BaseballCard({
         </Section>
 
         {/* Footer: availability + joined date */}
-        <div className="flex justify-between items-center" style={{ paddingTop: "var(--space-4)", borderTop: "1px solid var(--gray-100)" }}>
+        <div className="flex justify-between items-center" style={{ paddingTop: "var(--space-4)", borderTop: "1px solid var(--card-border)" }}>
           <div className="flex items-center" style={{ gap: "8px" }}>
             <span
               style={{
@@ -357,12 +357,12 @@ export function BaseballCard({
                 background: advisor.availability_status === "active" ? "var(--success)" : "var(--gray-300)",
               }}
             />
-            <span style={{ fontFamily: "var(--font-ui)", fontSize: "12px", color: "var(--gray-500)" }}>
+            <span style={{ fontFamily: "var(--font-ui)", fontSize: "12px", color: "var(--text-secondary)" }}>
               {advisor.availability_status === "active" ? "Active" : "Paused"}
             </span>
           </div>
           {joinedStr && (
-            <span style={{ fontFamily: "var(--font-ui)", fontSize: "12px", color: "var(--gray-400)" }}>
+            <span style={{ fontFamily: "var(--font-ui)", fontSize: "12px", color: "var(--text-muted)" }}>
               Joined {joinedStr}
             </span>
           )}
@@ -389,8 +389,8 @@ function CompactCard({
     <div
       className="group relative cursor-pointer"
       style={{
-        background: "var(--white)",
-        border: "1px solid var(--gray-200)",
+        background: "var(--card-bg)",
+        border: "1px solid var(--card-border)",
         transition: "all 300ms var(--ease-out)",
       }}
     >
@@ -413,7 +413,7 @@ function CompactCard({
               background: avatarColor,
               fontSize: "16px",
               fontWeight: 500,
-              color: "var(--white)",
+              color: "var(--text-on-brand)",
               flexShrink: 0,
             }}
           >
@@ -421,7 +421,7 @@ function CompactCard({
           </div>
           <div>
             <div className="flex items-center" style={{ gap: "6px" }}>
-              <span style={{ fontFamily: "var(--font-display)", fontSize: "18px", color: "var(--coastal-900)", fontWeight: 400 }}>
+              <span style={{ fontFamily: "var(--font-display)", fontSize: "18px", color: "var(--text-primary)", fontWeight: 400 }}>
                 {advisor.full_name}
               </span>
               {advisor.verified && (
@@ -431,7 +431,7 @@ function CompactCard({
                 </>
               )}
             </div>
-            <div style={{ fontFamily: "var(--font-ui)", fontSize: "12px", color: "var(--gray-400)" }}>
+            <div style={{ fontFamily: "var(--font-ui)", fontSize: "12px", color: "var(--text-muted)" }}>
               {advisor.years_experience} yrs &middot; {advisor.region}
               {advisor.office && ` \u00B7 ${advisor.office}`}
             </div>
@@ -475,7 +475,7 @@ function CompactCard({
           {advisor.licensed_states.map((st) => (
             <span
               key={st}
-              style={{ fontFamily: "var(--font-ui)", fontSize: "10px", padding: "3px 8px", background: "var(--coastal-100)", color: "var(--coastal-700)", fontWeight: 500 }}
+              style={{ fontFamily: "var(--font-ui)", fontSize: "10px", padding: "3px 8px", background: "var(--coastal-100)", color: "var(--text-primary)", fontWeight: 500 }}
             >
               {st}
             </span>
@@ -488,13 +488,13 @@ function CompactCard({
             {specTags.slice(0, 4).map((tag) => (
               <span
                 key={tag.id}
-                style={{ fontFamily: "var(--font-ui)", fontSize: "10px", padding: "3px 8px", background: "var(--gray-100)", color: "var(--gray-600)" }}
+                style={{ fontFamily: "var(--font-ui)", fontSize: "10px", padding: "3px 8px", background: "var(--tag-specialization-bg)", color: "var(--tag-specialization-text)" }}
               >
                 {tag.name}
               </span>
             ))}
             {specTags.length > 4 && (
-              <span style={{ fontFamily: "var(--font-ui)", fontSize: "10px", padding: "3px 8px", color: "var(--gray-400)" }}>
+              <span style={{ fontFamily: "var(--font-ui)", fontSize: "10px", padding: "3px 8px", color: "var(--text-muted)" }}>
                 +{specTags.length - 4} more
               </span>
             )}
@@ -502,7 +502,7 @@ function CompactCard({
         )}
 
         {/* Availability indicator */}
-        <div className="flex items-center" style={{ gap: "6px", marginTop: "var(--space-3)", paddingTop: "var(--space-3)", borderTop: "1px solid var(--gray-100)" }}>
+        <div className="flex items-center" style={{ gap: "6px", marginTop: "var(--space-3)", paddingTop: "var(--space-3)", borderTop: "1px solid var(--card-border)" }}>
           <span
             style={{
               width: "6px",
@@ -511,7 +511,7 @@ function CompactCard({
               background: advisor.availability_status === "active" ? "var(--success)" : "var(--gray-300)",
             }}
           />
-          <span style={{ fontFamily: "var(--font-ui)", fontSize: "11px", color: "var(--gray-400)" }}>
+          <span style={{ fontFamily: "var(--font-ui)", fontSize: "11px", color: "var(--text-muted)" }}>
             {advisor.availability_status === "active" ? "Active" : "Paused"}
           </span>
         </div>
@@ -522,11 +522,11 @@ function CompactCard({
 
 function StatCell({ value, label }: { value: string; label: string }) {
   return (
-    <div style={{ padding: "var(--space-4)", textAlign: "center", borderRight: "1px solid var(--gray-100)" }}>
-      <div style={{ fontFamily: "var(--font-display)", fontSize: "24px", color: "var(--coastal-900)", fontWeight: 400, lineHeight: 1 }}>
+    <div style={{ padding: "var(--space-4)", textAlign: "center", borderRight: "1px solid var(--card-border)" }}>
+      <div style={{ fontFamily: "var(--font-display)", fontSize: "24px", color: "var(--text-primary)", fontWeight: 400, lineHeight: 1 }}>
         {value}
       </div>
-      <div style={{ fontFamily: "var(--font-ui)", fontSize: "10px", color: "var(--gray-400)", textTransform: "uppercase", letterSpacing: "0.5px", marginTop: "4px" }}>
+      <div style={{ fontFamily: "var(--font-ui)", fontSize: "10px", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.5px", marginTop: "4px" }}>
         {label}
       </div>
     </div>
@@ -536,10 +536,10 @@ function StatCell({ value, label }: { value: string; label: string }) {
 function MiniStat({ value, label }: { value: string; label: string }) {
   return (
     <div>
-      <div style={{ fontFamily: "var(--font-display)", fontSize: "16px", color: "var(--coastal-900)", fontWeight: 400 }}>
+      <div style={{ fontFamily: "var(--font-display)", fontSize: "16px", color: "var(--text-primary)", fontWeight: 400 }}>
         {value}
       </div>
-      <div style={{ fontFamily: "var(--font-ui)", fontSize: "10px", color: "var(--gray-400)", textTransform: "uppercase", letterSpacing: "0.3px" }}>
+      <div style={{ fontFamily: "var(--font-ui)", fontSize: "10px", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.3px" }}>
         {label}
       </div>
     </div>
@@ -549,7 +549,7 @@ function MiniStat({ value, label }: { value: string; label: string }) {
 function Section({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div style={{ marginBottom: "var(--space-4)" }}>
-      <div style={{ fontFamily: "var(--font-ui)", fontSize: "11px", color: "var(--gray-400)", fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "var(--space-2)" }}>
+      <div style={{ fontFamily: "var(--font-ui)", fontSize: "11px", color: "var(--text-muted)", fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "var(--space-2)" }}>
         {label}
       </div>
       {children}

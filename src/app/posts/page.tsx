@@ -81,10 +81,10 @@ export default async function MyPostsPage() {
       <Nav />
       <div className="mx-auto" style={{ maxWidth: "1000px", padding: "var(--space-7) var(--space-6)" }}>
         <div className="overline" style={{ marginBottom: "var(--space-5)" }}>My Posts</div>
-        <h1 style={{ fontFamily: "var(--font-display)", fontSize: "36px", color: "var(--coastal-900)", fontWeight: 400, marginBottom: "var(--space-3)", lineHeight: 1.1 }}>
-          Your <em style={{ fontStyle: "italic", color: "var(--coastal-700)" }}>posted</em> cases
+        <h1 style={{ fontFamily: "var(--font-display)", fontSize: "36px", color: "var(--text-primary)", fontWeight: 400, marginBottom: "var(--space-3)", lineHeight: 1.1 }}>
+          Your <em style={{ fontStyle: "italic", color: "var(--coastal-600)" }}>posted</em> cases
         </h1>
-        <p style={{ fontFamily: "var(--font-body-serif)", fontSize: "16px", color: "var(--gray-500)", lineHeight: 1.7, fontWeight: 300, marginBottom: "var(--space-7)", maxWidth: "560px" }}>
+        <p style={{ fontFamily: "var(--font-body-serif)", fontSize: "16px", color: "var(--text-secondary)", lineHeight: 1.7, fontWeight: 300, marginBottom: "var(--space-7)", maxWidth: "560px" }}>
           Track the cases you&apos;ve posted and see which senior advisors have expressed interest.
         </p>
         <MyPostsBoard posts={posts} />

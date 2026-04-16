@@ -34,14 +34,14 @@ export function Hero({ onPostCase }: { onPostCase?: () => void }) {
         className="flex items-center justify-between"
         style={{
           padding: "12px 32px",
-          background: "var(--coastal-900)",
+          background: "#252f4a",
           borderBottom: "1px solid rgba(255,255,255,0.06)",
         }}
       >
         <div className="flex items-center" style={{ gap: "var(--space-6)" }}>
           {STATS.map((stat) => (
             <div key={stat.label} className="flex items-center" style={{ gap: "8px" }}>
-              <span style={{ fontFamily: "var(--font-display)", fontSize: "20px", color: "var(--white)", fontWeight: 400 }}>
+              <span style={{ fontFamily: "var(--font-display)", fontSize: "20px", color: "var(--text-on-brand)", fontWeight: 400 }}>
                 {stat.num}
               </span>
               <span style={{ fontFamily: "var(--font-ui)", fontSize: "11px", color: "var(--coastal-400)", letterSpacing: "0.3px" }}>
@@ -78,7 +78,7 @@ export function Hero({ onPostCase }: { onPostCase?: () => void }) {
       className="grid min-h-[420px] relative"
       style={{
         gridTemplateColumns: "1fr 1fr",
-        borderBottom: "1px solid var(--gray-200)",
+        borderBottom: "1px solid var(--card-border)",
       }}
     >
       {/* Left — Content */}
@@ -98,19 +98,19 @@ export function Hero({ onPostCase }: { onPostCase?: () => void }) {
             fontSize: "clamp(36px, 4vw, 56px)",
             lineHeight: 0.96,
             letterSpacing: "-0.02em",
-            color: "var(--coastal-900)",
+            color: "var(--text-primary)",
             marginBottom: "var(--space-5)",
             fontWeight: 400,
           }}
         >
-          Find your <em style={{ fontStyle: "italic", color: "var(--coastal-700)" }}>perfect</em>{" "}
+          Find your <em style={{ fontStyle: "italic", color: "var(--text-primary)" }}>perfect</em>{" "}
           collaboration
         </h1>
         <p
           style={{
             fontFamily: "var(--font-body-serif)",
             fontSize: "17px",
-            color: "var(--gray-500)",
+            color: "var(--text-secondary)",
             maxWidth: "420px",
             lineHeight: 1.7,
             fontWeight: 300,
@@ -129,7 +129,7 @@ export function Hero({ onPostCase }: { onPostCase?: () => void }) {
       {/* Right — Dark with stats */}
       <div
         className="relative overflow-hidden hidden md:block"
-        style={{ background: "var(--coastal-900)" }}
+        style={{ background: "#252f4a" }}
       >
         <div
           className="absolute inset-0"
@@ -166,7 +166,7 @@ export function Hero({ onPostCase }: { onPostCase?: () => void }) {
                 style={{
                   fontFamily: "var(--font-display)",
                   fontSize: "48px",
-                  color: "var(--white)",
+                  color: "var(--text-on-brand)",
                   lineHeight: 1,
                   marginBottom: "var(--space-2)",
                   fontWeight: 400,

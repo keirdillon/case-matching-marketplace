@@ -10,8 +10,8 @@ export function StatsBar() {
     <div
       className="grid grid-cols-2 md:grid-cols-4"
       style={{
-        borderBottom: "1px solid var(--gray-200)",
-        background: "var(--white)",
+        borderBottom: "1px solid var(--card-border)",
+        background: "var(--card-bg)",
       }}
     >
       {STATS.map((stat, i) => (
@@ -20,14 +20,14 @@ export function StatsBar() {
           className="text-center"
           style={{
             padding: "var(--space-5) var(--space-6)",
-            borderRight: i < STATS.length - 1 ? "1px solid var(--gray-200)" : "none",
+            borderRight: i < STATS.length - 1 ? "1px solid var(--card-border)" : "none",
           }}
         >
           <div
             style={{
               fontFamily: "var(--font-display)",
               fontSize: "36px",
-              color: "var(--coastal-900)",
+              color: "var(--text-primary)",
               lineHeight: 1,
               marginBottom: "var(--space-1)",
               fontWeight: 400,
@@ -39,7 +39,7 @@ export function StatsBar() {
             style={{
               fontFamily: "var(--font-ui)",
               fontSize: "11px",
-              color: "var(--gray-400)",
+              color: "var(--text-muted)",
               fontWeight: 400,
               letterSpacing: "0.5px",
               textTransform: "uppercase",

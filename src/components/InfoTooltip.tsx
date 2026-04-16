@@ -37,8 +37,8 @@ export function InfoTooltip({ text }: { text: string }) {
             transform: "translateX(-50%)",
             width: "240px",
             padding: "10px 14px",
-            background: "var(--coastal-900)",
-            color: "var(--white)",
+            background: "#252f4a",
+            color: "#ffffff",
             fontFamily: "var(--font-ui)",
             fontSize: "12px",
             lineHeight: 1.55,
@@ -60,7 +60,7 @@ export function InfoTooltip({ text }: { text: string }) {
               height: 0,
               borderLeft: "5px solid transparent",
               borderRight: "5px solid transparent",
-              borderTop: "5px solid var(--coastal-900)",
+              borderTop: "5px solid #252f4a",
             }}
           />
           {text}

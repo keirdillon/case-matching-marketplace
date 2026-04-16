@@ -122,13 +122,13 @@ export function CaseDetailModal({ caseData, onClose }: CaseDetailModalProps) {
       style={{ background: "rgba(37, 47, 74, 0.6)", backdropFilter: "blur(4px)" }}
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
-      <div style={{ display: "grid", gridTemplateColumns: interestedMatches.length > 0 && isPoster ? "1fr 1fr" : "1fr", width: interestedMatches.length > 0 && isPoster ? "820px" : "480px", maxWidth: "95vw", background: "var(--white)", boxShadow: "var(--shadow-xl)", maxHeight: "90vh", overflow: "auto" }}>
+      <div style={{ display: "grid", gridTemplateColumns: interestedMatches.length > 0 && isPoster ? "1fr 1fr" : "1fr", width: interestedMatches.length > 0 && isPoster ? "820px" : "480px", maxWidth: "95vw", background: "var(--card-bg)", boxShadow: "var(--shadow-xl)", maxHeight: "90vh", overflow: "auto" }}>
         {/* Left — Case detail */}
-        <div style={{ padding: "var(--space-6)", borderRight: interestedMatches.length > 0 && isPoster ? "1px solid var(--gray-200)" : "none", background: "var(--coastal-50)" }}>
-          <div style={{ fontFamily: "var(--font-ui)", fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase", color: "var(--gray-400)", fontWeight: 500, marginBottom: "var(--space-4)" }}>
+        <div style={{ padding: "var(--space-6)", borderRight: interestedMatches.length > 0 && isPoster ? "1px solid var(--card-border)" : "none", background: "var(--coastal-50)" }}>
+          <div style={{ fontFamily: "var(--font-ui)", fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase", color: "var(--text-muted)", fontWeight: 500, marginBottom: "var(--space-4)" }}>
             The Opportunity
           </div>
-          <h3 style={{ fontFamily: "var(--font-display)", fontSize: "26px", color: "var(--coastal-900)", lineHeight: 1.1, letterSpacing: "-0.01em", fontWeight: 400, marginBottom: "var(--space-4)" }}>
+          <h3 style={{ fontFamily: "var(--font-display)", fontSize: "26px", color: "var(--text-primary)", lineHeight: 1.1, letterSpacing: "-0.01em", fontWeight: 400, marginBottom: "var(--space-4)" }}>
             {caseData.title}
           </h3>
 
@@ -138,7 +138,7 @@ export function CaseDetailModal({ caseData, onClose }: CaseDetailModalProps) {
             {caseData.industry.map((ind) => (
               <Tag key={ind} bg="var(--sand-100)" color="var(--sand-500)">{ind}</Tag>
             ))}
-            <Tag bg="var(--coastal-900)" color="var(--white)">{caseData.aum_range}</Tag>
+            <Tag bg="#252f4a" color="var(--text-on-brand)">{caseData.aum_range}</Tag>
           </div>
 
           {/* Details */}
@@ -149,19 +149,19 @@ export function CaseDetailModal({ caseData, onClose }: CaseDetailModalProps) {
           <DetailRow label="Needs" value={(caseData.needs || []).map((n) => NEEDS_LABELS[n] || n).join(", ")} />
 
           {caseData.additional_context && (
-            <p style={{ fontFamily: "var(--font-body-serif)", fontSize: "14px", color: "var(--gray-500)", lineHeight: 1.65, fontWeight: 300, marginTop: "var(--space-4)", fontStyle: "italic" }}>
+            <p style={{ fontFamily: "var(--font-body-serif)", fontSize: "14px", color: "var(--text-secondary)", lineHeight: 1.65, fontWeight: 300, marginTop: "var(--space-4)", fontStyle: "italic" }}>
               {caseData.additional_context}
             </p>
           )}
 
           {/* Poster info */}
           <div className="flex items-center" style={{ gap: "10px", marginTop: "var(--space-5)" }}>
-            <div className="flex items-center justify-center" style={{ width: "28px", height: "28px", borderRadius: "50%", background: avatarColor, fontSize: "10px", fontWeight: 500, color: "var(--white)" }}>
+            <div className="flex items-center justify-center" style={{ width: "28px", height: "28px", borderRadius: "50%", background: avatarColor, fontSize: "10px", fontWeight: 500, color: "var(--text-on-brand)" }}>
               {initials}
             </div>
             <div>
-              <div style={{ fontFamily: "var(--font-ui)", fontSize: "13px", fontWeight: 500, color: "var(--coastal-900)" }}>{caseData.advisor.full_name}</div>
-              <div style={{ fontFamily: "var(--font-ui)", fontSize: "11px", color: "var(--gray-400)" }}>{caseData.advisor.years_experience} yrs &middot; {caseData.advisor.region}</div>
+              <div style={{ fontFamily: "var(--font-ui)", fontSize: "13px", fontWeight: 500, color: "var(--text-primary)" }}>{caseData.advisor.full_name}</div>
+              <div style={{ fontFamily: "var(--font-ui)", fontSize: "11px", color: "var(--text-muted)" }}>{caseData.advisor.years_experience} yrs &middot; {caseData.advisor.region}</div>
             </div>
           </div>
         </div>
@@ -169,23 +169,23 @@ export function CaseDetailModal({ caseData, onClose }: CaseDetailModalProps) {
         {/* Right — Interested advisors (poster view) */}
         {isPoster && interestedMatches.length > 0 && (
           <div style={{ padding: "var(--space-6)" }}>
-            <div style={{ fontFamily: "var(--font-ui)", fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase", color: "var(--gray-400)", fontWeight: 500, marginBottom: "var(--space-4)" }}>
+            <div style={{ fontFamily: "var(--font-ui)", fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase", color: "var(--text-muted)", fontWeight: 500, marginBottom: "var(--space-4)" }}>
               Interested Senior Advisors ({interestedMatches.length})
             </div>
 
             {interestedMatches.map((match) => (
-              <div key={match.id} style={{ marginBottom: "var(--space-5)", paddingBottom: "var(--space-5)", borderBottom: "1px solid var(--gray-100)" }}>
+              <div key={match.id} style={{ marginBottom: "var(--space-5)", paddingBottom: "var(--space-5)", borderBottom: "1px solid var(--card-border)" }}>
                 <div className="flex items-center" style={{ gap: "14px", marginBottom: "var(--space-3)" }}>
-                  <div className="flex items-center justify-center" style={{ width: "44px", height: "44px", borderRadius: "50%", background: "var(--coastal-600)", color: "var(--white)", fontSize: "16px", fontWeight: 500 }}>
+                  <div className="flex items-center justify-center" style={{ width: "44px", height: "44px", borderRadius: "50%", background: "var(--coastal-600)", color: "var(--text-on-brand)", fontSize: "16px", fontWeight: 500 }}>
                     {match.advisor ? getInitials(match.advisor.full_name) : "?"}
                   </div>
                   <div>
-                    <div style={{ fontFamily: "var(--font-ui)", fontSize: "15px", fontWeight: 500, color: "var(--coastal-900)" }}>{match.advisor?.full_name || "Unknown"}</div>
-                    <div style={{ fontFamily: "var(--font-ui)", fontSize: "12px", color: "var(--gray-400)" }}>{match.advisor?.years_experience} yrs &middot; {match.advisor?.region}</div>
+                    <div style={{ fontFamily: "var(--font-ui)", fontSize: "15px", fontWeight: 500, color: "var(--text-primary)" }}>{match.advisor?.full_name || "Unknown"}</div>
+                    <div style={{ fontFamily: "var(--font-ui)", fontSize: "12px", color: "var(--text-muted)" }}>{match.advisor?.years_experience} yrs &middot; {match.advisor?.region}</div>
                   </div>
                 </div>
                 {match.advisor?.bio && (
-                  <p style={{ fontFamily: "var(--font-body-serif)", fontSize: "13px", color: "var(--gray-600)", lineHeight: 1.65, fontStyle: "italic", marginBottom: "var(--space-3)" }}>
+                  <p style={{ fontFamily: "var(--font-body-serif)", fontSize: "13px", color: "var(--text-secondary)", lineHeight: 1.65, fontStyle: "italic", marginBottom: "var(--space-3)" }}>
                     &ldquo;{match.advisor.bio}&rdquo;
                   </p>
                 )}
@@ -200,7 +200,7 @@ export function CaseDetailModal({ caseData, onClose }: CaseDetailModalProps) {
         )}
 
         {/* Actions bar */}
-        <div className="flex justify-center" style={{ gridColumn: "1 / -1", padding: "var(--space-5)", borderTop: "1px solid var(--gray-200)", gap: "var(--space-3)" }}>
+        <div className="flex justify-center" style={{ gridColumn: "1 / -1", padding: "var(--space-5)", borderTop: "1px solid var(--card-border)", gap: "var(--space-3)" }}>
           <button onClick={onClose} className="btn btn-outline btn-sm">Close</button>
 
           {/* Senior advisor: express interest */}
@@ -216,7 +216,7 @@ export function CaseDetailModal({ caseData, onClose }: CaseDetailModalProps) {
           )}
 
           {isPoster && interestedMatches.length === 0 && !loading && (
-            <span style={{ fontFamily: "var(--font-ui)", fontSize: "13px", color: "var(--gray-400)", padding: "10px 24px" }}>
+            <span style={{ fontFamily: "var(--font-ui)", fontSize: "13px", color: "var(--text-muted)", padding: "10px 24px" }}>
               No interest yet — check back soon
             </span>
           )}
@@ -228,9 +228,9 @@ export function CaseDetailModal({ caseData, onClose }: CaseDetailModalProps) {
 
 function DetailRow({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex justify-between" style={{ padding: "8px 0", borderBottom: "1px solid var(--gray-100)" }}>
-      <span style={{ fontFamily: "var(--font-ui)", fontSize: "12px", color: "var(--gray-400)", fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.5px" }}>{label}</span>
-      <span style={{ fontFamily: "var(--font-ui)", fontSize: "13px", color: "var(--coastal-900)", textAlign: "right" }}>{value}</span>
+    <div className="flex justify-between" style={{ padding: "8px 0", borderBottom: "1px solid var(--card-border)" }}>
+      <span style={{ fontFamily: "var(--font-ui)", fontSize: "12px", color: "var(--text-muted)", fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.5px" }}>{label}</span>
+      <span style={{ fontFamily: "var(--font-ui)", fontSize: "13px", color: "var(--text-primary)", textAlign: "right" }}>{value}</span>
     </div>
   );
 }

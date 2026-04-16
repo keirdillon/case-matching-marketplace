@@ -37,8 +37,8 @@ export function CaseCard({ caseData, isNew = false, onClick, onSuggest }: CaseCa
       className="group relative cursor-pointer"
       onClick={onClick}
       style={{
-        background: "var(--white)",
-        border: "1px solid var(--gray-200)",
+        background: "var(--card-bg)",
+        border: "1px solid var(--card-border)",
         transition: "all 300ms var(--ease-out)",
       }}
     >
@@ -55,16 +55,15 @@ export function CaseCard({ caseData, isNew = false, onClick, onSuggest }: CaseCa
       {/* Meeting-first header */}
       <div
         style={{
-          background: "var(--coastal-900)",
+          background: "#252f4a",
           padding: "var(--space-4) var(--space-5)",
         }}
       >
-        {/* Date + Time as headline */}
         <div
           style={{
             fontFamily: "var(--font-display)",
             fontSize: "18px",
-            color: "var(--white)",
+            color: "var(--text-on-brand)",
             fontWeight: 400,
             lineHeight: 1.2,
             letterSpacing: "-0.01em",
@@ -80,7 +79,7 @@ export function CaseCard({ caseData, isNew = false, onClick, onSuggest }: CaseCa
               fontSize: "10px",
               padding: "3px 10px",
               background: "rgba(255,255,255,0.15)",
-              color: "var(--white)",
+              color: "var(--text-on-brand)",
               fontWeight: 500,
               letterSpacing: "0.3px",
               textTransform: "uppercase",
@@ -95,7 +94,7 @@ export function CaseCard({ caseData, isNew = false, onClick, onSuggest }: CaseCa
                 fontSize: "10px",
                 padding: "3px 8px",
                 background: "var(--coastal-600)",
-                color: "var(--white)",
+                color: "var(--text-on-brand)",
                 fontWeight: 600,
                 letterSpacing: "0.5px",
               }}
@@ -123,7 +122,7 @@ export function CaseCard({ caseData, isNew = false, onClick, onSuggest }: CaseCa
                 fontSize: "9px",
                 padding: "3px 8px",
                 background: "var(--success)",
-                color: "var(--white)",
+                color: "var(--text-on-brand)",
                 fontWeight: 600,
                 letterSpacing: "1px",
                 textTransform: "uppercase",
@@ -137,24 +136,22 @@ export function CaseCard({ caseData, isNew = false, onClick, onSuggest }: CaseCa
 
       {/* Card body */}
       <div style={{ padding: "var(--space-4) var(--space-5)" }}>
-        {/* Location */}
         <div
           style={{
             fontFamily: "var(--font-ui)",
             fontSize: "12px",
-            color: "var(--gray-500)",
+            color: "var(--text-secondary)",
             marginBottom: "var(--space-3)",
           }}
         >
           {locationIcon} {locationText}
         </div>
 
-        {/* Client summary or fallback to additional_context */}
         <div
           style={{
             fontFamily: "var(--font-body-serif)",
             fontSize: "14px",
-            color: "var(--gray-500)",
+            color: "var(--text-secondary)",
             lineHeight: 1.65,
             fontWeight: 300,
             marginBottom: "var(--space-3)",
@@ -167,7 +164,6 @@ export function CaseCard({ caseData, isNew = false, onClick, onSuggest }: CaseCa
           {caseData.client_summary || caseData.additional_context}
         </div>
 
-        {/* Specialization tags */}
         <div
           className="flex flex-wrap"
           style={{ gap: "4px", marginBottom: "var(--space-3)" }}
@@ -179,8 +175,8 @@ export function CaseCard({ caseData, isNew = false, onClick, onSuggest }: CaseCa
                 fontFamily: "var(--font-ui)",
                 fontSize: "10px",
                 padding: "3px 8px",
-                background: "var(--gray-100)",
-                color: "var(--gray-600)",
+                background: "var(--tag-specialization-bg)",
+                color: "var(--tag-specialization-text)",
                 fontWeight: 400,
               }}
             >
@@ -189,12 +185,11 @@ export function CaseCard({ caseData, isNew = false, onClick, onSuggest }: CaseCa
           ))}
         </div>
 
-        {/* Footer: poster + complexity + AUM */}
         <div
           className="flex justify-between items-center"
           style={{
             paddingTop: "var(--space-3)",
-            borderTop: "1px solid var(--gray-100)",
+            borderTop: "1px solid var(--card-border)",
           }}
         >
           <div className="flex items-center" style={{ gap: "10px" }}>
@@ -207,7 +202,7 @@ export function CaseCard({ caseData, isNew = false, onClick, onSuggest }: CaseCa
                 background: avatarColor,
                 fontSize: "10px",
                 fontWeight: 500,
-                color: "var(--white)",
+                color: "var(--text-on-brand)",
               }}
             >
               {initials}
@@ -220,7 +215,7 @@ export function CaseCard({ caseData, isNew = false, onClick, onSuggest }: CaseCa
                   fontFamily: "var(--font-ui)",
                   fontSize: "13px",
                   fontWeight: 500,
-                  color: "var(--coastal-900)",
+                  color: "var(--text-primary)",
                   textDecoration: "none",
                 }}
               >
@@ -230,7 +225,7 @@ export function CaseCard({ caseData, isNew = false, onClick, onSuggest }: CaseCa
                 style={{
                   fontFamily: "var(--font-ui)",
                   fontSize: "11px",
-                  color: "var(--gray-400)",
+                  color: "var(--text-muted)",
                 }}
               >
                 {caseData.advisor.years_experience} yrs &middot; {caseData.advisor.region}
@@ -245,11 +240,12 @@ export function CaseCard({ caseData, isNew = false, onClick, onSuggest }: CaseCa
                 fontFamily: "var(--font-ui)",
                 fontSize: "10px",
                 padding: "3px 8px",
-                background: "var(--coastal-900)",
-                color: "var(--white)",
+                background: "#252f4a",
+                color: "var(--text-on-brand)",
                 fontWeight: 500,
                 letterSpacing: "0.3px",
                 textTransform: "uppercase",
+                border: "1px solid var(--tag-aum-border)",
               }}
             >
               {caseData.aum_range}
@@ -257,9 +253,8 @@ export function CaseCard({ caseData, isNew = false, onClick, onSuggest }: CaseCa
           </div>
         </div>
 
-        {/* Manager: Suggest to Advisor button */}
         {onSuggest && (
-          <div style={{ paddingTop: "var(--space-3)", borderTop: "1px solid var(--gray-100)" }}>
+          <div style={{ paddingTop: "var(--space-3)", borderTop: "1px solid var(--card-border)" }}>
             <button
               onClick={(e) => { e.stopPropagation(); onSuggest(); }}
               className="cursor-pointer"

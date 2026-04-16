@@ -154,8 +154,8 @@ export function CaseBoard({ cases }: CaseBoardProps) {
         className="sticky hidden md:block overflow-y-auto"
         style={{
           padding: "var(--space-6) var(--space-5)",
-          background: "var(--white)",
-          borderRight: "1px solid var(--gray-200)",
+          background: "var(--card-bg)",
+          borderRight: "1px solid var(--card-border)",
           top: "65px",
           height: "calc(100vh - 65px)",
         }}
@@ -220,9 +220,9 @@ export function CaseBoard({ cases }: CaseBoardProps) {
                   fontFamily: "var(--font-ui)",
                   fontSize: "12px",
                   fontWeight: 500,
-                  color: activeComplexity.includes(n) ? "var(--white)" : "var(--gray-400)",
+                  color: activeComplexity.includes(n) ? "var(--text-on-brand)" : "var(--text-muted)",
                   background: activeComplexity.includes(n) ? "var(--coastal-600)" : "transparent",
-                  border: `1px solid ${activeComplexity.includes(n) ? "var(--coastal-600)" : "var(--gray-200)"}`,
+                  border: `1px solid ${activeComplexity.includes(n) ? "var(--coastal-600)" : "var(--card-border)"}`,
                   transition: "all var(--duration-fast)",
                 }}
               >
@@ -249,7 +249,7 @@ export function CaseBoard({ cases }: CaseBoardProps) {
           Reset All Filters
         </button>
 
-        <div style={{ marginTop: "var(--space-5)", paddingTop: "var(--space-5)", borderTop: "1px solid var(--gray-200)" }}>
+        <div style={{ marginTop: "var(--space-5)", paddingTop: "var(--space-5)", borderTop: "1px solid var(--card-border)" }}>
           <SidebarTitle>Saved Presets</SidebarTitle>
           {["Business Succession + $2M+ + SoFla", "Dental Practice + Estate Planning"].map((preset) => (
             <div
@@ -264,7 +264,7 @@ export function CaseBoard({ cases }: CaseBoardProps) {
               }}
             >
               <span style={{ width: "6px", height: "6px", background: "var(--coastal-600)", flexShrink: 0 }} />
-              <span style={{ fontFamily: "var(--font-ui)", fontSize: "12px", color: "var(--coastal-900)", fontWeight: 400 }}>
+              <span style={{ fontFamily: "var(--font-ui)", fontSize: "12px", color: "var(--text-primary)", fontWeight: 400 }}>
                 {preset}
               </span>
             </div>
@@ -283,13 +283,13 @@ export function CaseBoard({ cases }: CaseBoardProps) {
               fontSize: "11px",
               letterSpacing: "3px",
               textTransform: "uppercase",
-              color: "var(--gray-400)",
+              color: "var(--text-muted)",
               fontWeight: 500,
               gap: "12px",
             }}
           >
             Active Opportunities
-            <span style={{ width: "80px", height: "1px", background: "var(--gray-200)" }} />
+            <span style={{ width: "80px", height: "1px", background: "var(--card-border)" }} />
           </h2>
           <select
             className="cursor-pointer"
@@ -298,10 +298,10 @@ export function CaseBoard({ cases }: CaseBoardProps) {
             style={{
               fontFamily: "var(--font-ui)",
               fontSize: "12px",
-              color: "var(--gray-500)",
-              border: "1px solid var(--gray-200)",
+              color: "var(--text-secondary)",
+              border: "1px solid var(--card-border)",
               padding: "8px 32px 8px 12px",
-              background: "var(--white)",
+              background: "var(--card-bg)",
               appearance: "none",
               backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23a3a3a3' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E\")",
               backgroundRepeat: "no-repeat",
@@ -320,14 +320,14 @@ export function CaseBoard({ cases }: CaseBoardProps) {
           className="flex items-center"
           style={{
             background: "var(--coastal-100)",
-            border: "1px solid var(--coastal-200)",
+            border: "1px solid var(--card-border)",
             padding: "12px 20px",
             marginBottom: "var(--space-5)",
             gap: "12px",
           }}
         >
           <span style={{ width: "8px", height: "8px", background: "var(--coastal-600)", borderRadius: "50%", animation: "pulse 2s ease-in-out infinite" }} />
-          <span style={{ fontFamily: "var(--font-ui)", fontSize: "13px", color: "var(--coastal-800)", fontWeight: 500 }}>
+          <span style={{ fontFamily: "var(--font-ui)", fontSize: "13px", color: "var(--text-primary)", fontWeight: 500 }}>
             Joint Work Needed This Week <InfoTooltip text="These are upcoming meetings where advisors need collaboration support." />
           </span>
           <span className="ml-auto" style={{ fontFamily: "var(--font-display)", fontSize: "18px", color: "var(--coastal-600)", fontWeight: 400 }}>
@@ -337,7 +337,7 @@ export function CaseBoard({ cases }: CaseBoardProps) {
 
         {/* Results count */}
         {filtered.length !== cases.length && (
-          <div style={{ fontFamily: "var(--font-ui)", fontSize: "12px", color: "var(--gray-400)", marginBottom: "var(--space-4)" }}>
+          <div style={{ fontFamily: "var(--font-ui)", fontSize: "12px", color: "var(--text-muted)", marginBottom: "var(--space-4)" }}>
             Showing {filtered.length} of {cases.length} cases
           </div>
         )}
@@ -354,15 +354,15 @@ export function CaseBoard({ cases }: CaseBoardProps) {
             className="flex flex-col items-center justify-center"
             style={{
               padding: "var(--space-9) var(--space-6)",
-              background: "var(--white)",
-              border: "1px solid var(--gray-200)",
+              background: "var(--card-bg)",
+              border: "1px solid var(--card-border)",
               textAlign: "center",
             }}
           >
-            <div style={{ fontFamily: "var(--font-display)", fontSize: "24px", color: "var(--coastal-900)", marginBottom: "var(--space-3)" }}>
+            <div style={{ fontFamily: "var(--font-display)", fontSize: "24px", color: "var(--text-primary)", marginBottom: "var(--space-3)" }}>
               No matching cases
             </div>
-            <p style={{ fontFamily: "var(--font-body-serif)", fontSize: "15px", color: "var(--gray-400)", maxWidth: "360px", lineHeight: 1.6 }}>
+            <p style={{ fontFamily: "var(--font-body-serif)", fontSize: "15px", color: "var(--text-muted)", maxWidth: "360px", lineHeight: 1.6 }}>
               Try adjusting your filters or check back later for new opportunities.
             </p>
             <button onClick={resetFilters} className="btn btn-outline btn-sm" style={{ marginTop: "var(--space-5)" }}>
@@ -380,9 +380,9 @@ export function CaseBoard({ cases }: CaseBoardProps) {
 // Sub-components (same visual style as before)
 function SidebarTitle({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex items-center" style={{ fontFamily: "var(--font-ui)", fontSize: "11px", letterSpacing: "3px", textTransform: "uppercase", color: "var(--gray-400)", fontWeight: 500, marginBottom: "var(--space-5)", gap: "12px" }}>
+    <div className="flex items-center" style={{ fontFamily: "var(--font-ui)", fontSize: "11px", letterSpacing: "3px", textTransform: "uppercase", color: "var(--text-muted)", fontWeight: 500, marginBottom: "var(--space-5)", gap: "12px" }}>
       {children}
-      <span style={{ flex: 1, height: "1px", background: "var(--gray-200)" }} />
+      <span style={{ flex: 1, height: "1px", background: "var(--card-border)" }} />
     </div>
   );
 }
@@ -390,7 +390,7 @@ function SidebarTitle({ children }: { children: React.ReactNode }) {
 function FilterGroup({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div style={{ marginBottom: "var(--space-5)" }}>
-      <label className="block" style={{ fontFamily: "var(--font-ui)", fontSize: "12px", fontWeight: 500, color: "var(--coastal-900)", marginBottom: "var(--space-2)" }}>
+      <label className="block" style={{ fontFamily: "var(--font-ui)", fontSize: "12px", fontWeight: 500, color: "var(--text-primary)", marginBottom: "var(--space-2)" }}>
         {label}
       </label>
       {children}
@@ -408,7 +408,7 @@ function Chip({ children, active, onClick }: { children: React.ReactNode; active
         fontSize: "11px",
         padding: "6px 12px",
         background: active ? "var(--coastal-600)" : "var(--coastal-100)",
-        color: active ? "var(--white)" : "var(--coastal-800)",
+        color: active ? "var(--text-on-brand)" : "var(--text-primary)",
         fontWeight: 400,
         border: "1px solid transparent",
         transition: "all var(--duration-fast)",
@@ -429,9 +429,9 @@ function FilterSelect({ options, value, onChange }: { options: string[]; value: 
         padding: "10px 12px",
         fontFamily: "var(--font-ui)",
         fontSize: "13px",
-        color: "var(--coastal-900)",
-        border: "1px solid var(--gray-200)",
-        background: "var(--white)",
+        color: "var(--text-primary)",
+        border: "1px solid var(--card-border)",
+        background: "var(--card-bg)",
         outline: "none",
         appearance: "none",
         backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23a3a3a3' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E\")",

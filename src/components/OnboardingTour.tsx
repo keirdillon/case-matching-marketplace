@@ -114,8 +114,8 @@ export function OnboardingTour() {
           position: "fixed",
           bottom: "24px",
           right: "24px",
-          background: "var(--coastal-900)",
-          color: "var(--white)",
+          background: "#252f4a",
+          color: "var(--text-on-brand)",
           padding: "16px 20px",
           boxShadow: "0 8px 32px rgba(0,0,0,0.3)",
           zIndex: 300,
@@ -139,7 +139,7 @@ export function OnboardingTour() {
               fontSize: "12px",
               fontWeight: 500,
               background: "var(--coastal-600)",
-              color: "var(--white)",
+              color: "var(--text-on-brand)",
               border: "none",
             }}
           >
@@ -171,10 +171,10 @@ export function OnboardingTour() {
     return (
       <Overlay onClose={closeTour}>
         <div style={{ textAlign: "center", padding: "var(--space-6)" }}>
-          <div style={{ fontFamily: "var(--font-display)", fontSize: "28px", color: "var(--coastal-900)", marginBottom: "var(--space-3)" }}>
+          <div style={{ fontFamily: "var(--font-display)", fontSize: "28px", color: "var(--text-primary)", marginBottom: "var(--space-3)" }}>
             What&apos;s your role?
           </div>
-          <p style={{ fontFamily: "var(--font-ui)", fontSize: "14px", color: "var(--gray-500)", marginBottom: "var(--space-6)", lineHeight: 1.6 }}>
+          <p style={{ fontFamily: "var(--font-ui)", fontSize: "14px", color: "var(--text-secondary)", marginBottom: "var(--space-6)", lineHeight: 1.6 }}>
             We&apos;ll customize the tour based on how you use AdvisorConnect.
           </p>
           <div className="flex flex-col" style={{ gap: "var(--space-3)", maxWidth: "360px", margin: "0 auto" }}>
@@ -196,7 +196,7 @@ export function OnboardingTour() {
               marginTop: "var(--space-5)",
               fontFamily: "var(--font-ui)",
               fontSize: "12px",
-              color: "var(--gray-400)",
+              color: "var(--text-muted)",
               background: "none",
               border: "none",
             }}
@@ -215,22 +215,22 @@ export function OnboardingTour() {
       <div style={{ padding: "var(--space-6)" }}>
         {/* Step indicator */}
         <div className="flex items-center justify-between" style={{ marginBottom: "var(--space-5)" }}>
-          <span style={{ fontFamily: "var(--font-ui)", fontSize: "11px", color: "var(--gray-400)", textTransform: "uppercase", letterSpacing: "1px" }}>
+          <span style={{ fontFamily: "var(--font-ui)", fontSize: "11px", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "1px" }}>
             Step {step + 1} of {TOUR_STEPS.length}
           </span>
           <button
             onClick={closeTour}
             className="cursor-pointer"
-            style={{ fontFamily: "var(--font-ui)", fontSize: "12px", color: "var(--gray-400)", background: "none", border: "none" }}
+            style={{ fontFamily: "var(--font-ui)", fontSize: "12px", color: "var(--text-muted)", background: "none", border: "none" }}
           >
             Skip Tour
           </button>
         </div>
 
-        <div style={{ fontFamily: "var(--font-display)", fontSize: "24px", color: "var(--coastal-900)", marginBottom: "var(--space-3)", lineHeight: 1.15 }}>
+        <div style={{ fontFamily: "var(--font-display)", fontSize: "24px", color: "var(--text-primary)", marginBottom: "var(--space-3)", lineHeight: 1.15 }}>
           {currentStep.title}
         </div>
-        <p style={{ fontFamily: "var(--font-body-serif)", fontSize: "15px", color: "var(--gray-500)", lineHeight: 1.7, marginBottom: "var(--space-5)" }}>
+        <p style={{ fontFamily: "var(--font-body-serif)", fontSize: "15px", color: "var(--text-secondary)", lineHeight: 1.7, marginBottom: "var(--space-5)" }}>
           {getDescription(currentStep)}
         </p>
 
@@ -253,7 +253,7 @@ export function OnboardingTour() {
                 width: i === step ? "16px" : "6px",
                 height: "6px",
                 borderRadius: "3px",
-                background: i === step ? "var(--coastal-600)" : "var(--gray-200)",
+                background: i === step ? "var(--coastal-600)" : "var(--card-border)",
                 transition: "all 200ms",
               }}
             />
@@ -269,9 +269,9 @@ export function OnboardingTour() {
               padding: "10px 20px",
               fontFamily: "var(--font-ui)",
               fontSize: "13px",
-              color: "var(--gray-500)",
+              color: "var(--text-secondary)",
               background: "none",
-              border: "1px solid var(--gray-200)",
+              border: "1px solid var(--card-border)",
               opacity: step === 0 ? 0.4 : 1,
             }}
             disabled={step === 0}
@@ -286,7 +286,7 @@ export function OnboardingTour() {
               fontFamily: "var(--font-ui)",
               fontSize: "13px",
               fontWeight: 500,
-              color: "var(--white)",
+              color: "var(--text-on-brand)",
               background: "var(--coastal-600)",
               border: "none",
             }}
@@ -308,7 +308,7 @@ function Overlay({ children, onClose }: { children: React.ReactNode; onClose: ()
     >
       <div
         style={{
-          background: "var(--white)",
+          background: "var(--card-bg)",
           width: "480px",
           maxWidth: "95vw",
           boxShadow: "0 16px 48px rgba(0,0,0,0.3)",
@@ -330,15 +330,15 @@ function RoleButton({ title, subtitle, onClick }: { title: string; subtitle: str
       style={{
         padding: "16px 20px",
         textAlign: "left",
-        background: "var(--white)",
-        border: "1px solid var(--gray-200)",
+        background: "var(--card-bg)",
+        border: "1px solid var(--card-border)",
         transition: "all 200ms",
       }}
     >
-      <div style={{ fontFamily: "var(--font-ui)", fontSize: "14px", fontWeight: 500, color: "var(--coastal-900)", marginBottom: "4px" }}>
+      <div style={{ fontFamily: "var(--font-ui)", fontSize: "14px", fontWeight: 500, color: "var(--text-primary)", marginBottom: "4px" }}>
         {title}
       </div>
-      <div style={{ fontFamily: "var(--font-ui)", fontSize: "12px", color: "var(--gray-400)" }}>
+      <div style={{ fontFamily: "var(--font-ui)", fontSize: "12px", color: "var(--text-muted)" }}>
         {subtitle}
       </div>
     </button>
@@ -361,7 +361,7 @@ export function NewHereButton() {
         fontSize: "12px",
         color: "var(--coastal-400)",
         background: "none",
-        border: "1px solid var(--gray-200)",
+        border: "1px solid var(--card-border)",
         padding: "6px 12px",
         transition: "all 200ms",
       }}
@@ -409,17 +409,17 @@ function OnboardingTourFromButton({ onClose }: { onClose: () => void }) {
     return (
       <Overlay onClose={onClose}>
         <div style={{ textAlign: "center", padding: "var(--space-6)" }}>
-          <div style={{ fontFamily: "var(--font-display)", fontSize: "28px", color: "var(--coastal-900)", marginBottom: "var(--space-3)" }}>
+          <div style={{ fontFamily: "var(--font-display)", fontSize: "28px", color: "var(--text-primary)", marginBottom: "var(--space-3)" }}>
             What&apos;s your role?
           </div>
-          <p style={{ fontFamily: "var(--font-ui)", fontSize: "14px", color: "var(--gray-500)", marginBottom: "var(--space-6)", lineHeight: 1.6 }}>
+          <p style={{ fontFamily: "var(--font-ui)", fontSize: "14px", color: "var(--text-secondary)", marginBottom: "var(--space-6)", lineHeight: 1.6 }}>
             We&apos;ll customize the tour based on how you use AdvisorConnect.
           </p>
           <div className="flex flex-col" style={{ gap: "var(--space-3)", maxWidth: "360px", margin: "0 auto" }}>
             <RoleButton title="I'm looking for joint work support" subtitle="Post cases, find senior partners" onClick={() => selectRole("ixp")} />
             <RoleButton title="I'm available to collaborate" subtitle="Browse cases, express interest" onClick={() => selectRole("exp")} />
           </div>
-          <button onClick={onClose} className="cursor-pointer" style={{ marginTop: "var(--space-5)", fontFamily: "var(--font-ui)", fontSize: "12px", color: "var(--gray-400)", background: "none", border: "none" }}>Cancel</button>
+          <button onClick={onClose} className="cursor-pointer" style={{ marginTop: "var(--space-5)", fontFamily: "var(--font-ui)", fontSize: "12px", color: "var(--text-muted)", background: "none", border: "none" }}>Cancel</button>
         </div>
       </Overlay>
     );
@@ -431,24 +431,24 @@ function OnboardingTourFromButton({ onClose }: { onClose: () => void }) {
     <Overlay onClose={onClose}>
       <div style={{ padding: "var(--space-6)" }}>
         <div className="flex items-center justify-between" style={{ marginBottom: "var(--space-5)" }}>
-          <span style={{ fontFamily: "var(--font-ui)", fontSize: "11px", color: "var(--gray-400)", textTransform: "uppercase", letterSpacing: "1px" }}>
+          <span style={{ fontFamily: "var(--font-ui)", fontSize: "11px", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "1px" }}>
             Step {step + 1} of {TOUR_STEPS.length}
           </span>
-          <button onClick={onClose} className="cursor-pointer" style={{ fontFamily: "var(--font-ui)", fontSize: "12px", color: "var(--gray-400)", background: "none", border: "none" }}>Close</button>
+          <button onClick={onClose} className="cursor-pointer" style={{ fontFamily: "var(--font-ui)", fontSize: "12px", color: "var(--text-muted)", background: "none", border: "none" }}>Close</button>
         </div>
-        <div style={{ fontFamily: "var(--font-display)", fontSize: "24px", color: "var(--coastal-900)", marginBottom: "var(--space-3)", lineHeight: 1.15 }}>{currentStep.title}</div>
-        <p style={{ fontFamily: "var(--font-body-serif)", fontSize: "15px", color: "var(--gray-500)", lineHeight: 1.7, marginBottom: "var(--space-5)" }}>{getDescription(currentStep)}</p>
+        <div style={{ fontFamily: "var(--font-display)", fontSize: "24px", color: "var(--text-primary)", marginBottom: "var(--space-3)", lineHeight: 1.15 }}>{currentStep.title}</div>
+        <p style={{ fontFamily: "var(--font-body-serif)", fontSize: "15px", color: "var(--text-secondary)", lineHeight: 1.7, marginBottom: "var(--space-5)" }}>{getDescription(currentStep)}</p>
         {currentStep.action && (
           <button onClick={() => { onClose(); router.push(currentStep.action!.href); }} className="btn btn-outline btn-sm" style={{ marginBottom: "var(--space-5)" }}>{currentStep.action.label}</button>
         )}
         <div className="flex items-center justify-center" style={{ gap: "6px", marginBottom: "var(--space-4)" }}>
           {TOUR_STEPS.map((_, i) => (
-            <span key={i} style={{ width: i === step ? "16px" : "6px", height: "6px", borderRadius: "3px", background: i === step ? "var(--coastal-600)" : "var(--gray-200)", transition: "all 200ms" }} />
+            <span key={i} style={{ width: i === step ? "16px" : "6px", height: "6px", borderRadius: "3px", background: i === step ? "var(--coastal-600)" : "var(--card-border)", transition: "all 200ms" }} />
           ))}
         </div>
         <div className="flex justify-between">
-          <button onClick={back} disabled={step === 0} className="cursor-pointer" style={{ padding: "10px 20px", fontFamily: "var(--font-ui)", fontSize: "13px", color: "var(--gray-500)", background: "none", border: "1px solid var(--gray-200)", opacity: step === 0 ? 0.4 : 1 }}>Back</button>
-          <button onClick={next} className="cursor-pointer" style={{ padding: "10px 24px", fontFamily: "var(--font-ui)", fontSize: "13px", fontWeight: 500, color: "var(--white)", background: "var(--coastal-600)", border: "none" }}>{step === TOUR_STEPS.length - 1 ? "Get Started" : "Next"}</button>
+          <button onClick={back} disabled={step === 0} className="cursor-pointer" style={{ padding: "10px 20px", fontFamily: "var(--font-ui)", fontSize: "13px", color: "var(--text-secondary)", background: "none", border: "1px solid var(--card-border)", opacity: step === 0 ? 0.4 : 1 }}>Back</button>
+          <button onClick={next} className="cursor-pointer" style={{ padding: "10px 24px", fontFamily: "var(--font-ui)", fontSize: "13px", fontWeight: 500, color: "var(--text-on-brand)", background: "var(--coastal-600)", border: "none" }}>{step === TOUR_STEPS.length - 1 ? "Get Started" : "Next"}</button>
         </div>
       </div>
     </Overlay>

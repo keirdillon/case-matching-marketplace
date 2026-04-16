@@ -68,19 +68,19 @@ export default async function ProfilePage() {
           style={{
             fontFamily: "var(--font-display)",
             fontSize: "36px",
-            color: "var(--coastal-900)",
+            color: "var(--text-primary)",
             fontWeight: 400,
             marginBottom: "var(--space-3)",
             lineHeight: 1.1,
           }}
         >
-          Set up your <em style={{ fontStyle: "italic", color: "var(--coastal-700)" }}>expertise</em> profile
+          Set up your <em style={{ fontStyle: "italic", color: "var(--coastal-600)" }}>expertise</em> profile
         </h1>
         <p
           style={{
             fontFamily: "var(--font-body-serif)",
             fontSize: "16px",
-            color: "var(--gray-500)",
+            color: "var(--text-secondary)",
             lineHeight: 1.7,
             fontWeight: 300,
             marginBottom: "var(--space-7)",

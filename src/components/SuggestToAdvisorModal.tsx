@@ -78,9 +78,9 @@ export function SuggestToAdvisorModal({ open, caseId, managerId, onClose }: Sugg
       style={{ background: "rgba(37,47,74,0.6)", backdropFilter: "blur(4px)" }}
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
-      <div style={{ width: "440px", maxWidth: "95vw", background: "var(--white)", boxShadow: "var(--shadow-xl)" }}>
-        <div style={{ padding: "var(--space-5) var(--space-6)", borderBottom: "1px solid var(--gray-200)" }}>
-          <h3 style={{ fontFamily: "var(--font-display)", fontSize: "20px", color: "var(--coastal-900)", fontWeight: 400 }}>
+      <div style={{ width: "440px", maxWidth: "95vw", background: "var(--card-bg)", boxShadow: "var(--shadow-xl)" }}>
+        <div style={{ padding: "var(--space-5) var(--space-6)", borderBottom: "1px solid var(--card-border)" }}>
+          <h3 style={{ fontFamily: "var(--font-display)", fontSize: "20px", color: "var(--text-primary)", fontWeight: 400 }}>
             Suggest to Advisor
           </h3>
         </div>
@@ -91,14 +91,14 @@ export function SuggestToAdvisorModal({ open, caseId, managerId, onClose }: Sugg
               <div style={{ width: "48px", height: "48px", background: "var(--success)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "var(--space-4)" }}>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5"><polyline points="20 6 9 17 4 12" /></svg>
               </div>
-              <div style={{ fontFamily: "var(--font-ui)", fontSize: "15px", color: "var(--coastal-900)", fontWeight: 500 }}>
+              <div style={{ fontFamily: "var(--font-ui)", fontSize: "15px", color: "var(--text-primary)", fontWeight: 500 }}>
                 Suggestion sent!
               </div>
             </div>
           ) : (
             <>
               <div style={{ marginBottom: "var(--space-5)" }}>
-                <label style={{ fontFamily: "var(--font-ui)", fontSize: "12px", fontWeight: 500, color: "var(--coastal-900)", display: "block", marginBottom: "var(--space-2)" }}>
+                <label style={{ fontFamily: "var(--font-ui)", fontSize: "12px", fontWeight: 500, color: "var(--text-primary)", display: "block", marginBottom: "var(--space-2)" }}>
                   Select Advisor<span style={{ color: "var(--error)" }}>*</span>
                 </label>
                 <select
@@ -107,8 +107,8 @@ export function SuggestToAdvisorModal({ open, caseId, managerId, onClose }: Sugg
                   style={{
                     width: "100%", padding: "12px 14px",
                     fontFamily: "var(--font-ui)", fontSize: "14px",
-                    color: "var(--coastal-900)",
-                    border: "1px solid var(--gray-200)", background: "var(--white)", outline: "none",
+                    color: "var(--text-primary)",
+                    border: "1px solid var(--input-border)", background: "var(--input-bg)", outline: "none",
                   }}
                 >
                   <option value="">Choose an advisor...</option>
@@ -121,7 +121,7 @@ export function SuggestToAdvisorModal({ open, caseId, managerId, onClose }: Sugg
               </div>
 
               <div style={{ marginBottom: "var(--space-5)" }}>
-                <label style={{ fontFamily: "var(--font-ui)", fontSize: "12px", fontWeight: 500, color: "var(--coastal-900)", display: "block", marginBottom: "var(--space-2)" }}>
+                <label style={{ fontFamily: "var(--font-ui)", fontSize: "12px", fontWeight: 500, color: "var(--text-primary)", display: "block", marginBottom: "var(--space-2)" }}>
                   Message (optional)
                 </label>
                 <textarea
@@ -132,8 +132,8 @@ export function SuggestToAdvisorModal({ open, caseId, managerId, onClose }: Sugg
                   style={{
                     width: "100%", padding: "12px 14px",
                     fontFamily: "var(--font-ui)", fontSize: "14px",
-                    color: "var(--coastal-900)",
-                    border: "1px solid var(--gray-200)", background: "var(--white)",
+                    color: "var(--text-primary)",
+                    border: "1px solid var(--input-border)", background: "var(--input-bg)",
                     outline: "none", resize: "vertical", minHeight: "80px",
                   }}
                 />
@@ -143,7 +143,7 @@ export function SuggestToAdvisorModal({ open, caseId, managerId, onClose }: Sugg
         </div>
 
         {!success && (
-          <div className="flex justify-end" style={{ padding: "var(--space-4) var(--space-6)", borderTop: "1px solid var(--gray-200)", gap: "var(--space-3)" }}>
+          <div className="flex justify-end" style={{ padding: "var(--space-4) var(--space-6)", borderTop: "1px solid var(--card-border)", gap: "var(--space-3)" }}>
             <button onClick={onClose} className="btn btn-outline btn-sm">Cancel</button>
             <button
               onClick={handleSubmit}

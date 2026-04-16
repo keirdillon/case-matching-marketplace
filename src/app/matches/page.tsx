@@ -142,10 +142,10 @@ export default async function MyMatchesPage() {
       <Nav />
       <div className="mx-auto" style={{ maxWidth: "1000px", padding: "var(--space-7) var(--space-6)" }}>
         <div className="overline" style={{ marginBottom: "var(--space-5)" }}>My Matches</div>
-        <h1 style={{ fontFamily: "var(--font-display)", fontSize: "36px", color: "var(--coastal-900)", fontWeight: 400, marginBottom: "var(--space-3)", lineHeight: 1.1 }}>
-          Your <em style={{ fontStyle: "italic", color: "var(--coastal-700)" }}>connections</em>
+        <h1 style={{ fontFamily: "var(--font-display)", fontSize: "36px", color: "var(--text-primary)", fontWeight: 400, marginBottom: "var(--space-3)", lineHeight: 1.1 }}>
+          Your <em style={{ fontStyle: "italic", color: "var(--coastal-600)" }}>connections</em>
         </h1>
-        <p style={{ fontFamily: "var(--font-body-serif)", fontSize: "16px", color: "var(--gray-500)", lineHeight: 1.7, fontWeight: 300, marginBottom: "var(--space-7)", maxWidth: "560px" }}>
+        <p style={{ fontFamily: "var(--font-body-serif)", fontSize: "16px", color: "var(--text-secondary)", lineHeight: 1.7, fontWeight: 300, marginBottom: "var(--space-7)", maxWidth: "560px" }}>
           All your match activity — cases you&apos;ve expressed interest in and advisors who want to collaborate on your cases.
         </p>
         <MyMatchesBoard matches={matches} />
