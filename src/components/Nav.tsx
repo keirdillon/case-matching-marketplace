@@ -1,6 +1,25 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+const NAV_LINKS = [
+  { label: "Discover", href: "/" },
+  { label: "Board", href: "/board" },
+  { label: "My Posts", href: "/posts" },
+  { label: "My Matches", href: "/matches" },
+  { label: "Directory", href: "/directory" },
+  { label: "Profile", href: "/profile" },
+];
 
 export function Nav() {
+  const pathname = usePathname();
+
+  function isActive(href: string) {
+    if (href === "/") return pathname === "/";
+    return pathname.startsWith(href);
+  }
+
   return (
     <nav
       className="flex items-center justify-between sticky top-0 z-100 bg-white"
@@ -46,40 +65,36 @@ export function Nav() {
         className="list-none items-center hidden md:flex"
         style={{ gap: "var(--space-5)" }}
       >
-        {[
-          { label: "Discover", href: "/", active: true },
-          { label: "Board", href: "/board" },
-          { label: "My Posts", href: "/posts" },
-          { label: "My Matches", href: "/matches" },
-          { label: "Directory", href: "/directory" },
-          { label: "Profile", href: "/profile" },
-        ].map((link) => (
-          <li key={link.label}>
-            <Link
-              href={link.href}
-              className="relative no-underline"
-              style={{
-                fontFamily: "var(--font-ui)",
-                fontSize: "13px",
-                color: link.active ? "var(--coastal-900)" : "var(--gray-500)",
-                fontWeight: link.active ? 500 : 400,
-                transition: "color var(--duration-fast)",
-              }}
-            >
-              {link.label}
-              {link.active && (
-                <span
-                  className="absolute left-0 right-0"
-                  style={{
-                    bottom: "-4px",
-                    height: "1.5px",
-                    background: "var(--coastal-600)",
-                  }}
-                />
-              )}
-            </Link>
-          </li>
-        ))}
+        {NAV_LINKS.map((link) => {
+          const active = isActive(link.href);
+          return (
+            <li key={link.label}>
+              <Link
+                href={link.href}
+                className="relative no-underline"
+                style={{
+                  fontFamily: "var(--font-ui)",
+                  fontSize: "13px",
+                  color: active ? "var(--coastal-900)" : "var(--gray-500)",
+                  fontWeight: active ? 500 : 400,
+                  transition: "color var(--duration-fast)",
+                }}
+              >
+                {link.label}
+                {active && (
+                  <span
+                    className="absolute left-0 right-0"
+                    style={{
+                      bottom: "-4px",
+                      height: "1.5px",
+                      background: "var(--coastal-600)",
+                    }}
+                  />
+                )}
+              </Link>
+            </li>
+          );
+        })}
       </ul>
 
       <div className="flex items-center" style={{ gap: "var(--space-4)" }}>
